@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Cartas encontradas</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/buscar-carta"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">carta-porte-encontradas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <div  class="table-container" *ngIf="this.cartasEncontradas.length > 0">
+      <div class="head-table wrapper">
+        <div class="element-head-table element-wrapper">Entregador</div>
+        <div class="element-head-table element-wrapper fecha-element">
+          Fecha Des.
+        </div>
+        <div class="element-head-table element-wrapper puerto-element">
+          Puerto
+        </div>
+      </div>
+
+      <div *ngFor="let cartaPorte of cartasEncontradas; index as i">
+        <!-- <ion-accordion-group class="important-info wrapper">-->
+          <ion-accordion  value="first">
+            <ion-item slot="header" color="light" class="ion-item">
+              <ion-label>
+          <div
+            class="important-info wrapper"
+            (click)="toggleState(i)"
+            [ngClass]="responsiveTableService.getColorEstado(cartaPorte)"
+          >
+            <div class="element-important element-wrapper">
+              {{cartaPorte.entregador.nombreCorto}}
+            </div>
+            <div class="element-important element-wrapper fecha-element">
+              {{cartaPorte.fechaDescarga | date: 'dd/MM/yyyy'}}
+            </div>
+            <div class="element-important element-wrapper puerto-element">
+              {{cartaPorte.plantaDestino.descripcion}}
+            </div>
+          </div>
+        </ion-label>
+        </ion-item>
+
+
+      </ion-accordion>
+        <!--  </ion-accordion-group>-->
+      </div>
+
+      <div *ngIf="loading" class="spinner-container">
+        <ion-spinner></ion-spinner>
+      </div>
+    </div>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,87 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slort="start">
+      <ion-menu-button menu="menuPrincipal"></ion-menu-button>
+      <ion-title>Bienvenido</ion-title>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+  <ion-card color="light">
+    <ion-card-header>
+      <ion-card-title><ion-icon name="person-outline"></ion-icon> {{usuarioActivo?.nombre}}</ion-card-title>
+      <ion-card-subtitle>{{usuarioActivo?.tipo.descripcion}}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card color="secondary">
+    <ion-card-header>
+      <ion-card-subtitle>Total de Camiones</ion-card-subtitle>
+      <ion-card-title>{{completeTableData.length}}</ion-card-title>
+
+     </ion-card-header>
+  </ion-card>
+
+
+  <ion-card color="success">
+    <ion-card-header>
+      <ion-card-subtitle><ion-icon name="checkmark-outline"></ion-icon> Camiones Autorizados</ion-card-subtitle>
+      <ion-card-title>{{completeTableDataAutorizado.length}}</ion-card-title>
+
+     </ion-card-header>
+  </ion-card>
+
+
+  <ion-card color="tertiary">
+    <ion-card-header>
+      <ion-card-subtitle><ion-icon name="reload-outline"></ion-icon> Camiones a Descargar</ion-card-subtitle>
+      <ion-card-title>{{completeTableDataAdescargar.length}}</ion-card-title>
+
+    </ion-card-header>
+  </ion-card>
+
+
+   <ion-card color="danger">
+     <ion-card-header >
+      <ion-card-subtitle><ion-icon name="warning"></ion-icon> Incidencias</ion-card-subtitle>
+      <ion-card-title>{{completeTableDataMostrarIncidencias.length}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+     </ion-card-content>
+
+  </ion-card>
+
+
+
+
+
+
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <!--<ion-tab-button tab="inicio">
+        <ion-icon name="cash" aria-hidden="true"></ion-icon>
+        <ion-label>Inicio</ion-label>
+      </ion-tab-button>-->
+
+      <ion-tab-button tab="todo">
+        <ion-icon name="reorder-four-outline"aria-hidden="true"></ion-icon>
+
+        <ion-label>Todas las cartas</ion-label>
+        <ion-badge  *ngIf="cantidadTodos" color="success">{{cantidadTodos}}</ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button tab="incidencias">
+
+        <ion-icon name="warning-outline"  aria-hidden="true"></ion-icon>
+        <ion-label>Incidencias</ion-label>
+        <ion-badge *ngIf="cantidadIncidencias" color="danger">{{cantidadIncidencias}}</ion-badge>
+      </ion-tab-button>
+
+
+
+
+    </ion-tab-bar>
+  </ion-tabs>
+</ion-content>

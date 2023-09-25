@@ -1,0 +1,223 @@
+ion-content {
+  --padding-end: 10%;
+  --padding-start: 10%;
+  --padding-top: 5%;
+}
+
+.login-content {
+  background-color: #4372a418;
+  //background-image: url("../../../assets/images/fondo.png");
+//    background-size: 100% 100%;
+//background: rgb(168,198,237);
+//background: linear-gradient(0deg, rgba(168,198,237,1) 0%, rgba(119,165,227,1) 100%);
+background: rgb(168,198,237);
+background: linear-gradient(0deg, rgba(168,198,237,1) 0%, rgba(63,136,236,1) 100%);
+background-image: url("../../../../resources/bg.png");
+  .slogan_bienvenido_box {
+      font-family: 'Roboto-Bold';
+      font-size: 38px;
+      text-align: center;
+  }
+
+  .slogan_cooperativa_box {
+      font-family: 'Roboto-Bold';
+      font-size: 14px;
+      text-align: center;
+      color: #FFF;
+      margin-top: -20px;
+  }
+
+  .logo-row {
+      padding-top: 0px;
+      padding-bottom: 0px;
+  }
+
+  .login-box {
+      margin-top: 0px;
+  }
+
+  .text-input-ios {
+      text-align: center;
+      margin: 0px;
+  }
+
+  .item-block {
+      min-height: 37px;
+  }
+
+  .text-input-md {
+      margin: 3px 3px 3px 3px;
+      font-size: 11px;
+      padding: 0;
+      color: grey;
+      text-align: center;
+      width: calc(100% - 8px - 8px);
+  }
+
+  ion-input {
+      font-family: 'Roboto-Bold';
+      padding-bottom: 10px;
+  }
+
+  ion-list {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      border-radius: 5px;
+      background-color: transparent;;
+  }
+
+  ion-row {
+      align-items: center;
+      text-align: center;
+  }
+
+  ion-item {
+      font-size: 0.9em;
+      margin-bottom: 10px;
+      opacity: 0.8;
+      text-align: center;
+  }
+
+
+  .chkRecordarme {
+
+      margin: 0;
+      padding: 0;
+      left: -25%;
+      border: black;
+  }
+
+  .txtRecordarme {
+      font-size: 11px;
+      color: black;
+      padding-left: 45%;
+  }
+
+  .item-inner {
+      border-bottom-color: #ffffff !important;
+      box-shadow: none !important;
+  }
+
+  .btn-login {
+      font-family: "Roboto-Light";
+      font-size: 12px;
+      height: 40px;
+      opacity: 0.7;
+  }
+
+  .button-md:hover {
+      background-color: bgButtons;
+      color: black;
+      opacity: 0.4;
+  }
+
+  /*
+  para todos los botones del login
+  */
+  button[disabled] {
+      overflow: hidden;
+      // background: color($colors, bgButtons, base);
+      opacity: 0.3;
+      font-family: "Roboto-Light";
+      height: 40px;
+  }
+
+}
+
+*::-webkit-input-placeholder {
+  text-align: center !important;
+  color: #AAA !important;
+}
+
+*:-moz-placeholder {
+  text-align: center !important;
+  color: #AAA !important;
+}
+
+*:-ms-input-placeholder {
+  /* IE10+ */
+  text-align: center !important;
+  color: #AAA !important;
+}
+
+.small {
+  width: 100%;
+  padding: 0px;
+  display: flex;
+}
+.texto {
+text-align: center;
+  font-size: 11px;
+}
+.flex-properties {
+  flex-wrap: nowrap !important;
+  justify-content: center;
+}
+
+.leftmost {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  margin: 0px;
+}
+
+.middle {
+  border-radius: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.rightmost {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  margin: 0px;
+  flex-grow: 0;
+}
+
+.no-padl {
+  padding: 0px 0px 0px 5px !important;
+}
+
+.no-padr {
+  padding: 0px 5px 0px 0px !important;
+}
+
+.no-pad {
+  padding: 0px !important;
+}
+
+.button-inner {
+  display: flexbox;
+  flex-direction: column;
+}
+
+.bigger {
+  font-size: 1.7em !important;
+}
+.btn_user_icon{
+  position: absolute;
+  right: 6px;
+  bottom: 15px;
+  background: transparent;
+  z-index: 2;
+  ion-icon{
+      font-size: 22px;
+      color:#FF8000;
+  }
+}
+
+.btn_eye_icon{
+  position: absolute;
+  right: 6px;
+  bottom: 15px;
+  background: transparent;
+  z-index: 2;
+  ion-icon{
+      font-size: 22px;
+      color:#FF8000;
+  }
+}
+
+.btn_eye_icon:focus{
+  outline: none  !important;
+}

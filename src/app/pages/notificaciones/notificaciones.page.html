@@ -1,0 +1,63 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+
+    <ion-buttons slort="start">
+      <ion-menu-button menu="menuPrincipal"></ion-menu-button>
+      <ion-title>Notificaciones ({{numeroMensajes}})</ion-title>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/resumen"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="istodoCargado" padding>
+  <div class="tab-content top-space-2" *ngIf="numeroMensajes === 0" >
+    <ion-card color="danger">
+      <ion-card-header>
+        <ion-card-title><ion-icon name="notifications"></ion-icon> No hay Notificaciones</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        No tiene notificaciones hasta el momento.
+      </ion-card-content>
+    </ion-card>
+</div>
+
+  <div class="tab-content top-space-2" *ngIf="numeroMensajes > 0">
+    <ng-container class="container-space" *ngFor="let n of notificaciones">
+      <ion-card class= "{{muestraVistoSn(n)}}" *ngIf="n.visible" color="{{muestraVistoSn(n)}}">
+        <ion-card-header>
+
+          <ion-card-title>{{n.titulo}}</ion-card-title>
+
+          <ion-card-subtitle>{{parseFecha(n.fechaEnvio)}}</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-list class="justify transparent-bg smallest-list no-bottom-margin list-border" *ngIf="n.visible">
+            <div class="inline-creator">
+              <div (click)="verNotificacion(n)" class="list-content reservas-display black taright shrink-capacity">{{n.mensaje}}</div>
+             <!-- <div class="new-icon"><ion-icon  *ngIf="!n.visto" class="information-circle" name="information-circle"></ion-icon> </div>-->
+            </div>
+
+                <div style="float:right" class="borrar-notificacion-card-trash"  (click)="borrarNotificacion(n)">
+                <ion-icon name="trash"></ion-icon></div>
+
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+
+
+
+
+
+
+
+
+
+    </ng-container>
+  </div>
+</ion-content>

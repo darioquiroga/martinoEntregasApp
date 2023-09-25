@@ -1,0 +1,15 @@
+{
+  "server": {
+    "url": "http://localhost:8100"
+  },
+
+  "plugins": {
+    "SplashScreen": {
+
+    },
+    "PushNotifications": {
+        "presentationOptions": ["badge", "sound", "alert"]
+    }
+ }
+
+}

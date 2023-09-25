@@ -1,0 +1,137 @@
+ion-content {
+
+
+  background: rgb(235, 241, 246) !important;
+  /* Old browsers */
+  background: -moz-linear-gradient(-45deg, rgba(235, 241, 246, 1) 0%, rgba(171, 211, 238, 1) 50%, rgba(137, 195, 235, 1) 51%, rgba(213, 235, 251, 1) 100%) !important;
+  ;
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, rgba(235, 241, 246, 1) 0%, rgba(171, 211, 238, 1) 50%, rgba(137, 195, 235, 1) 51%, rgba(213, 235, 251, 1) 100%) !important;
+  ;
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, rgba(235, 241, 246, 1) 0%, rgba(171, 211, 238, 1) 50%, rgba(137, 195, 235, 1) 51%, rgba(213, 235, 251, 1) 100%) !important;
+  ;
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ebf1f6', endColorstr='#d5ebfb', GradientType=1) !important;
+  ;
+  /* IE6-9 fallback on horizontal gradient */
+
+}
+
+ion-list {
+  padding: 0px 10px;
+  background-color: transparent;
+
+  ion-label{
+    color: var(--ion-color-primary);
+    font-weight: bold;
+  }
+
+  ion-icon {
+    color: var(--ion-color-primary);
+  }
+  ion-card ion-card-header {
+    font-size: 9px;
+}
+
+}
+.texto_gral{
+  font-size: 12px;
+}
+h2 {
+  //font-family: times, Times New Roman, times-roman, georgia, serif;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  line-height: 1em;
+  letter-spacing: -1px;
+  color: var(--ion-color-primary);
+  margin: 10px 10px 10px 10px;
+  padding: 0 0 0 0;
+  //font-weight: 100;
+}
+
+h3 {
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+  line-height: 1em;
+  letter-spacing: -1px;
+  color: #272727;
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+}
+
+h4 {
+  font-family: 'Raleway', sans-serif;
+  text-transform: uppercase;
+  background-color: transparent;
+  border: none !important;
+  color: var(--primary);
+  font-size: 1em;
+}
+
+strong {
+  font-weight: normal;
+  float: right;
+  //margin-right: 5%;
+  color: black;
+}
+.ctacte_saldo{
+  font-weight: bold;
+  font-size: 12px;
+  color: #3171E2;
+}
+.ion-card-title{
+
+  font-size: 15px;
+
+}
+
+
+
+
+.ionCol {
+  display: contents;
+}
+
+.ionCol img {
+  padding: 5px;
+  left: -10px;
+  position: relative;
+}
+
+.par {
+  --background: #FFFFFF;
+  opacity: 0.8;
+  font-size: 12px;
+  padding-bottom: 5px;
+  color: var(--ion-color-primary);
+}
+
+.impar {
+  --background: #F9F9F9;
+  opacity: 0.8;
+  font-size: 12px;
+  padding-bottom: 5px;
+  color: var(--ion-color-primary);
+}
+
+.item-inner{
+  border-style: none;
+
+}
+
+
+
+.texto {
+  color: rgb(70, 70, 70);
+  font-size: 11px;
+  padding-left: 2%;
+
+}
+
+
+ion-toolbar{
+  background-color: var(--ion-color-primary-toolbar);;
+}

@@ -1,0 +1,87 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Buscar carta de porte</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/resumen"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="body" >
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title>Buscar carta de porte</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <div  class="buscar-content" *ngIf="!loading" >
+
+
+
+<div class="filtro-fechas-container" *ngIf="checkIfIsPatente()" >
+  <ion-item id="open-desde" button="true">
+    <ion-label position="stacked">Desde el</ion-label>
+    <ion-input value="{{ filtroFechas.desde | date: 'dd MMM yyyy' }}" id="date"></ion-input>
+    <ion-popover trigger="open-desde"  show-backdrop="false" >
+        <ng-template>
+            <ion-datetime color="grey" presentation="date" [(ngModel)]="filtroFechas.desde" locale="es-ES"
+            doneText="Ok" cancelText="Cancelar"
+            [showDefaultButtons]="true"
+        ></ion-datetime>
+        </ng-template>
+    </ion-popover>
+</ion-item>
+<ion-item id="open-hasta">
+  <ion-label position="stacked">Hasta el</ion-label>
+  <ion-input value="{{ filtroFechas.hasta | date: 'dd MMM yyyy' }}" id="date"></ion-input>
+  <ion-popover trigger="open-hasta"  show-backdrop="false"  >
+      <ng-template>
+          <ion-datetime  color="grey" presentation="date" [(ngModel)]="filtroFechas.hasta" locale="es-ES"
+          doneText="Aceptar" cancelText="Cancelar"
+          [showDefaultButtons]="true"></ion-datetime>
+      </ng-template>
+  </ion-popover>
+</ion-item>
+
+ </div>
+
+    <ion-item class="busqueda-container">
+        <ion-label color="#1d2b36" floating>{{buscaCartaTitulo}}</ion-label>
+        <ion-input  [(ngModel)]="nroCartaOPatenteBuscada"></ion-input>
+    </ion-item>
+
+    <div class="btn-container">
+
+        <button (click)="onClickBuscar()" ion-button icon-end>
+            {{buscarCartaBtnBuscar}}
+            <ion-icon name="search"></ion-icon>
+        </button>
+
+    </div>
+
+
+    <div *ngIf="checkIfIsPatente()" class="help-info">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+        <a>
+            {{buscarCartaTipPatente}}
+        </a>
+    </div>
+
+    <div *ngIf="!checkIfIsPatente()" class="help-info">
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+        <a>
+            {{buscarCartaTipNroCarta}}
+        </a>
+    </div>
+</div>
+
+
+</ion-content>
+
+
+
+
+
+
+

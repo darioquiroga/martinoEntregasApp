@@ -1,0 +1,244 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+
+    <ion-title>{{tituloCantidad}}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/resumen"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" padding class="body">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Descarga</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="filtro-fechas-container">
+
+    <!--<a>Camiones descargados el día: </a>
+    <ion-badge (click)="changeDate()" color="main-black">{{filtroFecha | date: 'dd/MM/yyyy'}}</ion-badge>-->
+
+
+  </div>
+  <ion-item id="open-desde" button="true">
+    <ion-label position="stacked">Camiones descargados el día: </ion-label>
+    <ion-input value="{{ filtroFecha | date: 'dd MMM yyyy' }}" id="date"></ion-input>
+
+    <ion-popover trigger="open-desde"  show-backdrop="false" >
+        <ng-template>
+            <ion-datetime   presentation="date" (click)="changeDate()" [(ngModel)]="filtroFecha"
+            doneText="Ok" cancelText="Cancelar"
+            [showDefaultButtons]="true"
+        ></ion-datetime>
+        </ng-template>
+    </ion-popover>
+</ion-item>
+
+<!--   <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+</ion-refresher>-->
+
+
+
+
+<div class="searchbar-container">
+  <ion-searchbar [(ngModel)]="inputSearchBar" [debounce]="500" placeholder="Numero de carta o patente"  (ionInput)="searchByText($event, ['Turno', 'QA'])"></ion-searchbar>
+</div>
+<ion-card *ngIf="this.parcialTableData.length >0 ">
+<div class="table-container">
+  <div class="head-table wrapper">
+      <div class="element-head-table element-wrapper">
+          Nro Carta
+      </div>
+      <div class="element-head-table element-wrapper nroCarta-element">
+          Titular
+      </div>
+      <div class="element-head-table element-wrapper patente-element">
+          Destino
+      </div>
+  </div>
+
+
+  <div class="infinite-scroll-top" *ngIf="((responsiveTableService.checkIfSpinnerTopIsOn(completeTableData, parcialTableData) &&
+          (!busquedaActiva)) && completeTableData.length > 0)">
+      <ion-spinner></ion-spinner>
+  </div>
+
+  <div class="element-table"  *ngFor="let cartaPorte of parcialTableData ; index as i">
+    <ion-accordion-group class="important-info wrapper" >
+      <ion-accordion  value="first">
+        <ion-item slot="header" color="light" class="ion-item">
+          <ion-label>
+
+            <div class="important-info wrapper"  (click)="toggleState(i)"
+            [ngClass]="responsiveTableService.getColorEstado(cartaPorte)">
+            <div class="element-important element-wrapper">
+              {{cartaPorte.nroCarta}}
+          </div>
+          <div class="element-important element-wrapper nroCarta-element">
+              {{descargaService.getIntervinienteOfArray(cartaPorte.intervinientes,'TITULAR').nombre}}
+          </div>
+          <div class="element-important element-wrapper patente-element">
+            {{descargaService.getPuerto(cartaPorte)}}
+          </div>
+            </div>
+          </ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+
+<!--  [@extraInfoState]="estadosToggleCarta[i]"-->
+            <div class="extra-info">
+
+              <div class="element-extra">
+                  <div class="title-extra">
+                      Patente
+                  </div>
+                  <div class="content-extra">
+                      {{cartaPorte.patente}}
+                  </div>
+              </div>
+
+              <div class="element-extra">
+                  <div class="title-extra">
+                      Vagon
+                  </div>
+                  <div class="content-extra">
+                      {{cartaPorte.nroVagon}}
+                  </div>
+              </div>
+
+              <div class="element-extra">
+                  <div class="title-extra">
+                      Procedencia
+                  </div>
+                  <div class="content-extra">
+                      {{cartaPorte.plantaProcedencia.localidad.descripcion}}, {{cartaPorte.plantaProcedencia.localidad.partido.descripcion}}, {{cartaPorte.plantaProcedencia.localidad.partido.provincia.descripcion}}
+                  </div>
+              </div>
+
+              <div class="element-extra">
+                  <div class="title-extra">
+                      Entregador
+                  </div>
+                  <div class="content-extra">
+                      {{cartaPorte.entregador.nombreCorto}}
+                  </div>
+              </div>
+
+              <div class="element-extra">
+                  <div class="title-extra">
+                      Cereal
+                  </div>
+                  <div class="content-extra">
+                      {{cartaPorte.cereal.nombre}}
+                  </div>
+              </div>
+
+
+              <div class="element-extra">
+                  <div class="title-extra">
+                      Kg Procedencia:
+                  </div>
+                  <div class="content-extra">
+                      {{cartaPorte.kgNetoProcedencia}}
+                  </div>
+              </div>
+              <div class="element-extra">
+                  <div class="title-extra">
+                      Kg Neto:
+                  </div>
+                  <div class="content-extra">
+                      {{cartaPorte.kgNeto}}
+                  </div>
+              </div>
+              <div class="element-extra">
+                  <div class="title-extra">
+                      Calidad:
+                  </div>
+                  <div class="content-extra">
+                      {{cartaPorte.calidad.descripcionCorta}}
+                  </div>
+              </div>
+              <div class="element-extra">
+                  <div class="title-extra">
+                      Observacion:
+                  </div>
+                  <div class="content-extra">
+                      {{cartaPorte.observacion}}
+                  </div>
+              </div>
+
+              <div *ngFor="let interviniente of cartaPorte.intervinientes" class="element-extra">
+                  <div class="title-extra">
+                      {{responsiveTableService.formatTipoInterviniente(interviniente.tipoInterviniente.nombre)}}
+                  </div>
+                  <div class="content-extra">
+                      {{interviniente.nombre}}
+                  </div>
+              </div>
+
+              <div class="element-extra">
+                  <div class="title-extra">
+                      Turno:
+                  </div>
+                  <div class="content-extra">
+                      {{cartaPorte.turno}}
+                  </div>
+              </div>
+
+              <div class="element-extra btn-img-container">
+                  <div class="title-extra">
+                  </div>
+                  <div class="content-extra extra-buttons">
+                    <!--   <button (click)="onClickImagen(cartaPorte)" class="btn-open-img" ion-button outline>
+                          <p *ngIf="!descargandoImagen">Imagen</p>
+                          <ion-spinner *ngIf="descargandoImagen"></ion-spinner>
+                      </button>-->
+                  </div>
+
+              </div>
+
+
+        </div>
+
+
+        </div>
+      </ion-accordion>
+
+    </ion-accordion-group>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+</ion-card>
+<div class="empty-table" *ngIf="!loading && (!parcialTableData || parcialTableData.length <= 0)">
+
+  <div *ngIf="inputSearchBar === '';then nadaPosi else nadaBusqueda"></div>
+
+  <ng-template #nadaPosi>
+      <div class="message-empty">Nada en posición</div>
+  </ng-template>
+  <ng-template #nadaBusqueda>
+      <div class="message-empty">Sin resultados</div>
+  </ng-template>
+
+</div>
+
+
+</ion-content>

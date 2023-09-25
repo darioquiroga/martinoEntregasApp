@@ -1,0 +1,8 @@
+export const perfilesUsuarios =  {
+    ADMINISTRADOR: 1,
+    USUARIO_BASE: 2,
+    USUARIO_AVANZADO: 3,
+    USUARIO_AUTORIZACION: 4,
+    ENTREGADOR_ADMINISTR: 5,
+    ENTREGADOR_BASE: 6
+}

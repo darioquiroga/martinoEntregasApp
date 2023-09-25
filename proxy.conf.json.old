@@ -1,0 +1,7 @@
+{
+    "/api/*" : {
+        "target" : "https://ws.cerealnet.com/cerealnetServiciosWebV2/ws",
+        "secure" : false,
+        "logLevel": "debug"
+    }
+}

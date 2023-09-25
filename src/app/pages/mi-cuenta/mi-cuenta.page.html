@@ -1,0 +1,82 @@
+
+
+
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title>Mi Cuenta</ion-title>
+
+      <ion-buttons slot="end">
+        <ion-back-button defaultHref="/resumen"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content [fullscreen]="true" *ngIf="istodoCargado">
+
+    <ion-card color="light" >
+      <ion-card-header>
+        <ion-card-title class="ion-card-title"><ion-icon name="person"></ion-icon> Datos de su cuenta</ion-card-title>
+      </ion-card-header>
+      <ion-card-content >
+        <ion-list >
+          <ion-item class="texto_gral" >
+            <ion-label >{{cuenta}}</ion-label>
+          </ion-item>
+          <ion-item class="texto_gral">
+           <ion-label>{{socioNombre}}</ion-label>
+          </ion-item >
+          <ion-item class="texto_gral">
+            <ion-label>{{socioEmail}}</ion-label>
+           </ion-item>
+       </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+
+
+    <ion-card color="light">
+      <ion-card-header>
+        <ion-card-title class="ion-card-title"><ion-icon name="build"></ion-icon> Cambio de clave</ion-card-title>
+        <ion-card-subtitle class="texto_gral">Indique una nueva contraseña que solo usted recuerde.</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="login-box">
+          <form (ngSubmit)="cambiarClave()" #registerForm="ngForm">
+            <ion-row>
+              <ion-col>
+                <ion-list inset>
+                  <ion-item class="texto_gral">
+                    <ion-input type="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Ingrese la clave actual" name="clave"  [(ngModel)]="claveActual" required></ion-input>
+                  </ion-item>
+
+                  <ion-item class="texto_gral">
+                    <ion-input type="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Ingrese la clave nueva" name="clave"   [(ngModel)]="claveNueva" required></ion-input>
+                  </ion-item>
+
+                  <ion-item class="texto_gral">
+                    <ion-input type="password" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="repita la clave nueva" name="clave"  [(ngModel)]="claveRepetida" ></ion-input>
+                  </ion-item>
+
+                </ion-list>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col class="signup-col">
+                <ion-button class="texto_gral" type="submit" [disabled]="!registerForm.form.valid">Cambiar Clave</ion-button>
+
+              </ion-col>
+            </ion-row>
+
+          </form>
+      </div>
+      </ion-card-content>
+    </ion-card>
+
+
+
+
+
+
+
+</ion-content>

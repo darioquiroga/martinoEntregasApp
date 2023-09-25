@@ -1,0 +1,4 @@
+<div class="modulo-datos-usuario-1" *ngIf="resumen" (click)="pushCuenta()">
+  <h2>{{ resumen.cuenta.nombre | uppercase }}</h2>
+  <h3>NRO CUENTA: {{ resumen.cuenta.id | uppercase }} - EMAIL: {{resumen.cuenta.email}}</h3>
+</div>

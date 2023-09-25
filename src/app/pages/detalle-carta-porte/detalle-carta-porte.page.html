@@ -1,0 +1,566 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Carta de porte  {{cartaDePorte.nroCarta}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/buscar-carta"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" padding class="body">
+  <ion-header collapse="condense">
+
+  </ion-header>
+
+
+  <div class="container">
+
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="col-xs-12 col-md-12 with-style without-padding ">
+                <div class="col-xs-12 col-md-3 with-style without-padding">
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-12 with-style titulo-secundario">
+                            AFIP
+                        </div>
+                        <div class="col-xs-6 col-md-12 with-style titulo-secundario">
+                            Destinatario
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-9 with-style without-padding">
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-12 col-md-12 with-style without-padding">
+                            <div class="col-xs-6 col-md-2 with-style">
+                                Carta de Porte
+                            </div>
+                            <div class="col-xs-6 col-md-4 with-style">
+                                {{cartaDePorte.nroCarta}}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 with-style without-padding">
+                            <div class="col-xs-6 col-md-2 with-style">
+                                C.E.E
+                            </div>
+                            <div class="col-xs-6 col-md-4 with-style">
+
+                                <!-- {{cartaDePorte.cee}} -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-12 col-md-12 with-style without-padding">
+
+                            <div class="col-xs-6 col-md-1 with-style">
+                                C.T.G
+                            </div>
+                            <div class="col-xs-6 col-md-2 with-style">
+                                {{cartaDePorte.nroCtg}}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-12 with-style without-padding">
+                            <div class="col-xs-6 col-md-2 with-style">
+                                RENSPA
+                            </div>
+                            <div class="col-xs-6 col-md-2 with-style">
+                                {{cartaDePorte.renspa}}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-3 with-style without-padding">
+                            <div class="col-xs-6 col-md-2 with-style">
+                                Fecha Carga
+                            </div>
+                            <div class="col-xs-6 col-md-2 with-style">
+                              {{cartaDePorte.fechaCarga}}
+                                <!--{{utilsService.formatDate(cartaDePorte.fechaCarga)}}-->
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-3 with-style without-padding">
+                            <div class="col-xs-6 col-md-2 with-style">
+                                Fecha Vencimiento
+                            </div>
+                            <div class="col-xs-6 col-md-2 with-style">
+                              {{cartaDePorte.fechaVencimiento}}
+                              <!--   {{uiService.formatDate(cartaDePorte.fechaVencimiento)}}-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 margin-top">
+            <div class="col-xs-12 col-md-12 with-style titulo-principal">
+                CARTA DE PORTE PARA EL TRANSPORTE AUTOMOTOR DE GRANOS - OPERADOR (Inc. b)
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-lg-12  col-sm-12 col-md-12 margin-top">
+            <div class="col-xs-12 col-md-12 with-style without-padding ">
+                <div class="col-xs-2 col-md-1 with-style titulo-secundario">
+                    1
+                </div>
+                <div class="col-xs-10 col-md-11 with-style titulo-secundario">
+                    INTERVINIENTES
+                </div>
+            </div>
+
+            <div *ngFor="let interviniente of cartaDePorte.intervinientes" class="col-xs-12 col-md-12 with-style without-padding">
+                <div class="col-xs-12 col-md-12 with-style without-padding">
+                    <div class="col-xs-6 col-md-3 with-style titulo-secundario">
+                        {{formatTipoInterviniente(interviniente.tipoInterviniente.nombre)}}
+                    </div>
+                    <div class="col-xs-6 col-md-5 with-style">
+                        {{interviniente.nombre}}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-12 with-style without-padding">
+                    <div class="col-xs-6 col-md-2 with-style">
+                        CUIT Nro
+                    </div>
+                    <div class="col-xs-6 col-md-2 with-style">
+                        {{interviniente.nroCuit}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-12 with-style without-padding">
+                <div class="col-xs-12 col-md-12 with-style without-padding">
+                    <div class="col-xs-6 col-md-3 with-style titulo-secundario">
+                        Entregador
+                    </div>
+                    <div class="col-xs-6 col-md-5 with-style">
+                        {{cartaDePorte.entregador.nombre}}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-12 with-style without-padding">
+                    <div class="col-xs-6 col-md-2 with-style">
+                        CUIT Nro
+                    </div>
+                    <div class="col-xs-6 col-md-2 with-style">
+                        {{cartaDePorte.entregador.cuit}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-md-12 margin-top">
+            <div class="col-xs-12 col-md-12 with-style without-padding ">
+                <div class="col-xs-2 col-md-1 with-style titulo-secundario">
+                    2
+                </div>
+                <div class="col-xs-10 col-md-11 with-style titulo-secundario">
+                    GRANOS/ESPECIE
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-12 with-style without-padding">
+                <div class="col-xs-12 col-md-3 with-style without-padding">
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-7 with-style">
+                            Grano/Especie:
+                        </div>
+                        <div class="col-xs-6 col-md-5 with-style">
+                            {{cartaDePorte.cereal.nombre}}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-7 with-style">
+                            Tipo:
+                        </div>
+                        <div class="col-xs-6 col-md-5 with-style">
+                            {{cartaDePorte.tipoGrano}}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-7 with-style">
+                            Cosecha:
+                        </div>
+                        <div class="col-xs-6 col-md-5 with-style">
+                            {{formatCosecha(cartaDePorte.cosecha)}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-4 with-style without-padding">
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-7 with-style">
+                            Contrato Nro:
+                        </div>
+                        <div class="col-xs-6 col-md-5 with-style">
+                            {{cartaDePorte.nroContrato}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-5 with-style without-padding">
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-9 with-style">
+                            Peso Bruto
+                        </div>
+                        <div class="col-xs-6 col-md-3 with-style">
+                            {{cartaDePorte.brutoProcedencia || 0}} Kg
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-9 with-style">
+                            Peso Tara
+                        </div>
+                        <div class="col-xs-6 col-md-3 with-style">
+                            {{cartaDePorte.taraProcedencia || 0}} Kg
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-9 with-style">
+                            Peso Neto
+                        </div>
+                        <div class="col-xs-6 col-md-3 with-style">
+                            {{cartaDePorte.netoProcedencia || 0}} Kg
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xs-12 col-md-7 with-style without-padding ">
+                    <div style="text-align: center;" class="col-xs-12 col-md-12 with-style titulo-secundario">
+                        PROCEDENCIA DE LA MERCADERÍA
+                    </div>
+                    <div class="col-xs-12 col-md-12 with-style without-padding custom-height">
+                        <div class="col-xs-6 col-md-3 with-style">
+                            Direccion
+                        </div>
+                        <div class="col-xs-6 col-md-9 with-style">
+                            {{cartaDePorte.plantaProcedencia.direccion}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-5 with-style without-padding ">
+
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-9 with-style">
+                            Establecimiento
+                        </div>
+                        <div class="col-xs-6 col-md-3 with-style">
+
+                            {{cartaDePorte.plantaProcedencia.descripcion}}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-9 with-style">
+                            Localidad
+                        </div>
+                        <div class="col-xs-6 col-md-3 with-style">
+                            {{cartaDePorte.plantaProcedencia.localidad.descripcion}}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-9 with-style">
+                            Partido
+                        </div>
+                        <div class="col-xs-6 col-md-3 with-style">
+                            {{cartaDePorte.plantaProcedencia.localidad.partido.descripcion}}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-9 with-style">
+                            Provincia
+                        </div>
+                        <div class="col-xs-6 col-md-3 with-style">
+                            {{cartaDePorte.plantaProcedencia.localidad.partido.provincia.descripcion}}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-md-12 margin-top">
+            <div class="col-xs-12 col-md-12 with-style without-padding ">
+                <div class="col-xs-2 col-md-1 with-style titulo-secundario">
+                    3
+                </div>
+                <div class="col-xs-10 col-md-5 with-style titulo-secundario">
+                    DESTINO
+                </div>
+                <div class="col-xs-5 col-md-2 with-style">
+                    Localidad
+                </div>
+                <div class="col-xs-7 col-md-4 with-style">
+                    {{cartaDePorte.plantaDestino.localidad.descripcion}}
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-12 with-style without-padding ">
+                <div class="col-xs-5 col-md-2 with-style">
+                    Direccion
+                </div>
+                <div class="col-xs-7 col-md-4 with-style">
+                    {{cartaDePorte.plantaDestino.direccion}}
+                </div>
+                <div class="col-xs-5 col-md-2 with-style">
+                    Provincia
+                </div>
+                <div class="col-xs-7 col-md-4 with-style">
+                    {{cartaDePorte.plantaDestino.localidad.partido.provincia.descripcion}}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-12 margin-top">
+            <div class="col-xs-12 col-md-12 with-style without-padding ">
+                <div class="col-xs-2 col-md-1 with-style titulo-secundario">
+                    4
+                </div>
+                <div class="col-xs-10 col-md-4 with-style titulo-secundario">
+                    DATOS DEL TRANSPORTE
+                </div>
+                <div class="col-xs-7 col-md-2 with-style">
+                    Pagador del Flete
+                </div>
+                <div class="col-xs-5 col-md-5 with-style">
+                    {{cartaDePorte.pagadorFlete}}
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-12 with-style without-padding ">
+                <div class="col-xs-7 col-md-1 with-style">
+                    Camion
+                </div>
+                <div class="col-xs-5 col-md-1 with-style">
+                    {{cartaDePorte.patente}}
+                </div>
+                <div class="col-xs-7 col-md-1 with-style">
+                    Acoplado
+                </div>
+                <div class="col-xs-5 col-md-1 with-style">
+                    {{cartaDePorte.patenteAcoplado}}
+                </div>
+                <!-- <div class="col-xs-7 col-md-2 with-style">
+                    Tarifa de Referencia
+                </div>
+                <div class="col-xs-5 col-md-1 with-style">
+                    {{cartaDePorte.tarifaReferencia}}
+                </div> -->
+                <div class="col-xs-7 col-md-1 with-style">
+                    Tarifa (por tonelada)
+                </div>
+                <div class="col-xs-5 col-md-1 with-style">
+                    $ {{cartaDePorte.tarifaPorTonelada}}
+                </div>
+                <div class="col-xs-7 col-md-2 with-style">
+                    Km a recorrer
+                </div>
+                <div class="col-xs-5 col-md-1 with-style">
+                    {{cartaDePorte.kmRecorrer}} Km
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-12 margin-top">
+            <div class="col-xs-12 col-md-12 with-style without-padding ">
+                <div class="col-xs-2 col-md-1 with-style titulo-secundario without-border-bottom">
+                    5
+                </div>
+                <div class="col-xs-10 col-md-11 with-style titulo-secundario without-border-bottom">
+                    DATOS A COMPLETAR EN EL LUGAR DE DESTINO Y DESCARGA
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-12 with-style without-padding">
+                <div class="col-xs-12 col-md-3 with-style without-padding">
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-7 with-style">
+                            Fecha Arribo:
+                        </div>
+                        <div class="col-xs-6 col-md-5 with-style">
+                          {{cartaDePorte.fechaArribo}}
+                            <!--{{utilsService.formatDate(cartaDePorte.fechaArribo)}}-->
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-7 with-style">
+                            Fecha Descarga:
+                        </div>
+                        <div class="col-xs-6 col-md-5 with-style">
+                          {{cartaDePorte.fechaDescarga}}
+                            <!--{{utilsService.formatDate(cartaDePorte.fechaDescarga)}}-->
+                        </div>
+                    </div>
+                    <!-- <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-7 with-style">
+                            Turno Nro:
+                        </div>
+                        <div class="col-xs-6 col-md-5 with-style">
+                            {{cartaDePorte.turnoNro}}
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="col-xs-12 col-md-2 with-style without-padding">
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-7 with-style">
+                            Hora Arribo
+                        </div>
+                        <div class="col-xs-6 col-md-5 with-style">
+                            {{cartaDePorte.horaArribo}}
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-7 with-style">
+                            Hora Descarga
+                        </div>
+                        <div class="col-xs-6 col-md-5 with-style">
+                            {{cartaDePorte.horaDescarga}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-3 with-style without-padding">
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-9 with-style">
+                            Peso Bruto
+                        </div>
+                        <div class="col-xs-6 col-md-3 with-style">
+                            {{cartaDePorte.kgBruto || 0}} Kg
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-9 with-style">
+                            Peso Tara
+                        </div>
+                        <div class="col-xs-6 col-md-3 with-style">
+                            {{cartaDePorte.kgTara || 0}} Kg
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-12 with-style without-padding">
+                        <div class="col-xs-6 col-md-9 with-style">
+                            Peso Neto
+                        </div>
+                        <div class="col-xs-6 col-md-3 with-style">
+                            {{cartaDePorte.kgNeto || 0}} Kg
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4 with-style">
+                    Observaciones: {{cartaDePorte.observacion}}
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TODO: Por el momento no incluido -->
+        <!-- <div class="col-xs-12 col-md-12 margin-top">
+            <div class="col-xs-12 col-md-12 with-style without-padding ">
+                <div class="col-xs-2 col-md-1 with-style titulo-secundario without-border-bottom">
+                    6
+                </div>
+                <div class="col-xs-10 col-md-11 with-style titulo-secundario without-border-bottom">
+                    CAMBIO DEL DOMICILIO DE DESCARGA / DESVIO
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-12 with-style without-padding">
+                <div class="col-xs-12 col-md-6 with-style without-padding">
+                    <div class="col-xs-6 col-md-7 with-style">
+                        CUIT Destino y Denominación
+                    </div>
+                    <div class="col-xs-6 col-md-5 with-style">
+                        {{cartaDePorte.cuitDestinoDeno}}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-6 with-style without-padding">
+                    <div class="col-xs-6 col-md-7 with-style">
+                        CUIT Destinatario y Denominación
+                    </div>
+                    <div class="col-xs-6 col-md-5 with-style">
+                        {{cartaDePorte.cuitDestinatarioDeno}}
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xs-12 col-md-12 with-style without-padding">
+                <div class="col-xs-12 col-md-4 with-style without-padding">
+                    <div class="col-xs-6 col-md-8 with-style">
+                        Localidad
+                    </div>
+                    <div class="col-xs-6 col-md-4 with-style">
+                        {{cartaDePorte.localidadDesvio}}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4 with-style without-padding">
+                    <div class="col-xs-6 col-md-8 with-style">
+                        Nro Planta RUCA
+                    </div>
+                    <div class="col-xs-6 col-md-4 with-style">
+                        {{cartaDePorte.nroPlantaRUCA}}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4 with-style without-padding">
+                    <div class="col-xs-6 col-md-8 with-style">
+                        Fecha
+                    </div>
+                    <div class="col-xs-6 col-md-4 with-style">
+                        {{cartaDePorte.fechaDesvio}}
+                    </div>
+                </div>
+            </div>
+
+        </div> -->
+
+        <div class="col-xs-12 col-md-12 margin-top">
+            <div class="col-xs-12 col-md-12 with-style without-padding ">
+                <div class="col-xs-2 col-md-1 with-style titulo-secundario">
+                    7
+                </div>
+                <div class="col-xs-10 col-md-11 with-style titulo-secundario">
+                    ANALISIS
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-12 with-style without-padding">
+                <div class="col-xs-12 col-md-3 with-style without-padding">
+                    <div class="col-xs-6 col-md-6 with-style">
+                        Rubro
+                    </div>
+                    <div class="col-xs-6 col-md-6 with-style">
+                        {{cartaDePorte.analisis.rubro.descripcion}}
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3 with-style without-padding">
+                    <div class="col-xs-6 col-md-6 with-style">
+                        Porcentaje
+                    </div>
+                    <div class="col-xs-6 col-md-6 with-style">
+                        {{cartaDePorte.analisis.porcentaje}} %
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-3 with-style without-padding">
+                    <div class="col-xs-6 col-md-7 with-style">
+                        Merma Kgs
+                    </div>
+                    <div class="col-xs-6 col-md-5 with-style">
+                        {{cartaDePorte.analisis.kgsMerma}} Kg
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-3 with-style without-padding">
+                    <div class="col-xs-6 col-md-6 with-style">
+                        Porcentaje Merma
+                    </div>
+                    <div class="col-xs-6 col-md-6 with-style">
+                        {{cartaDePorte.analisis.porcentajeMerma}} %
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+</ion-content>
