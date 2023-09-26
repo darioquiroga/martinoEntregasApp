@@ -9,13 +9,15 @@
 
 <ion-content >
   <ion-card color="light">
+    <img alt="Martino Entregas" src="../../../assets/images/total-camiones.png" />
     <ion-card-header>
-      <ion-card-title><ion-icon name="person-outline"></ion-icon> {{usuarioActivo?.nombre}}</ion-card-title>
+      <ion-card-title>{{usuarioActivo?.nombre}}</ion-card-title>
       <ion-card-subtitle>{{usuarioActivo?.tipo.descripcion}}</ion-card-subtitle>
     </ion-card-header>
   </ion-card>
 
   <ion-card color="secondary">
+  
     <ion-card-header>
       <ion-card-subtitle>Total de Camiones</ion-card-subtitle>
       <ion-card-title>{{completeTableData.length}}</ion-card-title>
@@ -25,6 +27,7 @@
 
 
   <ion-card color="success">
+    
     <ion-card-header>
       <ion-card-subtitle><ion-icon name="checkmark-outline"></ion-icon> Camiones Autorizados</ion-card-subtitle>
       <ion-card-title>{{completeTableDataAutorizado.length}}</ion-card-title>
@@ -34,6 +37,7 @@
 
 
   <ion-card color="tertiary">
+   
     <ion-card-header>
       <ion-card-subtitle><ion-icon name="reload-outline"></ion-icon> Camiones a Descargar</ion-card-subtitle>
       <ion-card-title>{{completeTableDataAdescargar.length}}</ion-card-title>
@@ -43,6 +47,7 @@
 
 
    <ion-card color="danger">
+   
      <ion-card-header >
       <ion-card-subtitle><ion-icon name="warning"></ion-icon> Incidencias</ion-card-subtitle>
       <ion-card-title>{{completeTableDataMostrarIncidencias.length}}</ion-card-title>
