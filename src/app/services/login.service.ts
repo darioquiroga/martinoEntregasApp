@@ -16,7 +16,7 @@ import { Observable, timeout } from 'rxjs';
 })
 export class LoginService {
   public usuarioActual: Usuario | any;
-  public usuarioToken: string | undefined;
+  public usuarioToken: Usuario | any;
   public esPuertosSn: boolean | false = false;
   public usuarioGrabado: Usuario | any;
   public logueado: boolean = false;
@@ -132,17 +132,21 @@ export class LoginService {
     //return new Promise(async (resolve, reject) => {
     //  try {
     let credenciales: any = localStorage.getItem('usuarioActual');
+    let credencialesToken: any = localStorage.getItem('token');
     this.usuarioGrabado = JSON.parse(credenciales);
+    this.usuarioToken = JSON.parse(credencialesToken);
 
+  
     const today = new Date();
     const fechaHoy = today.toDateString();
-    let fechaToken = new Date(this.usuarioGrabado.token.fechaHasta);
-    let fechaActual = new Date(fechaHoy);
-    if (this.usuarioGrabado.token.hashId != '') {
+    //let fechaToken = new Date(this.usuarioGrabado.token.fechaHasta);
+    //let fechaActual = new Date(fechaHoy);
+    
+    if (this.usuarioToken  != null && this.usuarioGrabado != '' ) {
       return new Promise(async (resolve, reject) => {
-        let token: string = this.usuarioGrabado.token.hashId;
+     
         let parametros: URLSearchParams = new URLSearchParams();
-        parametros.set('token', token);
+        parametros.set('token', this.usuarioToken);
         resolve(true);
 
         try {
@@ -153,7 +157,7 @@ export class LoginService {
           const httpOptions = {
             headers: new HttpHeaders({
               'Content-Type': 'application/x-www-form-urlencoded',
-              token: token,
+              token: this.usuarioToken,
             }),
           };
 
@@ -161,7 +165,7 @@ export class LoginService {
             let control = resp.estado;
 
             if (control.codigo == 'OK') {
-              // si no tien permiso  lo pateo
+              // si no tiene permiso  lo pateo
 
               this.versionCerealnet = control.versionLib;
               this.versionServicio = control.version;
@@ -182,7 +186,9 @@ export class LoginService {
 
               */
     } else {
-      console.log('se debe loguear ):');
+      this.logueado = false;
+      
+      alert ('se debe loguear')
       // no hay credenciales asi que lo mando a pantalla de login
     }
     //this.loginUser();

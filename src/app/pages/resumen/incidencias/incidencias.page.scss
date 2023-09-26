@@ -31,7 +31,7 @@ ion-content {
 
 
   $main-text: #1d2b36;
-  $head-table: #1d2b36;
+  $head-table: #004693;
   $important-info: #FFFFFF;
   $important-info--odd: #F7F7F7;
   $element-extra: #FFFFFF;
@@ -192,11 +192,10 @@ ion-fab {
           }
 
 
-
           .element-table {
 
               .important-info, .ion-item{
-               font-size: 11px;
+               font-size: 12px;
 
               }
 
@@ -404,7 +403,7 @@ ion-fab {
             padding-inline-end: var(--ion-padding, 0px);
             padding-top: var(--ion-padding, 0px);
             padding-bottom: var(--ion-padding, 0px);
-            font-size: 10px;
+            font-size: 12px;
         }
 
 

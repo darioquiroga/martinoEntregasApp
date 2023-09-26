@@ -65,7 +65,7 @@ export class LoginPage implements OnInit {
     this.emailEmpresa = textos.login.html.cerealnet.mail;
     this.direccionEmpresa = textos.login.html.cerealnet.direccion;
     this.telefonoEmpresa = textos.login.html.cerealnet.telefono;
-    //this.doLoadLogin();
+    this.doLoadLogin();
   }
   togglePasswordMode() {
     this.passwordTypeInput  =  this.passwordTypeInput  ===  'text'  ?  'password'  :  'text';
@@ -131,6 +131,7 @@ export class LoginPage implements OnInit {
   }
 
   async doLoadLogin() {
+
     await this.uiService.presentLoading("Ingresando...");
       this.loginService.trySavedLogin().then(
         async returnValue => {
@@ -140,10 +141,10 @@ export class LoginPage implements OnInit {
            //Redirijo al resumen
             this.navController.navigateRoot('/resumen', { animated: true });
           } else {
-
+            // Redirijo al login
             this.navController.navigateRoot('/login', { animated: true });
           }
-
+         
           console.log(returnValue);
         },
         (error: any) => {

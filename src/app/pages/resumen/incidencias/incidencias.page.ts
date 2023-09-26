@@ -174,7 +174,7 @@ async initTable() {
   //this.uiService.presentAlertInfo("Espere");
   await this.uiService.presentLoading("Aguarde...");
   // Seteo un titulo por default
-  this.tituloCantidad = `Posicion del día`;
+  this.tituloCantidad = `Incidencias`;
   // Busco la posicion y refresco
   await this.refreshTable();
   // Saco el spinner
@@ -199,19 +199,7 @@ async initTable() {
 
 
         // Cambio el titulo por uno mas acorde
-        if (this.activeFilters.destino && this.activeFilters.estado) {
-
-            this.tituloCantidad = `Total: ${this.parcialTableData.length}`;
-        } else {
-            if (typeFilter === 'todos') {
-                // Guardo todos en cantidad
-                this.filtroDestino  ="";
-                this.filtroEstado = "";
-                this.tituloCantidad = `Cantidad en Posicion: ${this.completeTableDataMostrarIncidencias.length}`;
-            } else {
-                this.tituloCantidad = `${this.posicionDiaService.getTituloFiltrado(filter, typeFilter)}${this.parcialTableData.length}`;
-            }
-        }
+        this.tituloCantidad = `Incidencias: ${this.completeTableDataMostrarIncidencias.length}`;
 
     }
 
@@ -303,7 +291,7 @@ async searchByText(ev: any,  exclude?: any) {
   // Defino si hay una búsqueda activa
   this.busquedaActiva = respuestaBusqueda.busquedaActiva;
   // Guardo la parcial table encontrada
-  this.parcialTableData = respuestaBusqueda.parcialTableEncontrada;
+  this.completeTableDataMostrarIncidencias = respuestaBusqueda.parcialTableEncontrada;
   // Cierro todos los toggles de las cartas de porte
   this.estadosToggleCarta = this.responsiveTableService.closeToggles(this.estadosToggleCarta);
 }
@@ -361,6 +349,8 @@ doInfiniteScrollTop($event: { scrollTop: any; }) {
   // Necesario para asegurarse que el user no se desplaza hacia abajo
   this.lastScrollTop = $event.scrollTop;
 }
+// Hago la búsqueda SIEMPRE en la tabla completa (tabla con TODAS las cps del user)
+
 // Refresca la tabla
 async refreshTable() {
  // alert("refresh table")
@@ -408,7 +398,7 @@ async refreshTable() {
          if (!this.completeTableDataMostrarIncidencias){
           this.tituloCantidad = `Nada en Posición `;
         }else{
-          this.tituloCantidad = `Cantidad en Posicion: `+this.completeTableDataMostrarIncidencias.length;
+          this.tituloCantidad = `Incidencias: `+this.completeTableDataMostrarIncidencias.length;
         }
           // Obtengo los destinos para los filtros
           this.destinosList = this.posicionDiaService.getDestinosList(this.completeTableData);

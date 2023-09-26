@@ -162,7 +162,7 @@ export class AppComponent {
     this.router.navigateByUrl('/politica');
   }
   onClickCamionesDescarga() {
-    alert('onClickCamionesDescarga');
+   
     this.router.navigateByUrl( 'http://www.cerealnet.com.ar/movil/CamionesDescargaH.aspx');
   }
 }

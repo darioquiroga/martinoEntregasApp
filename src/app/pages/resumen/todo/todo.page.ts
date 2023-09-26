@@ -306,11 +306,11 @@ async searchByText(ev: any,  exclude?: any) {
   // Activo spinner mientras busca
   this.loading = false;
   // Busco
-  let respuestaBusqueda = await this.responsiveTableService.searchByNroCartaOrPatente(ev, this.completeTableData);
+  let respuestaBusqueda = await this.responsiveTableService.searchByNroCartaOrPatente(ev, this.completeTableDataMostrar);
   // Defino si hay una búsqueda activa
   this.busquedaActiva = respuestaBusqueda.busquedaActiva;
   // Guardo la parcial table encontrada
-  this.parcialTableData = respuestaBusqueda.parcialTableEncontrada;
+  this.completeTableDataMostrar = respuestaBusqueda.parcialTableEncontrada;
   // Cierro todos los toggles de las cartas de porte
   this.estadosToggleCarta = this.responsiveTableService.closeToggles(this.estadosToggleCarta);
 }
