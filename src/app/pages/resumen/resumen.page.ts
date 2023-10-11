@@ -145,9 +145,25 @@ export class ResumenPage implements OnInit {
 
      }
    }
-
+   onClickServiciosExternos(op: any) {
+    if (op === 1){
+      alert('https://martinoentregas.com.ar/tipos-de-camiones/')
+      this.router.navigateByUrl( 'https://martinoentregas.com.ar/tipos-de-camiones/');
+    }else if(op == 2){
+      alert('https://martinoentregas.com.ar/tarifas-acondicionadoras/')
+      this.router.navigateByUrl( 'https://martinoentregas.com.ar/tarifas-acondicionadoras/');
+    }else if(op == 3){
+      alert('https://martinoentregas.com.ar/tarifas-exportadores/')
+      this.router.navigateByUrl( 'https://martinoentregas.com.ar/tarifas-exportadores/');
+      
+    }
+    
+  }
+  onClickTest(){
+    alert("LINK EXTERNO")
+  }
    onClickIncidencias() {
-    alert("click")
+   
     this.router.navigateByUrl('/incidencias');
   }
 }

@@ -13,7 +13,7 @@
 <ion-content [fullscreen]="true" padding class="body">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Descarga</ion-title>
+      <ion-title size="large">{{this.tituloCantidad }}</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -48,9 +48,9 @@
 <div class="searchbar-container">
   <ion-searchbar [(ngModel)]="inputSearchBar" [debounce]="500" placeholder="Numero de carta o patente"  (ionInput)="searchByText($event, ['Turno', 'QA'])"></ion-searchbar>
 </div>
-<ion-card *ngIf="this.parcialTableData.length >0 ">
-<div class="table-container">
-  <div class="head-table wrapper">
+<ion-card>
+<div class="table-container" *ngIf="this.parcialTableData.length >0 ">
+  <!--<div class="head-table wrapper">
       <div class="element-head-table element-wrapper">
           Nro Carta
       </div>
@@ -60,7 +60,7 @@
       <div class="element-head-table element-wrapper patente-element">
           Destino
       </div>
-  </div>
+  </div>-->
 
 
   <div class="infinite-scroll-top" *ngIf="((responsiveTableService.checkIfSpinnerTopIsOn(completeTableData, parcialTableData) &&
@@ -80,7 +80,7 @@
               {{cartaPorte.nroCarta}}
           </div>
           <div class="element-important element-wrapper nroCarta-element">
-              {{descargaService.getIntervinienteOfArray(cartaPorte.intervinientes,'TITULAR').nombre}}
+              {{descargaService.getIntervinienteOfArray(cartaPorte.intervinientes,'TITULAR').nombre.slice(0,20)}}
           </div>
           <div class="element-important element-wrapper patente-element">
             {{descargaService.getPuerto(cartaPorte)}}
@@ -225,8 +225,8 @@
 
 
 </div>
-
 </ion-card>
+
 <div class="empty-table" *ngIf="!loading && (!parcialTableData || parcialTableData.length <= 0)">
 
   <div *ngIf="inputSearchBar === '';then nadaPosi else nadaBusqueda"></div>

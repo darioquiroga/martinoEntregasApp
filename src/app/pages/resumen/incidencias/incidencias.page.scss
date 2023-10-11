@@ -195,7 +195,7 @@ ion-fab {
           .element-table {
 
               .important-info, .ion-item{
-               font-size: 12px;
+               font-size: 11px;
 
               }
 
@@ -403,7 +403,7 @@ ion-fab {
             padding-inline-end: var(--ion-padding, 0px);
             padding-top: var(--ion-padding, 0px);
             padding-bottom: var(--ion-padding, 0px);
-            font-size: 12px;
+            font-size: 11px;
         }
 
 
@@ -416,7 +416,9 @@ ion-fab {
 
       }
 
-
+      .espacioEntreReg{
+        margin-bottom: 5px;
+      }
       /*ion-accordion-group{
         ion-accordion {
 

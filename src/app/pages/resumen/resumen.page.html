@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-buttons slort="start">
       <ion-menu-button menu="menuPrincipal"></ion-menu-button>
@@ -7,47 +7,155 @@
   </ion-toolbar>
 </ion-header>
 
+
+
+<ion-card color="light">
+  <img alt="Martino Entregas" src="../../../assets/images/total-camiones.png" />
+  <ion-card-header>
+    <ion-card-title>{{usuarioActivo?.nombre}}</ion-card-title>
+    <ion-card-subtitle>{{usuarioActivo?.tipo.descripcion}}</ion-card-subtitle>
+  </ion-card-header>
+
+</ion-card>
+<!--<ion-card color="light">
+  <ion-card-header>
+    <ion-card-title><ion-icon name="construct"></ion-icon> UTILIDADES (12)</ion-card-title>
+
+  </ion-card-header>
+
+<ion-card-content>
+
+--> <div class="scrolling-wrapper">
+  <div class="cardHscroll">
+
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="list-outline"></ion-icon>
+
+    </ion-button>
+    <div style="text-align: center; font-size: 9px;">Tarifas Acondicionadoras</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="boat-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px;">Tarifas Exportadores</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="location-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px;">Mapa de Puertos</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+
+      <ion-icon name="git-compare-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px;">Distancia entre puertos</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="bus-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px;">Tipos de camiones</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="location-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px;">Posición de camiones</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="document-lock-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px;">Condiciones de recibo</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="timer-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px;">Horario cupo cosecha</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="calendar-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px;">Horario fin de semana</div>
+
+</div>
+<div class="cardHscroll">
+  <ion-button class="button-services" (click)= "onClickTest()" >
+    <ion-icon name="document-text-outline"></ion-icon>
+  </ion-button>
+  <div style="text-align: center; font-size: 9px;">CP y DJ</div>
+</div>
+
+<div class="cardHscroll">
+  <ion-button class="button-services" (click)= "onClickTest()" >
+    <ion-icon name="trail-sign-outline"></ion-icon>
+  </ion-button>
+  <div style="text-align: center; font-size: 9px;">Planta - Destino</div>
+</div>
+
+
+<div class="cardHscroll">
+  <ion-button class="button-services" (click)= "onClickTest()" >
+    <ion-icon name="thumbs-down-outline"></ion-icon>
+  </ion-button>
+  <div style="text-align: center; font-size: 9px;">Daños y defectos</div>
+</div>
+<div class="cardHscroll">
+  <ion-button class="button-services" (click)= "onClickTest()" >
+    <ion-icon name="document-text-outline"></ion-icon>
+  </ion-button>
+  <div style="text-align: center; font-size: 9px;">Cond. Comerciales</div>
+</div>
+
+</div>
+<!--<hr>
+
+<hr>
+</ion-card-content>
+
+</ion-card>-->
+
 <ion-content >
-  <ion-card color="light">
-    <img alt="Martino Entregas" src="../../../assets/images/total-camiones.png" />
-    <ion-card-header>
-      <ion-card-title>{{usuarioActivo?.nombre}}</ion-card-title>
-      <ion-card-subtitle>{{usuarioActivo?.tipo.descripcion}}</ion-card-subtitle>
-    </ion-card-header>
-  </ion-card>
+
+
+
 
   <ion-card color="secondary">
-  
     <ion-card-header>
       <ion-card-subtitle>Total de Camiones</ion-card-subtitle>
-      <ion-card-title>{{completeTableData.length}}</ion-card-title>
+      <ion-card-title style="font-size: 30px;">{{completeTableData.length}}</ion-card-title>
 
      </ion-card-header>
   </ion-card>
 
 
   <ion-card color="success">
-    
+
     <ion-card-header>
       <ion-card-subtitle><ion-icon name="checkmark-outline"></ion-icon> Camiones Autorizados</ion-card-subtitle>
-      <ion-card-title>{{completeTableDataAutorizado.length}}</ion-card-title>
+      <ion-card-title style="font-size: 30px;">{{completeTableDataAutorizado.length}}</ion-card-title>
 
      </ion-card-header>
   </ion-card>
 
 
   <ion-card color="tertiary">
-   
+
     <ion-card-header>
       <ion-card-subtitle><ion-icon name="reload-outline"></ion-icon> Camiones a Descargar</ion-card-subtitle>
-      <ion-card-title>{{completeTableDataAdescargar.length}}</ion-card-title>
+      <ion-card-title style="font-size: 30px;">{{completeTableDataAdescargar.length}}</ion-card-title>
 
     </ion-card-header>
   </ion-card>
 
 
-   <ion-card color="danger">
-   
+<!--   <ion-card color="danger">
+
      <ion-card-header >
       <ion-card-subtitle><ion-icon name="warning"></ion-icon> Incidencias</ion-card-subtitle>
       <ion-card-title>{{completeTableDataMostrarIncidencias.length}}</ion-card-title>
@@ -56,7 +164,7 @@
 
      </ion-card-content>
 
-  </ion-card>
+  </ion-card>-->
 
 
 

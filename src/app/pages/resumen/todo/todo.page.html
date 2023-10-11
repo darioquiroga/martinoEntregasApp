@@ -35,12 +35,12 @@
    <ion-badge class="ion-badge-format" style="font-size: 10px;  color:white" *ngIf="filtroDestino" color="warning">{{filtroDestino}}</ion-badge>
 </div>-->
 
-  <ion-card>
 
 
+<ion-card>
 
     <div class="table-container" *ngIf="this.parcialTableData.length > 0">
-      <div class="head-table wrapper">
+      <!--<div class="head-table wrapper">
         <div class="element-head-table element-wrapper">
           ESTADO
         </div>
@@ -50,7 +50,7 @@
         <div class="element-head-table element-wrapper patente-element">
           DESTINO
         </div>
-      </div>
+      </div>-->
     <!-- <div class="infinite-scroll-top"
      *ngIf="(responsiveTableService.checkIfSpinnerTopIsOn(completeTableData, parcialTableData) &&
      (!activeFilters.destino && !activeFilters.estado) &&
@@ -87,7 +87,7 @@
                     <div
                       class="element-important element-wrapper patente-element"
                     >
-                    {{cartaPorte.destino.descripcionAbre}}
+                    {{cartaPorte.destino.descripcionAbre.slice(0,10)}}
                     </div>
                   </div>
                 </ion-label>

@@ -64,7 +64,7 @@ export class DescargaService {
 
      const token: any = currentToken;
      let parameters:URLSearchParams = new URLSearchParams();
-      parameters.set("puertos", isPuertos);
+     // parameters.set("puertos", isPuertos);
       parameters.set("fechaDesde", fechaDesde)
       parameters.set("fechaHasta", fechaHasta)
 

@@ -19,7 +19,7 @@
 
   <ion-col>
     <div class="slogan_box">
-   <br><br><br><br><br>
+   <br><br>
      INGRESE SUS CREDENCIALES DE ACCESO
 
     </div>
@@ -81,18 +81,7 @@
 
 
       </ion-row>
-<ion-row>
 
-  <ion-checkbox
-
-  [(ngModel)]="rememberMe"
-  [ngModelOptions]="{standalone: true}"
-  name="rememberMe"
-  ngControl="rememberMe"
->
-</ion-checkbox>
-<ion-label class="txtRecordarme"> Ingreso de sesion automático</ion-label>
-</ion-row>
       <ion-row>
         <ion-col class="signup-col">
           <ion-button
@@ -109,46 +98,117 @@
 
 
     </form>
-    <ion-row>
-      <ion-col class="signup-col">
-      <ion-item button  >
-        <ion-label><ion-icon name="color-wand"></ion-icon>
-           DATOS UTILES</ion-label>
-      </ion-item>
-  </ion-col>
-  </ion-row>
- <ion-row>
-      <ion-col class="signup-col">
-      <ion-item button >
-        <ion-label> <ion-icon name="link"></ion-icon> LINKS DE INTERES</ion-label>
-      </ion-item>
-  </ion-col>
-  </ion-row>
+   
 
 
+<!--<ion-card color="light">
+  <ion-card-header>
+    <ion-card-title><ion-icon name="construct"></ion-icon> UTILIDADES (12)</ion-card-title>
+
+  </ion-card-header>
+
+<ion-card-content>
+
+--> 
+<div class="slogan_box" style="color:white">
+  
+    INFORMACION UTIL
+
+   </div>
+<div class="scrolling-wrapper">
+  <div class="cardHscroll">
+
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="list-outline"></ion-icon>
+
+    </ion-button>
+    <div style="text-align: center; font-size: 9px; color:white;">Tarifas Acond</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="boat-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px; color:white;">Tarifas Export</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="location-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px; color:white;">Mapa Puertos</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+
+      <ion-icon name="git-compare-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px; color:white;">Dist entre puertos</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="bus-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px; color:white;">Tipos camiones</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="location-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px; color:white;">Posición camiones</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="document-lock-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px; color:white;">Cond. Recibo</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="timer-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px; color:white;">Cupos cosecha</div>
+  </div>
+  <div class="cardHscroll">
+    <ion-button class="button-services" (click)= "onClickTest()" >
+      <ion-icon name="calendar-outline"></ion-icon>
+    </ion-button>
+    <div style="text-align: center; font-size: 9px; color:white;">Fin de semana</div>
+ 
+</div>
+<div class="cardHscroll">
+  <ion-button class="button-services" (click)= "onClickTest()" >
+    <ion-icon name="document-text-outline"></ion-icon>
+  </ion-button>
+  <div style="text-align: center; font-size: 9px; color:white;">CP y DJ</div>
+</div>
+
+<div class="cardHscroll">
+  <ion-button class="button-services" (click)= "onClickTest()" >
+    <ion-icon name="trail-sign-outline"></ion-icon>
+  </ion-button>
+  <div style="text-align: center; font-size: 9px; color:white;">Planta Destino</div>
+</div>
 
 
-    <div   id="modulo_servicios">
-      <ion-col>
-        <ion-row class="ion-justify-content-center">
-          <ion-button class="button-services" alt="Datos útiles"   aria-label="Datos útiles">
+<div class="cardHscroll">
+  <ion-button class="button-services" (click)= "onClickTest()" >
+    <ion-icon name="thumbs-down-outline"></ion-icon>
+  </ion-button>
+  <div style="text-align: center; font-size: 9px; color:white;">Defectos</div>
+</div>
+<div class="cardHscroll">
+  <ion-button class="button-services" (click)= "onClickTest()" >
+    <ion-icon name="document-text-outline"></ion-icon>
+  </ion-button>
+  <div style="text-align: center; font-size: 9px; color:white">Cond. Comerciales</div>
+</div>
 
-            <ion-icon name="color-wand"></ion-icon>
+</div>
+<!--<hr>
 
-          </ion-button>
+<hr>
+</ion-card-content>
 
-          <ion-button class="button-services">
-
-            <ion-icon name="link"></ion-icon>
-
-          </ion-button><br>
-
-        </ion-row>
-
-
-      </ion-col>
-
-    </div>
+</ion-card>-->
 
 
 

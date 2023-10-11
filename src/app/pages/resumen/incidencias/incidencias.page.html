@@ -39,12 +39,12 @@
     <ion-badge class="ion-badge-format" style="font-size: 10px;  color:white" *ngIf="filtroDestino" color="warning">{{filtroDestino}}</ion-badge>
  </div>-->
 
-  <ion-card>
+
 
 
 
      <div class="table-container" *ngIf="this.parcialTableData.length > 0">
-       <div class="head-table wrapper">
+       <!--<div class="head-table wrapper">
          <div class="element-head-table element-wrapper">
            ESTADO
          </div>
@@ -54,7 +54,7 @@
          <div class="element-head-table element-wrapper patente-element">
            DESTINO
          </div>
-       </div>
+       </div>-->
      <!-- <div class="infinite-scroll-top"
       *ngIf="(responsiveTableService.checkIfSpinnerTopIsOn(completeTableData, parcialTableData) &&
       (!activeFilters.destino && !activeFilters.estado) &&
@@ -71,175 +71,38 @@
            *ngFor="let cartaPorte of completeTableDataMostrarIncidencias  ; index as i "
          >
 
-        <!--<ion-card color="light">
-          <ion-card-header>
+         <!--<ion-accordion-group expand="inset">
+          <ion-accordion value="first"  >
+            <ion-item slot="header" color="responsiveTableService.getColorEstado(cartaPorte)">
+           <ion-row style="width: 100%;" >
+              <ion-col style="width: 150px;" >
+                <div> {{ cartaPorte.estadoPosiReal ? cartaPorte.estadoPosiReal :
+                  cartaPorte.estadoCarta.descripcion }}</div>
+                <div>XXXX</div>
 
-            <ion-card-subtitle>{{ cartaPorte.estadoPosiReal ? cartaPorte.estadoPosiReal :
-              cartaPorte.estadoCarta.descripcion }} </ion-card-subtitle>
-              <ion-card-title>
-                <div class="element-important element-wrapper">
-                 {{cartaPorte.nroCarta}}
-              </div></ion-card-title>
-          </ion-card-header>
+              </ion-col>
+              <ion-col >
+                <div>{{cartaPorte.nroCarta}}</div>
+                <div>XXXX</div>
+              </ion-col>
 
-          <ion-card-content>
-            <ion-accordion-group class="important-info wrapper">
-              <ion-accordion value="first">
-                <ion-item slot="header" color="light" class="ion-item">
-                  <ion-label>
-                    <div
-                      class="important-info wrapper"
-                      (click)="toggleState(i)"
-                      [ngClass]="responsiveTableService.getColorEstado(cartaPorte)"
-                    >
-                      <div class="element-important element-wrapper">
-                        {{ cartaPorte.estadoPosiReal ? cartaPorte.estadoPosiReal :
-                        cartaPorte.estadoCarta.descripcion }}
-                      </div>
-                      <div
-                        class="element-important element-wrapper nroCarta-element"
-                      >
-                        {{cartaPorte.nroCarta}}
-                      </div>
-                      <div
-                        class="element-important element-wrapper patente-element"
-                      >
-                      {{cartaPorte.destino.descripcionAbre}}
+              <ion-col>
+                <div> {{cartaPorte.destino.descripcionAbre}}</div>
+                <div>XXXX</div>
+              </ion-col>
 
-                      </div>
-                    </div>
-                  </ion-label>
-                </ion-item>
-                <div class="ion-padding" slot="content">
-                  <div class="extra-info">
-                    <div class="extra-info">
-                      <div
-                        *ngFor="let interviniente of cartaPorte.intervinientes"
-                        class="element-extra"
-                      >
-                        <div class="title-extra">
-                          {{responsiveTableService.formatTipoInterviniente(interviniente.tipoInterviniente.nombre)}}
-                        </div>
-                        <div class="content-extra">{{interviniente.nombre}}</div>
-                      </div>
 
-                      <div class="element-extra">
-                        <div class="title-extra">Destino</div>
-                        <div class="content-extra">
-                          {{cartaPorte.destino.descripcionAbre}},
-                          {{cartaPorte.plantaDestino.descripcion}}
-                        </div>
-                      </div>
-                      <div class="element-extra">
-                        <div class="title-extra">Entregador</div>
-                        <div class="content-extra">
-                          {{cartaPorte.entregador.nombre}}
-                        </div>
-                      </div>
+           </ion-row>
+            </ion-item>
 
-                      <div class="element-extra">
-                        <div class="title-extra">Cereal</div>
-                        <div class="content-extra">
-                          {{cartaPorte.cereal.nombre}}
-                        </div>
-                      </div>
-                      <div class="element-extra">
-                        <div class="title-extra">Procedencia</div>
-                        <div class="content-extra">
-                          {{cartaPorte.localidadProcedencia.descripcion}}
-                        </div>
-                      </div>
-                      <div class="element-extra">
-                        <div class="title-extra">Kg Procedencia:</div>
-                        <div class="content-extra">
-                          {{cartaPorte.kgNetoProcedencia}}
-                        </div>
-                      </div>
-                      <div class="element-extra">
-                        <div class="title-extra">Kg Neto:</div>
-                        <div class="content-extra">{{cartaPorte.kgNeto}}</div>
-                      </div>
-                      <div class="element-extra">
-                        <div class="title-extra">Calidad:</div>
-                        <div class="content-extra">
-                          {{cartaPorte.calidad.descripcionCorta}}
-                        </div>
-                      </div>
-                      <div class="element-extra">
-                        <div class="title-extra">Observacion:</div>
-                        <div class="content-extra">
-                          {{ posicionDiaService.getAnalisis(cartaPorte) }}
-                        </div>
-                      </div>
-                      <div class="element-extra">
-                        <div class="title-extra">Turno:</div>
-                        <div class="content-extra">{{cartaPorte.turno}}</div>
-                      </div>
+            <div class="ion-padding" slot="content">Más detalles de la orden</div>
+          </ion-accordion>
 
-                      <div *ngIf="
-                      posicionDiaService.checkIfAccionable(cartaPorte, usuarioActivo) ||
-                      puertosService.checkIfAccionable(cartaPorte)"
-                        class="element-extra btn-accion-container">
-                        <div class="title-extra"></div>
-                        <div class="content-extra extra-buttons">
-                          <button
-                            *ngIf="posicionDiaService.checkIfDesviableOrLlamable(cartaPorte) && usuarioActivo.tipo.id !== 99"
-                            (click)="posicionDiaService.solicitarAccion(cartaPorte, 3)"
-                            class="btn-llamado"
-                            ion-button
-                            outline
-                          >
-                          <ion-icon name="call"></ion-icon>
-                          </button>
-                          <button
-                            *ngIf="
-                                    posicionDiaService.checkIfDesviableOrLlamable(cartaPorte) ||
-                                    puertosService.checkIfAccionable(cartaPorte)
-                                "
-                            (click)="posicionDiaService.solicitarAccion(cartaPorte, 1)"
-                            class="btn-desviar"
-                            ion-button
-                            outline
-                          >
-                        Desviar
-                          </button>
-                          <button
-                            *ngIf="puertosService.checkIfAccionable(cartaPorte)"
-                            (click)="posicionDiaService.solicitarAccion(cartaPorte, 3)"
-                            class="btn-revision"
-                            ion-button
-                            outline
-                          >
-
-                            Revision
-                          </button>
-                          <button
-                            *ngIf="
-                                    posicionDiaService.checkIfAutorizable(cartaPorte) ||
-                                    puertosService.checkIfAccionable(cartaPorte)
-                                "
-                            (click)="posicionDiaService.solicitarAccion(cartaPorte, 2)"
-                            class="btn-autorizar"
-                            ion-button
-                            outline
-                          >
-                            Autorizar
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </ion-accordion>
-            </ion-accordion-group>
-
-          </ion-card-content>
-        </ion-card>
-      -->
+        </ion-accordion-group>-->
       <ion-accordion-group class="important-info wrapper">
-        <ion-accordion value="first">
+        <ion-accordion >
           <ion-item slot="header" color="light" class="ion-item">
-            <ion-label>
+            <!--<ion-label>
               <div
                 class="important-info wrapper"
                 (click)="toggleState(i)"
@@ -261,7 +124,38 @@
 
                 </div>
               </div>
-            </ion-label>
+            </ion-label>-->
+            <ion-label>
+              <div
+              class="important-info wrapper"
+              (click)="toggleState(i)"
+              [ngClass]="responsiveTableService.getColorEstado(cartaPorte)"
+            >
+            <ion-row style="width: 100%;" >
+
+              <ion-col style="width: 150px;" >
+                <div class="espacioEntreReg"><strong>{{ cartaPorte.estadoPosiReal ? cartaPorte.estadoPosiReal : cartaPorte.estadoCarta.descripcion }}</strong></div>
+                <div class="espacioEntreReg"> {{cartaPorte.cereal.nombre}} </div>
+                <div class="espacioEntreReg">Cal:  {{cartaPorte.calidad.descripcionCorta.slice(0,15)}} </div>
+               </ion-col>
+              <ion-col >
+                <div class="espacioEntreReg" >{{cartaPorte.nroCarta}}</div>
+                <div class="espacioEntreReg">Dest: {{cartaPorte.destino.descripcionAbre.slice(0,15)}}</div>
+                <div class="espacioEntreReg">Proc: {{cartaPorte.localidadProcedencia.descripcion.slice(0,15)}} </div>
+
+
+              </ion-col>
+
+              <ion-col>
+                <div class="espacioEntreReg">{{ cartaPorte.intervinientes[0].nombre.slice(0,25)}} </div>
+                <div class="espacioEntreReg"> {{cartaPorte.plantaDestino.descripcion.slice(0,15)}}</div>
+
+              </ion-col>
+
+
+           </ion-row>
+           </div>
+           </ion-label>
           </ion-item>
           <div class="ion-padding" slot="content">
             <div class="extra-info">
@@ -418,5 +312,5 @@
          </ng-template>
        </div>
      </div>
-   </ion-card>
+
  </ion-content>

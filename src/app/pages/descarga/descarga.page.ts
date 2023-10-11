@@ -72,7 +72,7 @@ export class DescargaPage implements OnInit {
  lastScrollTop : any | undefined;
  // Fecha para filtrar la descarga
  filtroFecha: Date | undefined;
-
+totalCartas: any | 0;
  // respuesta del servicio de estado ok, ver luego si esto se quita
  respuestaEstadoDescarga : string |  undefined;
  istodoCargado : any
@@ -120,7 +120,7 @@ export class DescargaPage implements OnInit {
     await this.uiService.presentLoading("Cargando...");
 
     // Seteo un titulo por default
-    this.tituloCantidad = `Descarga de ayer`;
+    this.tituloCantidad = `Descarga de ayer ` + this.totalCartas;
     // Seteo la fecha por default en ayer
     this.filtroFecha = new Date((new Date).getTime() - 24*60*60*1000);
     // Busco la posicion y refresco
@@ -172,25 +172,27 @@ async refreshTable() {
 
       this.descargaService.getDescarga(formattedDate, formattedDate).then(
         async (resp: any)=>{
-          if (resp.error.descripcion != ""){
-            this.uiService.presentAlertInfo("Error "+resp.status+": "+resp.error.descripcion);
-            this.loading = false
+          debugger
+          if (resp.data.length == 0){
             await this.loadingController.dismiss();
+            this.uiService.presentAlertInfo("No se encontraron datos de descarga");
           }else{
             let response = JSON.parse(JSON.stringify(resp.data));
+
             this.completeTableData = response
+
             // Guardo la cantidad en posicion (Posicion del dia)
             let cantidadReg = this.completeTableData.length;
             if (cantidadReg == undefined || cantidadReg == null){
               cantidadReg = 0;
             }
-            this.tituloCantidad = `Cantidad: ${cantidadReg}`;
+            this.tituloCantidad = `Descarga de ayer: ${cantidadReg}`;
             this.respuestaEstadoDescarga =  response.descripcion;
 
 
             // Guardo una parte parcial de la tabla completa (lazy load)
             this.parcialTableData = this.completeTableData;//this.responsiveTableService.getInitParcialTable(this.completeTableData);
-
+            this.totalCartas = this.parcialTableData.length;
             // Inicializo los estados toggle de las cartas en false
             this.estadosToggleCarta = this.responsiveTableService.initToggles(this.completeTableData.length);
             // Texto buscado vacio
@@ -198,9 +200,9 @@ async refreshTable() {
             // Saco el spinner
             this.loading = false;
             await this.loadingController.dismiss();
-          }
 
 
+        }
 
         },
         (error: any) => {

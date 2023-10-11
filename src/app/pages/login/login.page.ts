@@ -202,7 +202,9 @@ export class LoginPage implements OnInit {
 
 
 
-
+  onClickTest(){
+    alert("LINK EXTERNO")
+  }
 
 
 
