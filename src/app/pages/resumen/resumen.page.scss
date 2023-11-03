@@ -418,17 +418,17 @@ ion-fab {
 /*Utilidades*/
 .button-services {
     padding: 3px;
-        height: 70px;
-       font-size: 25px;
-      
-        --background:#002651;
-        --background-hover: #9ce0be;
+    width: 100px;
+    height: 80px;
+    --background:#FFC15A;
+    //--background:#002651;
+   --background-hover: #9ce0be;
         --background-activated: #88f4be;
         --background-focused: #88f4be;
        --color: white;
        --border-radius: 15px;
        --box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-      
+
       }
 .scrolling-wrapper {
     overflow-x: scroll;
@@ -436,7 +436,7 @@ ion-fab {
     white-space: nowrap;
     margin-left: 10px;
     margin-right: 10px;
-  
+
     .cardHscroll {
       display: inline-block;
     }
@@ -445,7 +445,7 @@ ion-fab {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
-  
+
     .card {
       flex: 0 0 auto;
     }
@@ -453,13 +453,12 @@ ion-fab {
   .scrolling-wrapper {
     -webkit-overflow-scrolling: touch;
   }
-  
+
   .scrolling-wrapper {
     &::-webkit-scrollbar {
       display: none;
     }
   }
-  
+
   // FIN UTILIDADES
 
-  

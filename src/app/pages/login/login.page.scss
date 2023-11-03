@@ -119,16 +119,16 @@ ion-content {
 
 
 .login-content {
-  background: rgba(255,255,255,1);
+ /* background: rgba(255,255,255,1);
   background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(48,48,146,1) 100%);
   background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(100%, rgba(48,48,146,1)));
   background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(48,48,146,1) 100%);
   background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(48,48,146,1) 100%);
   background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(48,48,146,1) 100%);
   background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(48,48,146,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#303092', GradientType=0 );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#303092', GradientType=0 );*/
 
-
+  background-image: url('../../../assets/images/bg1.png');
   .slogan_bienvenido_box {
       font-family: 'Roboto-Bold';
       font-size: 38px;
@@ -140,7 +140,7 @@ ion-content {
       font-family: 'Roboto-Bold';
       font-size: 11px;
       text-align: center;
-      color: #004693;
+      color: white;
      // margin-top: -20px;
   }
 
@@ -269,17 +269,18 @@ ion-footer{
 /*Utilidades*/
 .button-services {
   padding: 3px;
-      height: 60px;
-     font-size: 20px;
-    
-      --background:#e3ae09;
-      --background-hover: #9ce0be;
+  width: 100px;
+  height: 80px;
+
+  --background:#FFC15A;
+  //--background:#002651;
+ --background-hover: #9ce0be;
       --background-activated: #88f4be;
       --background-focused: #88f4be;
-     --color: white;
+    color: white;
      --border-radius: 15px;
      --box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-    
+
     }
 .scrolling-wrapper {
   overflow-x: scroll;
