@@ -34,6 +34,9 @@ export class ResumenPage implements OnInit {
    completeTableDataRechazados:  CartaPortePosicion[] = [];
    completeTableDataDemorados:  CartaPortePosicion[] = [];
    completeTableDataDesviados:  CartaPortePosicion[] = [];
+   public notificaciones: any;
+   public ver: boolean = false;
+   public numeroMensajes: any;
    posicionCompletaDelDia : any;
    cantidadTodos: any;
    cantidadIncidencias  : any;
@@ -57,6 +60,7 @@ export class ResumenPage implements OnInit {
     public responsiveTableService: ResponsiveTableService,
     public puertosService: PuertosService,
     private uiService: UiService,
+    //public notificacionesService: NotificacionesService,
     private zone: NgZone,
     private platform: Platform,
     private navController: NavController,
@@ -66,17 +70,37 @@ export class ResumenPage implements OnInit {
     private menuCtrl : MenuController,
     private router: Router
   ) { }
+  iraIncidencias(){
 
+    this.navController.navigateRoot('/resumen/incidencias');
+  }
+
+
+  iraTodos(){
+
+    this.navController.navigateRoot('/resumen/todo');
+  }
   ngOnInit() {
 
     if (typeof this.usuarioActivoJson === 'string') {
       this.usuarioActivo =  JSON.parse(this.usuarioActivoJson);
       this.cargarCartas();
     }
-
+    /*this.notificacionesService.ponerEnFalso();
+    this.notificacionesService.checkPorVer().then(async (resp) => {
+      this.data = resp;
+      if (this.data > 0) {
+        this.ver = true;
+      } else {
+        this.ver = false;
+      }
+      this.numeroMensajes = this.data;
+    });*/
 
 
   }
+
+
 
 
 
@@ -106,7 +130,7 @@ export class ResumenPage implements OnInit {
 
             // Guardo una parte parcial de la tabla completa (lazy load)
 
-
+            if (this.completeTableData){
             this.completeTableDataAutorizado = this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Autorizado");
             this.completeTableDataIngreso = this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Ingreso");
             this.completeTableDataDescargado = this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Descargado");
@@ -126,7 +150,10 @@ export class ResumenPage implements OnInit {
              // Obtengo los destinos para los filtros
 
 
-             await this.loadingController.dismiss();
+            // await this.loadingController.dismiss();
+            }else{
+              this.uiService.presentAlertInfo("No hay cartas disponibles.")
+            }
            }) ;
 
 
@@ -137,33 +164,14 @@ export class ResumenPage implements OnInit {
 
      }
      catch(err) {
-         console.log(err);
+
+         alert(err)
          // Muestro error
-         /*this.textos.erroresGenericos.timeOutError.titulo +
-           this.textos.erroresGenericos.timeOutError.descripcion*/
-         this.uiService.presentAlertInfo(textos.erroresGenericos.timeOutError.titulo+": "+textos.erroresGenericos.timeOutError.descripcion);
+         // this.uiService.presentAlertInfo(textos.erroresGenericos.timeOutError.titulo+": "+textos.erroresGenericos.timeOutError.descripcion);
 
      }
    }
-   onClickServiciosExternos(op: any) {
-    if (op === 1){
-      alert('https://martinoentregas.com.ar/tipos-de-camiones/')
-      this.router.navigateByUrl( 'https://martinoentregas.com.ar/tipos-de-camiones/');
-    }else if(op == 2){
-      alert('https://martinoentregas.com.ar/tarifas-acondicionadoras/')
-      this.router.navigateByUrl( 'https://martinoentregas.com.ar/tarifas-acondicionadoras/');
-    }else if(op == 3){
-      alert('https://martinoentregas.com.ar/tarifas-exportadores/')
-      this.router.navigateByUrl( 'https://martinoentregas.com.ar/tarifas-exportadores/');
-      
-    }
-    
-  }
-  onClickTest(){
-    alert("LINK EXTERNO")
-  }
-   onClickIncidencias() {
-   
-    this.router.navigateByUrl('/incidencias');
-  }
+
+
+
 }

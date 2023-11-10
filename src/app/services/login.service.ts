@@ -136,15 +136,15 @@ export class LoginService {
     this.usuarioGrabado = JSON.parse(credenciales);
     this.usuarioToken = JSON.parse(credencialesToken);
 
-  
+
     const today = new Date();
     const fechaHoy = today.toDateString();
     //let fechaToken = new Date(this.usuarioGrabado.token.fechaHasta);
     //let fechaActual = new Date(fechaHoy);
-    
+
     if (this.usuarioToken  != null && this.usuarioGrabado != '' ) {
       return new Promise(async (resolve, reject) => {
-     
+
         let parametros: URLSearchParams = new URLSearchParams();
         parametros.set('token', this.usuarioToken);
         resolve(true);
@@ -177,8 +177,9 @@ export class LoginService {
             }
           });
         } catch (error: any) {
-          const dataError = JSON.parse(error.error);
-          reject(dataError.control.descripcion);
+      //   alert("Ocurrio un error inesperado")
+          // const dataError = JSON.parse(error.error);
+         // reject(dataError.control.descripcion);
         }
       });
 
@@ -187,8 +188,8 @@ export class LoginService {
               */
     } else {
       this.logueado = false;
-      
-      alert ('se debe loguear')
+
+
       // no hay credenciales asi que lo mando a pantalla de login
     }
     //this.loginUser();

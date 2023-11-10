@@ -120,7 +120,7 @@ totalCartas: any | 0;
     await this.uiService.presentLoading("Cargando...");
 
     // Seteo un titulo por default
-    this.tituloCantidad = `Descarga de ayer ` + this.totalCartas;
+    this.tituloCantidad = `Descarga de ayer `
     // Seteo la fecha por default en ayer
     this.filtroFecha = new Date((new Date).getTime() - 24*60*60*1000);
     // Busco la posicion y refresco
@@ -175,18 +175,18 @@ async refreshTable() {
           debugger
           if (resp.data.length == 0){
             await this.loadingController.dismiss();
+            this.tituloCantidad = `Descarga de ayer 0`;
             this.uiService.presentAlertInfo("No se encontraron datos de descarga");
+
           }else{
             let response = JSON.parse(JSON.stringify(resp.data));
 
             this.completeTableData = response
 
             // Guardo la cantidad en posicion (Posicion del dia)
-            let cantidadReg = this.completeTableData.length;
-            if (cantidadReg == undefined || cantidadReg == null){
-              cantidadReg = 0;
-            }
-            this.tituloCantidad = `Descarga de ayer: ${cantidadReg}`;
+            //let cantidadReg = this.completeTableData.length
+
+            this.tituloCantidad = `Descarga de ayer (`+resp.data.length+")";
             this.respuestaEstadoDescarga =  response.descripcion;
 
 

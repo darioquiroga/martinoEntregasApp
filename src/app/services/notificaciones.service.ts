@@ -45,7 +45,7 @@ export class NotificacionesService {
 
                 this.http.get(url, httpOptions).subscribe((data: any) => {
                     let control = data.control;
-
+                    debugger
                     if (control.codigo == "OK") {
                         this.notificaciones = data.datos.mensajes;
                         resolve(

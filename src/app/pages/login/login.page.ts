@@ -144,7 +144,7 @@ export class LoginPage implements OnInit {
             // Redirijo al login
             this.navController.navigateRoot('/login', { animated: true });
           }
-         
+
           console.log(returnValue);
         },
         (error: any) => {
@@ -201,10 +201,6 @@ export class LoginPage implements OnInit {
 
 
 
-
-  onClickTest(){
-    alert("LINK EXTERNO")
-  }
 
 
 

@@ -83,8 +83,8 @@ export class PosicionDiaService {
         });
       } catch (error: any) {
         alert('Error: Ocurrio un error general, intente nuevamente más tarde.');
-        const dataError = JSON.parse(error.error);
-        reject(dataError.control.descripcion);
+        //const dataError = JSON.parse(error.error);
+        //reject(dataError.control.descripcion);
       }
     });
 

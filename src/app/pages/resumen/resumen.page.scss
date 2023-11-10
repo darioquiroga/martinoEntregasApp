@@ -1,5 +1,6 @@
 ion-content {
-  background: rgba(255,255,255,1);
+
+background: rgba(255,255,255,1);
 background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(48,48,146,1) 100%);
 background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(100%, rgba(48,48,146,1)));
 background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(48,48,146,1) 100%);
@@ -7,6 +8,8 @@ background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(48,48,146,1) 10
 background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(48,48,146,1) 100%);
 background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(48,48,146,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#303092', GradientType=0 );
+
+//background-image: url('../../../assets/images/bg1.png');
 
  }
 
@@ -31,7 +34,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   $element-extra: #FFFFFF;
   $element-extra--odd: #1d2b36;
 ion-card{
-  font-size: 10px;
+  font-size: 0px;
 }
 ion-header ion-toolbar{
   //background-color: var(--ion-color-primary-toolbar);
@@ -417,19 +420,24 @@ ion-fab {
 
 /*Utilidades*/
 .button-services {
-    padding: 3px;
-    width: 100px;
-    height: 80px;
-    --background:#FFC15A;
-    //--background:#002651;
-   --background-hover: #9ce0be;
-        --background-activated: #88f4be;
-        --background-focused: #88f4be;
-       --color: white;
-       --border-radius: 15px;
-       --box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    --background:#002652;
+    --background-hover: #9ce0be;
+    --background-activated: #88f4be;
+    --background-focused: #88f4be;
+    --color: white;
+    --border-radius: 15px;
 
-      }
+    --box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+    --padding-top: 0px;
+    --padding-start:0px;
+    --padding-end:0px;
+    --padding-bottom: 0px;
+    }
+    .cardHscroll {
+      display: inline-block;
+    }
+    /*
 .scrolling-wrapper {
     overflow-x: scroll;
     overflow-y: hidden;
@@ -439,8 +447,11 @@ ion-fab {
 
     .cardHscroll {
       display: inline-block;
+      margin: 0px;
+      padding: 0px;
     }
   }
+
   .scrolling-wrapper-flexbox {
     display: flex;
     flex-wrap: nowrap;
@@ -459,6 +470,6 @@ ion-fab {
       display: none;
     }
   }
-
+*/
   // FIN UTILIDADES
 
