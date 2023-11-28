@@ -40,24 +40,6 @@
 <ion-card>
 
     <div class="table-container" *ngIf="this.parcialTableData.length > 0">
-      <!--<div class="head-table wrapper">
-        <div class="element-head-table element-wrapper">
-          ESTADO
-        </div>
-        <div class="element-head-table element-wrapper nroCarta-element">
-          NRO CARTA
-        </div>
-        <div class="element-head-table element-wrapper patente-element">
-          DESTINO
-        </div>
-      </div>-->
-    <!-- <div class="infinite-scroll-top"
-     *ngIf="(responsiveTableService.checkIfSpinnerTopIsOn(completeTableData, parcialTableData) &&
-     (!activeFilters.destino && !activeFilters.estado) &&
-     (!busquedaActiva)) && completeTableData.length > 0"
-      >
-      <ion-spinner class="spinner-container" *ngIf=" !this.loading" ></ion-spinner>
-    </div>-->
 
 
       <!-- aca muestro carta de porte COMUN -->
@@ -69,8 +51,12 @@
           <ion-accordion-group class="important-info wrapper">
             <ion-accordion value="first">
               <ion-item slot="header" color="light" class="ion-item">
-                <ion-label>
-                  <div
+                <ion-label><div
+                  class="important-info wrapper"
+                  (click)="toggleState(i)"
+                  [ngClass]="responsiveTableService.getColorEstado(cartaPorte)"
+                >
+                 <!-- <div
                     class="important-info wrapper"
                     (click)="toggleState(i)"
                     [ngClass]="responsiveTableService.getColorEstado(cartaPorte)"
@@ -90,6 +76,31 @@
                     {{cartaPorte.destino.descripcionAbre.slice(0,10)}}
                     </div>
                   </div>
+                -->
+                <ion-row style="width: 100%;" >
+
+                  <ion-col style="width: 150px;" >
+                    <div class="espacioEntreReg"><strong>{{ cartaPorte.estadoPosiReal ? cartaPorte.estadoPosiReal : cartaPorte.estadoCarta.descripcion }}</strong></div>
+                    <div class="espacioEntreReg"> {{cartaPorte.cereal.nombre}} </div>
+                    <div class="espacioEntreReg">Cal:  {{cartaPorte.calidad.descripcionCorta.slice(0,15)}} </div>
+                   </ion-col>
+                  <ion-col >
+                    <div class="espacioEntreReg" >{{cartaPorte.nroCarta}}</div>
+                    <div class="espacioEntreReg">Dest: {{cartaPorte.destino.descripcionAbre.slice(0,15)}}</div>
+                    <div class="espacioEntreReg">Proc: {{cartaPorte.localidadProcedencia.descripcion.slice(0,15)}} </div>
+
+
+                  </ion-col>
+
+                  <ion-col>
+                    <div class="espacioEntreReg">{{ cartaPorte.intervinientes[0].nombre.slice(0,25)}} </div>
+                    <div class="espacioEntreReg"> {{cartaPorte.plantaDestino.descripcion.slice(0,15)}}</div>
+
+                  </ion-col>
+
+
+               </ion-row>
+              </div>
                 </ion-label>
               </ion-item>
               <div class="ion-padding" slot="content">
@@ -118,7 +129,12 @@
                         {{cartaPorte.entregador.nombre}}
                       </div>
                     </div>
-
+                    <div class="element-extra">
+                      <div class="title-extra">Patente camión</div>
+                      <div class="content-extra">
+                        {{cartaPorte.patente}},
+                      </div>
+                    </div>
                     <div class="element-extra">
                       <div class="title-extra">Cereal</div>
                       <div class="content-extra">

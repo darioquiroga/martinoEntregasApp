@@ -99,6 +99,9 @@ export class Todopage implements OnInit {
    completeTableDataAutorizado :  CartaPortePosicion[] = [];
    completeTableDataIngreso :  CartaPortePosicion[] = [];
    completeTableDataMostrar :  CartaPortePosicion[] = [];
+   completeTableDataDesviados : CartaPortePosicion[] = [];
+   completeTableDataRechazados :  CartaPortePosicion[] = [];
+   completeTableDataDemorados :  CartaPortePosicion[] = [];
    posicionCompletaDelDia : any;
    // Cantidad de camiones en posición
    tituloCantidad: string | undefined;
@@ -408,10 +411,13 @@ async refreshTable() {
          this.completeTableDataIngreso = this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Ingreso");
          this.completeTableDataDescargado = this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Descargado");
          this.completeTableDataAdescargar = this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "A Descargar");
-
+         this.completeTableDataRechazados =  this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Rechazo");
+         this.completeTableDataDemorados =   this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Demorado");
+         this.completeTableDataDesviados =   this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Desviado");
          this.completeTableDataMostrar = this.completeTableDataAutorizado.concat(this.completeTableDataIngreso)
-         .concat(this.completeTableDataDescargado)
-         .concat(this.completeTableDataAdescargar)
+            .concat(this.completeTableDataDescargado)
+            .concat(this.completeTableDataAdescargar)
+             .concat( this.completeTableDataDesviados)
          this.parcialTableData = this.responsiveTableService.getInitParcialTable(this.completeTableDataMostrar);
          if (!this.completeTableData){
           this.tituloCantidad = `Nada en Posición `;

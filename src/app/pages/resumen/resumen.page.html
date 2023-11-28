@@ -2,13 +2,15 @@
   <ion-toolbar>
 
     <ion-buttons slort="start">
-      <ion-menu-button menu="menuPrincipal"></ion-menu-button>
-      <ion-title>Bienvenido</ion-title>
-      <app-header-component
+      <ion-menu-button autoHide="false" menu="menuPrincipal"></ion-menu-button>
+     <ion-title style="font-size: 1.1rem; padding-inline: 0px;">{{usuarioActivo.nombre}}</ion-title>
+
+ <app-header-component
         *ngIf="notificaciones"
         [headerText]="''"
         [numeroMensajes]="ver ? numeroMensajes : numeroMensajes">
       </app-header-component>
+
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -82,7 +84,23 @@
 
   </div>
   -->
-  <ion-title style="text-align: center; color: white; font-size: smaller;" size="large">SERVICIOS UTILES</ion-title>
+
+  <ion-card *ngIf="cantidadTodos > 0" color="secondary" (click) ="iraTodos()">
+    <ion-card-header>
+      <ion-card-subtitle>Total de Camiones</ion-card-subtitle>
+      <ion-card-title style="font-size: 30px;">{{cantidadTodos}}</ion-card-title>
+     </ion-card-header>
+  </ion-card>
+
+  <ion-card color="danger" *ngIf="cantidadIncidencias > 0" (click) ="iraIncidencias()">
+    <ion-card-header>
+      <ion-card-subtitle>Incidencias</ion-card-subtitle>
+      <ion-card-title   style="font-size: 30px;"> {{cantidadIncidencias}}</ion-card-title>
+
+      </ion-card-header>
+  </ion-card>
+
+
   <div class="scrolling-wrapper" style="text-align: center;">
     <div class="cardHscroll">
       <ion-button class="button-services"  >
@@ -136,21 +154,8 @@
 
   </div>
 
-  <ion-card *ngIf="cantidadTodos > 0" color="secondary" (click) ="iraTodos()">
-    <ion-card-header>
-      <ion-card-subtitle>Total de Camiones</ion-card-subtitle>
-      <ion-card-title style="font-size: 35px;">{{cantidadTodos}}</ion-card-title>
 
-     </ion-card-header>
-  </ion-card>
 
-  <ion-card color="danger" *ngIf="cantidadIncidencias > 0" (click) ="iraIncidencias()">
-    <ion-card-header>
-      <ion-card-subtitle>Incidencias</ion-card-subtitle>
-      <ion-card-title style="font-size: 35px;">{{cantidadIncidencias}}</ion-card-title>
-
-      </ion-card-header>
-  </ion-card>
 
 
 

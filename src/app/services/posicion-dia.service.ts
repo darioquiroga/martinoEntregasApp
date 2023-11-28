@@ -22,6 +22,7 @@ import { Preferences } from '@capacitor/preferences';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TipoAccion } from '../modelo/tipoAccion';
 import { IonFab, IonFabButton, IonFabList, IonIcon } from '@ionic/angular';
+import { dispositivosOrigen } from '../shared/constants/dispositivosOrigen';
 
 /**
 * Esta clase se creo para invocar el recurso del servicio web que devuelve el
@@ -49,6 +50,7 @@ export class PosicionDiaService {
     private responsiveTableService: ResponsiveTableService,
     private puertosService: PuertosService, private uiService: UiService) { }
   public configuraciones = Configuraciones;
+
   // Hago la consulta
   async getPosicionDia() {
     // Mapeo el array posicionDia de la respuesta en otro array de modelos CartaPorte, y lo retorno
@@ -378,9 +380,8 @@ checkIfAutorizable(
 async solicitarAccion(
   cartaPorte: any,
   tipoAccion: number
-   // event: any
 ) {
-
+debugger
   // Checkeo si solicita un llamado o una accion //
   if (tipoAccion === tiposAcciones.SOLICITUD_LLAMADO ) {
 
@@ -390,7 +391,7 @@ async solicitarAccion(
             // Obtengo token del user
 
             // Nota: El await es requerido porque sinó NO dispara el catch de abajo
-           /* await this.authService.solicitarLlamado(
+           /*await this.authService.solicitarLlamado(
                 cartaPorte.entregador.idEntregador,
                 '',
                 tipoSesion.NORMAL,
@@ -400,17 +401,21 @@ async solicitarAccion(
 
             return new Promise(async (resolve, reject) => {
               try {
+
                 const isPuertos = this.puertosService.getIfPuertos()
                const currentToken:any = localStorage.getItem('token')?.toString();
                let parameters:URLSearchParams = new URLSearchParams();
-                const url = `${this.getURLServicioSolicitarLlamado(isPuertos)}?`+parameters;
+               parameters.set("tipoAccion", String(tipoAccion));
+               parameters.set("dispositivoOrigen", String(dispositivosOrigen.APP))
+
+               const url = `${this.getURLServicioSolicitarLlamado(isPuertos)}?`+parameters;
                 const httpOptions = {
                   headers: new HttpHeaders({
                       token: currentToken.replace(/['"]+/g, ''),
                   }),
 
                 };
-
+                debugger
                 this.http.post(url,  httpOptions).subscribe({
                   next: (data: any) => {
                      resolve (
@@ -422,12 +427,15 @@ async solicitarAccion(
                   },
 
                   error: (error: any) => {
-                    // ourrio algun error en el login
+                    debugger
+                    // ourrio algun error en el loginalert
+                    this.uiService.presentAlertConfirm("Error", "ocurrio un error inesperado. "+error.name)
                     resolve(error);
                   },
                 });
               } catch (error: any) {
-                alert('Error: Ocurrio un error general, intente nuevamente más tarde.');
+                this.uiService.presentAlertConfirm("Error", "ocurrio un error inesperado. "+error.name)
+
                 const dataError = JSON.parse(error.error);
                 reject(dataError.control.descripcion);
               }
@@ -450,37 +458,36 @@ async solicitarAccion(
       // Solicitó acción. Checkeo si son clientes o si es puertos
       const isPuertos = this.puertosService.getIfPuertos();
       //
-      /*if (isPuertos) {
+      if (isPuertos) {
           // Si el usuario es de puertos
           // this.navCtrl.push(AccionPuertosPage, {cartasEncontradas: cartasEncontradas});
-          this.app.getActiveNav().push(
+          /*this.app.getActiveNav().push(
               AccionPuertosPage,
               {
                   cartaPorte,
                   tipoAccion
               }
-          );
+          );*/
       } else {
           // Si el usuario es un cliente
-          this.utilsService.showAlert(
+          this.uiService.presentAlertConfirm(
               textos.posicionDia.solicitarAccion.titulo,
               textos.posicionDia.solicitarAccion.descripcion,
               async() => {
                   try {
                       // Obtengo token del user
-                      const currentToken = await this.storageService.getToken();
+                      const   currentToken:any = localStorage.getItem('token')?.toString();
 
                       // Solicito la accion
-                      this.authService.solicitarAccion(
+                     /* this.solicitarAccion(
                           cartaPorte,
                           tiposAcciones[tipoAccion],
                           currentToken
-                      );
-
+                      );*/
 
                       // Y ahora muto la cartaPorte que me viene por parámetros así se actualiza la vista
                       cartaPorte.setEstadoCarta(
-                          this.getEstadoByTipoAccion(tiposAcciones[tipoAccion])
+                          this.getEstadoByTipoAccion(tipoAccion)
                       );
 
                       // Agrego la clase del color
@@ -488,15 +495,15 @@ async solicitarAccion(
 
                   } catch(err) {
                       //console.log(err);
-                      this.utilsService.showAlert(
-                          textos.posicionDia.solicitarAccion.error.titulo,
+                      this.uiService.presentAlertInfo(
+                          textos.posicionDia.solicitarAccion.error.titulo+" : "+
                           textos.posicionDia.solicitarAccion.error.descripcion
                       );
                   }
               },
               true
           )
-      }*/
+      }
 
   }
 
@@ -572,7 +579,9 @@ getEstadoByTipoAccion(tipoAccion: number) {
     if(puertos === true){
       return PosicionDiaService.URLSERVICIOPUERTOS+`/notificaciones/solicitud-llamado`;
     }else{
-      return false;
+      return PosicionDiaService.URLSERVICIOPUERTOS+`/notificaciones/solicitud-llamado`;
+
+    //  return false;
     }
 }
 

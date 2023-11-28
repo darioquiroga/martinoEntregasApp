@@ -38,8 +38,8 @@ export class ResumenPage implements OnInit {
    public ver: boolean = false;
    public numeroMensajes: any;
    posicionCompletaDelDia : any;
-   cantidadTodos: any;
-   cantidadIncidencias  : any;
+   cantidadTodos: any = 0;
+   cantidadIncidencias  : any = 0;
    // Cantidad de camiones en posición
    tituloCantidad: string | undefined;
    // Filtros activos (badges que aparecen arriba del seachBar)
@@ -135,15 +135,17 @@ export class ResumenPage implements OnInit {
             this.completeTableDataIngreso = this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Ingreso");
             this.completeTableDataDescargado = this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Descargado");
             this.completeTableDataAdescargar = this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "A Descargar");
-            this.completeTableDataRechazados =  this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Rechazado");
+            this.completeTableDataRechazados =  this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Rechazo");
             this.completeTableDataDemorados =   this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Demorado");
             this.completeTableDataDesviados =   this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Desviado");
 
             this.completeTableDataMostrar = this.completeTableDataAutorizado.concat(this.completeTableDataIngreso)
             .concat(this.completeTableDataDescargado)
             .concat(this.completeTableDataAdescargar)
+             .concat( this.completeTableDataDesviados)
+
+            //this.completeTableDataMostrar = this.completeTableData;
             this.completeTableDataMostrarIncidencias = this.completeTableDataRechazados.concat(this.completeTableDataDemorados)
-            .concat(this.completeTableDataDesviados)
             this.cantidadTodos = this.completeTableDataMostrar.length
             this.cantidadIncidencias =this.completeTableDataMostrarIncidencias.length
 

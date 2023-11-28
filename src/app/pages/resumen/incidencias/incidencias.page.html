@@ -150,6 +150,7 @@
                 <div class="espacioEntreReg">{{ cartaPorte.intervinientes[0].nombre.slice(0,25)}} </div>
                 <div class="espacioEntreReg"> {{cartaPorte.plantaDestino.descripcion.slice(0,15)}}</div>
 
+
               </ion-col>
 
 
@@ -169,7 +170,12 @@
                   </div>
                   <div class="content-extra">{{interviniente.nombre}}</div>
                 </div>
-
+                <div class="element-extra">
+                  <div class="title-extra">Patente camión</div>
+                  <div class="content-extra">
+                    {{cartaPorte.patente}},
+                  </div>
+                </div>
                 <div class="element-extra">
                   <div class="title-extra">Destino</div>
                   <div class="content-extra">
@@ -243,7 +249,7 @@
                               posicionDiaService.checkIfDesviableOrLlamable(cartaPorte) ||
                               puertosService.checkIfAccionable(cartaPorte)
                           "
-                      (click)="posicionDiaService.solicitarAccion(cartaPorte, 1)"
+                      (click)="posicionDiaService.solicitarAccion(cartaPorte,1)"
                       class="btn-desviar"
                       ion-button
                       outline

@@ -248,7 +248,7 @@ ion-fab {
                       background: #fff;
                       display: flex;
                       justify-content: center;
-                      padding: 0;
+                      padding: 10px;
 
                       .extra-buttons {
                           display: flex;
@@ -257,7 +257,7 @@ ion-fab {
                           justify-content: space-evenly;
                           button {
                               font-size: 13px;
-                              padding: 0 10px;
+                              padding: 10px;
                               width: 25%;
                               border: none;
                           }

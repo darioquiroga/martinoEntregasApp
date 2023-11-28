@@ -4,6 +4,7 @@ export class Configuraciones {
     // PRODUCCIÓN
 
     public static urlBase: string = "https://ws.cerealnet.com/cerealnetServiciosWebV2/ws";
+    //public static urlBasePuertos: string = "https://ws.cerealnet.com/cerealnetPuertosRest-1.0-SNAPSHOT/ws";
     public static urlBasePuertos: string = "https://ws.cerealnet.com/cerealnetPuertosRest-1.0-SNAPSHOT/ws";
 
     public static miCuentaUrl: string = "https://ws.cerealnet.com/cerealnetServiciosWebV2/ws/mi-cuenta";

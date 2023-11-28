@@ -392,7 +392,6 @@ async refreshTable() {
          this.completeTableDataRechazados = this.responsiveTableService.getInitFilterByEstado(this.completeTableData, "Rechazo");
 
          this.completeTableDataMostrarIncidencias = this.completeTableDataRechazados.concat(this.completeTableDataDemorados)
-         .concat(this.completeTableDataDesviados)
          this.cantidadRegistros =  this.completeTableDataMostrarIncidencias.length;
          this.parcialTableData = this.responsiveTableService.getInitParcialTable(this.completeTableDataMostrarIncidencias);
          if (!this.completeTableDataMostrarIncidencias){

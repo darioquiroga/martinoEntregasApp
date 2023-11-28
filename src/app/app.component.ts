@@ -162,7 +162,7 @@ export class AppComponent {
     this.router.navigateByUrl('/politica');
   }
   onClickCamionesDescarga() {
-   
-    this.router.navigateByUrl( 'http://www.cerealnet.com.ar/movil/CamionesDescargaH.aspx');
+
+    this.router.navigateByUrl( 'https://martinoentregas.com.ar/posicion-de-camiones/');
   }
 }

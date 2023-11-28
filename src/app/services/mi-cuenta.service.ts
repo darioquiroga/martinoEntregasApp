@@ -77,7 +77,7 @@ export class MiCuentaService {
           next: (data: any) => {
             this.control = data.control
 
-            debugger
+
             // data is already a JSON object
             if (this.control.codigo == "OK"  ){
               // Intento parsear el usuario
@@ -120,7 +120,7 @@ export class MiCuentaService {
 
           }
         })
-       
+
         } catch (error: any) {
 
           const dataError = JSON.parse(error.error)

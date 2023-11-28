@@ -20,6 +20,7 @@ export class PuertosService {
   getIfPuertos = () => {
     if (typeof this.usuarioActivoJson === 'string') {
       const usuarioActivo: any = this.uiService.getUsuarioActivoSync();
+
       return usuarioActivo && usuarioActivo.tipo && usuarioActivo.tipo.id === tiposUsuarios.PUERTOS;
 
     }
