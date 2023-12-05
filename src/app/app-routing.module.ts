@@ -37,7 +37,10 @@ const routes: Routes = [
     path: 'logout',
     loadChildren: () => import('./pages/logout/logout.module').then( m => m.LogoutPageModule)
   },
-
+  {
+    path: 'buscar-camion',
+    loadChildren: () => import('./pages/buscar-camion/buscar-camion.module').then( m => m.BuscarCamionPageModule)
+  },
   {
     path: 'politica',
     loadChildren: () => import('./pages/info/politica/politica.module').then( m => m.PoliticaPageModule)

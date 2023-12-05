@@ -12,6 +12,7 @@ const routes: Routes = [
     path: 'incidencias',
     loadChildren: () => import('./incidencias/incidencias.module').then( m => m.IncidenciasPageModule)
   },
+
   {
     path: 'inicio',
     loadChildren: () => import('./inicio/inicio.module').then( m => m.InicioPageModule)
@@ -19,7 +20,8 @@ const routes: Routes = [
   {
     path: 'todo',
     loadChildren: () => import('./todo/todo.module').then( m => m.TodoPageModule)
-  }
+  },
+
 ];
 
 @NgModule({

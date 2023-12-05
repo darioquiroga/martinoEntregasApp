@@ -10,6 +10,7 @@ import { InterceptorService } from './../../services/interceptor.service';
 import { textos } from 'src/app/shared/textos/textos';
 import { tipoSesion } from '../../shared/constants/tipoSesion';
 import { Configuraciones }  from '../../shared/constants/configuraciones';
+import { timer } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -111,7 +112,8 @@ export class LoginPage implements OnInit {
         if (resp == true) {
 
           await this.loadingController.dismiss();
-          this.navController.navigateRoot('/resumen', { animated: true });
+          this.navController.navigateRoot('/resumen', { animated: false });
+
         } else {
 
           await this.loadingController.dismiss();
@@ -132,14 +134,23 @@ export class LoginPage implements OnInit {
 
   async doLoadLogin() {
 
+
     await this.uiService.presentLoading("Ingresando...");
       this.loginService.trySavedLogin().then(
         async returnValue => {
           //Si hay login guardado.
           await this.loadingController.dismiss();
-          if (returnValue) {
+
+          if (returnValue == true) {
            //Redirijo al resumen
+           setTimeout(() =>{
+            console.log("Redirigiendo al resumen...");
             this.navController.navigateRoot('/resumen', { animated: true });
+
+           }, 2000);
+
+
+
           } else {
             // Redirijo al login
             this.navController.navigateRoot('/login', { animated: true });
@@ -156,9 +167,9 @@ export class LoginPage implements OnInit {
 
   }
 
-  async soyCamionero(){
+ soyCamionero(){
 
-   this.navController.navigateRoot('/camionero-registro', { animated: true });
+   this.navController.navigateRoot('/buscar-camion', { animated: true });
   }
 
   /**

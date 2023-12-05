@@ -4,7 +4,7 @@ import { App } from '@capacitor/app';
 import { Camionero } from 'src/app/modelo/camionero';
 import { UiService } from 'src/app/services/ui.service';
 import { NotificacionesService } from 'src/app/services/notificaciones.service';
-import { BuscarCamionPage } from '../buscar-camion/buscar-camion.page';
+//import { BuscarCamionPage } from '../buscar-camion/buscar-camion.page';
 import { MenuController } from '@ionic/angular';
 import { LoadingController } from '@ionic/angular';
 import { textos } from 'src/app/shared/textos/textos';

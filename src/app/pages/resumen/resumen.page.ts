@@ -81,24 +81,43 @@ export class ResumenPage implements OnInit {
     this.navController.navigateRoot('/resumen/todo');
   }
   ngOnInit() {
+    if (!localStorage.getItem('reload')) {
+      localStorage['reload'] = true;
+      window.location.reload();
+  } else {
+    localStorage.removeItem('reload');
+  }
+   /* let i = 0;
+    setTimeout(() =>{
+      console.log("refrescarPaginaResumen()");
+      window.location.reload();
+      i++
 
-    if (typeof this.usuarioActivoJson === 'string') {
-      this.usuarioActivo =  JSON.parse(this.usuarioActivoJson);
-      this.cargarCartas();
+     }, 2000);
+
+   console.log("---> Temporizador de dos segundos y refresca para arreglar el bug de que no muestra el menu ni bien ingresa");
+*/
+
+   if (typeof this.usuarioActivoJson === 'string') {
+    this.usuarioActivo =  JSON.parse(this.usuarioActivoJson);
+    this.cargarCartas();
+  }
+  /*this.notificacionesService.ponerEnFalso();
+  this.notificacionesService.checkPorVer().then(async (resp) => {
+    this.data = resp;
+    if (this.data > 0) {
+      this.ver = true;
+    } else {
+      this.ver = false;
     }
-    /*this.notificacionesService.ponerEnFalso();
-    this.notificacionesService.checkPorVer().then(async (resp) => {
-      this.data = resp;
-      if (this.data > 0) {
-        this.ver = true;
-      } else {
-        this.ver = false;
-      }
-      this.numeroMensajes = this.data;
-    });*/
+    this.numeroMensajes = this.data;
+  });*/
 
 
   }
+
+
+
 
 
 

@@ -1,13 +1,109 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>buscar-camion</ion-title>
+    <ion-title>Buscar Camión</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">buscar-camion</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+<ion-content padding class="body">
+
+  <div *ngIf="!loading" class="buscar-content">
+      <ion-item class="busqueda-container">
+          <ion-label color="primary" floating>Ingrese patente o carta</ion-label>
+          <ion-input [(ngModel)]="nroCartaOPatenteBuscada"></ion-input>
+      </ion-item>
+
+      <div class="btn-container">
+
+          <button (click)="onClickBuscar()" ion-button icon-end>
+                BUSCAR
+              <ion-icon name="search"></ion-icon>
+          </button>
+
+      </div>
+  </div>
+
+
+<!-- Muestro la tabla cuando encuentre elementos -->
+  <!-- <div *ngIf="cartasEncontradas && cartasEncontradas.length > 0" class="table-container"> -->
+  <div *ngIf="(cartasEncontradas && cartasEncontradas.length > 0) && !loading" class="table-container">
+      <div class="head-table wrapper">
+          <div class="element-head-table element-wrapper">
+              Destino
+          </div>
+          <div class="element-head-table element-wrapper nroCarta-element">
+              Nro Carta
+          </div>
+          <div class="element-head-table element-wrapper patente-element">
+              Patente
+          </div>
+      </div>
+
+      <div class="element-table" *ngFor="let cartaPorte of cartasEncontradas; index as i">
+          <div class="important-info wrapper" >
+              <div class="element-important element-wrapper">
+                  {{cartaPorte.destino.descripcion}}
+              </div>
+              <div class="element-important element-wrapper nroCarta-element">
+                  {{cartaPorte.nroCarta}}
+              </div>
+              <div class="element-important element-wrapper patente-element">
+                  {{cartaPorte.patente}}
+              </div>
+          </div>
+
+          <div class="extra-info" [@extraInfoState]="estadosToggleCarta[i]">
+              <div class="element-extra">
+                  <div class="title-extra">
+                      Estado:
+                  </div>
+                  <div class="content-extra">
+                      {{cartaPorte.estado.descripcion}}
+                  </div>
+              </div>
+              <div class="element-extra">
+                  <div class="title-extra">
+                      Entregador:
+                  </div>
+                  <div class="content-extra">
+                      {{
+                          cartaPorte.fromPuerto && cartaPorte.entreCp ?
+                              cartaPorte.entreCp
+                              :
+                              cartaPorte.entregador.nombre
+                      }}
+                  </div>
+              </div>
+
+              <div *ngIf="!cartaPorte.fromPuerto" class="element-extra extra-btn">
+                  <div class="title-extra">
+                  </div>
+                  <div class="content-extra">
+                    <!--(click)="buscarCamionService.solicitarLlamado(cartaPorte)"-->
+                      <button  class="btn-solicitar-llamado" ion-button outline>
+                          <!-- <ion-icon class="menu-icon" name="call"></ion-icon> -->
+                          Solicitar Llamado
+                      </button>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+
+      <div *ngIf="loading" class="spinner-container">
+          <ion-spinner ></ion-spinner>
+      </div>
+  </div>
+
+
+<!-- /////////////////////// -->
+
+
+  <div *ngIf="loading" class="spinner-container">
+      <ion-spinner ></ion-spinner>
+  </div>
+
 </ion-content>
