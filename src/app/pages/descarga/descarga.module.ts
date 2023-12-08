@@ -19,7 +19,7 @@ import { DescargaPage } from './descarga.page';
     DescargaPageRoutingModule,
     PipesModule,
     HeaderComponentModule,
-     UserComponentModule
+    UserComponentModule
   ],
   declarations: [DescargaPage]
 })

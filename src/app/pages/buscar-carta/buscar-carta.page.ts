@@ -23,7 +23,8 @@ export class BuscarCartaPage implements OnInit {
   nroCartaOPatenteBuscada: string = '';
   // Intervalo de fechas activo (badges que aparecen arriba)
   filtroFechas: { desde: Date; hasta: Date };
-
+ // Texto buscado (esta bindeado con el input)
+ inputSearchBar: string | undefined;
   // Textos
   buscaCartaTitulo = textos.buscarCarta.html.titulo;
   buscarCartaBtnBuscar = textos.buscarCarta.html.btnBuscar
@@ -69,7 +70,7 @@ export class BuscarCartaPage implements OnInit {
           if (cartasEncontradas.data.length > 1) {
 
             // Mnando las cartas a mostrar en CartasEncontradasPage
-
+            debugger
             this.router.navigateByUrl("/carta-porte-encontradas", {state: {cartasEncontradas: cartasEncontradas}})
 
           } else {

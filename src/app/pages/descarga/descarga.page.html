@@ -17,13 +17,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <div class="filtro-fechas-container">
 
-    <!--<a>Camiones descargados el día: </a>
-    <ion-badge (click)="changeDate()" color="main-black">{{filtroFecha | date: 'dd/MM/yyyy'}}</ion-badge>-->
-
-
-  </div>
   <ion-item id="open-desde" button="true">
     <ion-label position="stacked">Camiones descargados el día: </ion-label>
     <ion-input value="{{ filtroFecha | date: 'dd MMM yyyy' }}" id="date"></ion-input>
@@ -46,7 +40,7 @@
 
 
 <div class="searchbar-container">
-  <ion-searchbar [(ngModel)]="inputSearchBar" [debounce]="500" placeholder="Numero de carta o patente"  (ionInput)="searchByText($event, ['Turno', 'QA'])"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="inputSearchBar" style="color: grey;" [debounce]="500" placeholder="Numero de carta o patente"  (ionInput)="searchByText($event, ['Turno', 'QA'])"></ion-searchbar>
 </div>
 <ion-card>
 <div class="table-container" *ngIf="this.parcialTableData.length >0 ">
