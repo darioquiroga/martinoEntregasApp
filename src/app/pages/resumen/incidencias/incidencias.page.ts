@@ -1,7 +1,7 @@
 import { AppComponent } from './../../../app.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Component, OnInit,  NgZone,  ViewChild, inject } from '@angular/core';
-
+import { MensajeriaService } from 'src/app/services/mensajeria.service';
 import {  IonContent, IonFab  } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 // Constantes y otros
@@ -130,6 +130,7 @@ export class IncidenciasPage implements OnInit {
     private navController: NavController,
     private loadingController: LoadingController,
     private menuController: MenuController,
+    private mensajeriaService: MensajeriaService,
     //public notificacionesService: NotificacionesService,
     private menuCtrl : MenuController,
 
@@ -194,6 +195,7 @@ async initTable() {
         this.activeFilters = this.posicionDiaService.getNewActiveFilters(filter, typeFilter,this.activeFilters);  ;
         // Filtro
         this.parcialTableData = this.posicionDiaService.filter(this.activeFilters, this.completeTableDataMostrarIncidencias);
+
         this.filtroDestino  = this.activeFilters.destino;
         this.filtroEstado = this.activeFilters.estado;
 
@@ -380,7 +382,7 @@ async refreshTable() {
           this.esPuertosSn = this.puertosService.getIfPuertos();
           const data = JSON.stringify(resp);
           this.completeTableData = JSON.parse(data).data ;
-
+debugger
           // Guardo la cantidad en posicion (Posicion del dia)
 
 

@@ -10,6 +10,7 @@ import { InterceptorService } from './../../services/interceptor.service';
 import { textos } from 'src/app/shared/textos/textos';
 import { tipoSesion } from '../../shared/constants/tipoSesion';
 import { Configuraciones }  from '../../shared/constants/configuraciones';
+import { MensajeriaService } from 'src/app/services/mensajeria.service';
 import { timer } from 'rxjs';
 @Component({
   selector: 'app-login',
@@ -47,6 +48,7 @@ export class LoginPage implements OnInit {
     private activateRoute: ActivatedRoute,
     private loadingController: LoadingController,
     private menuCtrl: MenuController,
+    private mensajeriaService: MensajeriaService,
     private interceptorService: InterceptorService,
 
 
@@ -131,6 +133,12 @@ export class LoginPage implements OnInit {
 
     }
   }
+
+enviarMensajeWhatsUp(){
+  //this.mensajeriaService.enviarMensajeWhatsUWapi("ESTES ES EL MENSAJE WHATS UP");
+
+}
+
 
   async doLoadLogin() {
 

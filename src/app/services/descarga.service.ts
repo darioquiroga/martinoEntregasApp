@@ -157,10 +157,12 @@ export class DescargaService {
       op = "historia";
     }
     if(isPuertos === true){
-      return DescargaService.URLSERVICIOPUERTOS + `/cartaPorte/`+op
+      return DescargaService.URLSERVICIO + `/cartaPorte/`+op
+      //return DescargaService.URLSERVICIOPUERTOS + `/cartaPorte/`+op
     }else{
       return DescargaService.URLSERVICIO + `/cartaPorte/`+op
     }
+
 
 
   }

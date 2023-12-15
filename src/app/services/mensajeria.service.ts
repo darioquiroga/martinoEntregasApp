@@ -1,0 +1,132 @@
+import { Control } from './../modelo/control';
+
+import { Usuario } from 'src/app/modelo/usuario';
+import { DEFAULT_CURRENCY_CODE, Injectable } from '@angular/core';
+
+//------------ IMPORTO LAS LIBRERIAS QUE NECESITO ------------//
+import { HTTP } from '@awesome-cordova-plugins/http/ngx';
+import { Cuenta } from 'src/app/modelo/cuenta';
+
+
+//------------IMPORTO LAS CLASES QUE NECESITO ------------//
+//Le agrego el authService. Para que use el token.
+import { LoginService } from 'src/app/services/login.service';
+
+//Agrego las configuraciones
+import { Configuraciones } from '../shared/constants/configuraciones';
+import { Preferences } from '@capacitor/preferences';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Token } from '../modelo/token';
+import * as CryptoJS from 'crypto-js';
+import axios from "axios";
+import { UiService } from './ui.service';
+/**
+* Esta clase se creo para invocar el recurso del servicio web que devuelve el
+* resumen de la cuenta
+*/
+@Injectable({
+  providedIn: 'root'
+})
+export class MensajeriaService {
+
+  //---------------------------------------------//
+  // DECLARACION DE LAS PROPIEDADES QUE NECESITO //
+  //---------------------------------------------//
+  public static URLSERVICIO: string = Configuraciones.wapiUrl;
+  public miCuenta: any;
+  public flag: boolean = false;
+  public control: any;
+  public logueado: boolean = false;
+  public respuesta : any;
+  //private loginService: LoginService | any;
+  //---------------------------------------------//
+
+  usuarioActual: any;
+  errors: Object | undefined;
+
+  // Metodo constructor
+  constructor(public http: HttpClient) { }
+  public configuraciones = Configuraciones;
+  // Este metodo invoca el servicio y parsea la respuesta
+
+
+  public async enviarMensajeWhatsUWapi(celular: any ,mensaje: any) {
+
+
+
+    return new Promise(async (resolve, reject) => {
+        try {
+
+        let parameters:URLSearchParams = new URLSearchParams();
+
+        const url = `${this.getURLServicio()}&to=`+celular+`&message=`+mensaje
+        //const datos = '{"to": "+5493416435556", "text": "hola soy gestagro enviando mensaje desde wapi.ima nombre de coope avella" }'
+        const datos = '{"to": "+5493416435556", "text": "hola soy la APP enviando mensaje con wapi.im desde app gestagro y matrino entregas, yeah !!!" }'
+
+        const httpOptions = {
+         headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': 'Token 33b8c0ae0e9b533d97eddd7f58087ff308276407'
+
+        }),
+       //body : JSON.parse(datos),
+
+        };
+
+        this.http.post(url, JSON.parse(datos), httpOptions).subscribe({
+
+          next: (response: any) => {
+            debugger
+            this.respuesta = response.result;
+            alert("Mensaje enviado con éxito")
+            resolve({
+              respuesta : this.respuesta
+            });
+
+
+
+          },
+          error: (error: any) => {
+
+            //("No se pudo enviar el mensaje "+error.message)
+            //alert("Mensaje enviado con éxito")
+            resolve({
+              respuesta : error.error.control
+
+            });
+
+          }
+        })
+
+        } catch (error: any) {
+
+          const dataError = JSON.parse(error.error)
+          reject(dataError.control.descripcion);
+        }
+
+      });
+
+
+
+  }
+
+
+
+
+  /**
+  * Esta funcion devuelve la URL del servicio
+  */
+
+
+
+
+  /**
+  * Esta funcion devuelve la URL del servicio
+  */
+  private getURLServicio() {
+
+    return MensajeriaService.URLSERVICIO+"?token=Token%2033b8c0ae0e9b533d97eddd7f58087ff308276407";
+
+  }
+
+}

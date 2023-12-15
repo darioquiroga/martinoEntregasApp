@@ -254,18 +254,9 @@
                       ion-button
                       outline
                     >
-                  Desviar
+                  Desviar xxx
                     </button>
-                    <button
-                      *ngIf="puertosService.checkIfAccionable(cartaPorte)"
-                      (click)="posicionDiaService.solicitarAccion(cartaPorte, 3)"
-                      class="btn-revision"
-                      ion-button
-                      outline
-                    >
 
-                      Revision
-                    </button>
                     <button
                       *ngIf="
                               posicionDiaService.checkIfAutorizable(cartaPorte) ||

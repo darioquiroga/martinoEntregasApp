@@ -23,6 +23,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TipoAccion } from '../modelo/tipoAccion';
 import { IonFab, IonFabButton, IonFabList, IonIcon } from '@ionic/angular';
 import { dispositivosOrigen } from '../shared/constants/dispositivosOrigen';
+import { MensajeriaService } from './mensajeria.service';
 
 /**
 * Esta clase se creo para invocar el recurso del servicio web que devuelve el
@@ -48,7 +49,8 @@ export class PosicionDiaService {
   // Metodo constructor
   constructor(public http: HttpClient,
     private responsiveTableService: ResponsiveTableService,
-    private puertosService: PuertosService, private uiService: UiService) { }
+    private puertosService: PuertosService, private uiService: UiService,
+    private mensajeriaService: MensajeriaService) { }
   public configuraciones = Configuraciones;
 
   // Hago la consulta
@@ -58,19 +60,19 @@ export class PosicionDiaService {
     return new Promise(async (resolve, reject) => {
       try {
         const isPuertos = this.puertosService.getIfPuertos()
-       const token: any = currentToken;
-       let parameters:URLSearchParams = new URLSearchParams();
-        const url = `${this.getURLServicio(isPuertos)}?`+parameters;
+        const token: any = currentToken;
+        let parameters: URLSearchParams = new URLSearchParams();
+        const url = `${this.getURLServicio(isPuertos)}?` + parameters;
         const httpOptions = {
           headers: new HttpHeaders({
-              token: token.replace(/['"]+/g, ''),
+            token: token.replace(/['"]+/g, ''),
           }),
 
         };
 
-        this.http.get(url,  httpOptions).subscribe({
+        this.http.get(url, httpOptions).subscribe({
           next: (data: any) => {
-             resolve (
+            resolve(
               {
                 data
               }
@@ -91,7 +93,7 @@ export class PosicionDiaService {
     });
 
 
-};
+  };
 
 
 
@@ -151,439 +153,349 @@ export class PosicionDiaService {
 
 
 
-// Checkea si el camion es desviable o autorizable (estado Demorado o Rechazado)
-    // También checkea que eluser logueado sea autorizador
-    checkIfAccionable(
-      cartaPorte: any,
-      usuarioActivo: { perfil: { id: number; }; }
+  // Checkea si el camion es desviable o autorizable (estado Demorado o Rechazado)
+  // También checkea que eluser logueado sea autorizador
+  checkIfAccionable(
+    cartaPorte: any,
+    usuarioActivo: { perfil: { id: number; }; }
   ) {
-      if (this.puertosService.getIfPuertos() === true){
+    if (this.puertosService.getIfPuertos() === true) {
       return (
-          (cartaPorte.estado.estado === estadosCartaPosicion.Demorado ||
-          cartaPorte.estado.estado === estadosCartaPosicion.Rechazo)  &&
-          (usuarioActivo.perfil.id === perfilesUsuarios.USUARIO_AUTORIZACION)
+        (cartaPorte.estado.estado === estadosCartaPosicion.Demorado ||
+          cartaPorte.estado.estado === estadosCartaPosicion.Rechazo) &&
+        (usuarioActivo.perfil.id === perfilesUsuarios.USUARIO_AUTORIZACION)
       ) ? true : false;
-    }else{
+    } else {
       return (
         (cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Demorado ||
-        cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Rechazo)  &&
+          cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Rechazo) &&
         (usuarioActivo.perfil.id === perfilesUsuarios.USUARIO_AUTORIZACION)
-    ) ? true : false;
+      ) ? true : false;
     }
 
   }
 
   // Reduce el parcial table. Por ahroa se quita elementos del final de la lista nomas
-    reduceParcialTable(
-        parcialTable: CartaPortePosicion[],
-        cantABorrar: number
-    ) {
-        return parcialTable.slice(
-            0,
-            parcialTable.length - cantABorrar
-        )
-    }
- // Recibe los fab's activos y los cierra
- closeFabs(fabCollection: IonFab[]) {
-  fabCollection.forEach(fab => {
+  reduceParcialTable(
+    parcialTable: CartaPortePosicion[],
+    cantABorrar: number
+  ) {
+    return parcialTable.slice(
+      0,
+      parcialTable.length - cantABorrar
+    )
+  }
+  // Recibe los fab's activos y los cierra
+  closeFabs(fabCollection: IonFab[]) {
+    fabCollection.forEach(fab => {
       fab.close();
-  });
-}
-// Ordena la posicion
-order(posicionCompletaDelDia: CartaPortePosicion[]) {
-
-  if (this.puertosService.getIfPuertos()) {
-      return concat(
-          posicionCompletaDelDia.filter(p => p.estadoPosiReal === 'Demorado'),
-          posicionCompletaDelDia.filter(p => p.estadoPosiReal === 'Rechazado'),
-          posicionCompletaDelDia.filter(p => p.estadoPosiReal === 'Autorizado'),
-          posicionCompletaDelDia.filter(p => p.estadoPosiReal === 'Desviado'),
-          posicionCompletaDelDia.filter(
-              p =>    p.estadoPosiReal !== 'Demorado' &&
-                      p.estadoPosiReal !== 'Rechazado' &&
-                      p.estadoPosiReal !== 'Autorizado' &&
-                      p.estadoPosiReal !== 'Desviado'
-          )
-      )
-  } else {
-      return concat(
-          posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Demorado),
-          posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Rechazo),
-          posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Autorizado),
-          posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Desviado),
-          posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Pendiente_Desvio),
-          posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Pendiente_Autorizacion),
-          posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Ingreso),
-          posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.A_Descargar),
-          posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Descargado_Pendiente),
-          posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Descargado),
-          posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === 0)
-      )
+    });
   }
+  // Ordena la posicion
+  order(posicionCompletaDelDia: CartaPortePosicion[]) {
 
-}
-// Filtrando
-filter(activeFilters: {estado: string, destino: string}, completeTableData: CartaPortePosicion[]) {
-  const isPuertos = this.puertosService.getIfPuertos();
+    if (this.puertosService.getIfPuertos()) {
+      return concat(
+        posicionCompletaDelDia.filter(p => p.estadoPosiReal === 'Demorado'),
+        posicionCompletaDelDia.filter(p => p.estadoPosiReal === 'Rechazado'),
+        posicionCompletaDelDia.filter(p => p.estadoPosiReal === 'Autorizado'),
+        posicionCompletaDelDia.filter(p => p.estadoPosiReal === 'Desviado'),
+        posicionCompletaDelDia.filter(
+          p => p.estadoPosiReal !== 'Demorado' &&
+            p.estadoPosiReal !== 'Rechazado' &&
+            p.estadoPosiReal !== 'Autorizado' &&
+            p.estadoPosiReal !== 'Desviado'
+        )
+      )
+    } else {
+      return concat(
+        posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Demorado),
+        posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Rechazo),
+        posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Autorizado),
+        posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Desviado),
+        posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Pendiente_Desvio),
+        posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Pendiente_Autorizacion),
+        posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Ingreso),
+        posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.A_Descargar),
+        posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Descargado_Pendiente),
+        posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === estadosCartaPosicion.Descargado),
+        posicionCompletaDelDia.filter(p => p.estadoCarta.idEstadoCarta === 0)
+      )
+    }
+
+  }
+  // Filtrando
+  filter(activeFilters: { estado: string, destino: string }, completeTableData: CartaPortePosicion[]) {
+    const isPuertos = this.puertosService.getIfPuertos();
 
 
-  // Antes que nada checkeo si el filtro es 'todos' retorno todas las cps
-  if (!activeFilters.destino && !activeFilters.estado) {
+    // Antes que nada checkeo si el filtro es 'todos' retorno todas las cps
+    if (!activeFilters.destino && !activeFilters.estado) {
       // Retorno la tabla parcial inicial
-    return this.responsiveTableService.getInitParcialTable(completeTableData);
-  }
+      return this.responsiveTableService.getInitParcialTable(completeTableData);
+    }
 
-  // Si existen los dos filtros, filtro por ambos. Sinó, filtro por cualquiera de los dos
-  let newTableDate = _.filter(completeTableData, (cartaPorte: CartaPortePosicion) => {
+    // Si existen los dos filtros, filtro por ambos. Sinó, filtro por cualquiera de los dos
+    let newTableDate = _.filter(completeTableData, (cartaPorte: CartaPortePosicion) => {
 
       // Primero checkeo que tenga destino
       if (cartaPorte.destino) {
 
-          return (activeFilters.estado && activeFilters.destino) ? //¿Existen ambas?
-              (
-                  (
-                      isPuertos ?
-                          cartaPorte.plantaDestino.descripcion === activeFilters.destino :
-                          cartaPorte.destino.descripcion === activeFilters.destino
-                  ) && //Filtra ambas con &&
-                  cartaPorte.estadoCarta.descripcion === activeFilters.estado) :
-              (
-                  (
-                      isPuertos ?
-                          cartaPorte.plantaDestino.descripcion === activeFilters.destino :
-                          `${cartaPorte.destino.descripcionAbre}, ${cartaPorte.plantaDestino.descripcion}` === activeFilters.destino
-                  ) || // Filtro una u otra con ||
-                  cartaPorte.estadoCarta.descripcion === activeFilters.estado
-              )
+        return (activeFilters.estado && activeFilters.destino) ? //¿Existen ambas?
+          (
+            (
+              isPuertos ?
+                cartaPorte.plantaDestino.descripcion === activeFilters.destino :
+                cartaPorte.destino.descripcion === activeFilters.destino
+            ) && //Filtra ambas con &&
+            cartaPorte.estadoCarta.descripcion === activeFilters.estado) :
+          (
+            (
+              isPuertos ?
+                cartaPorte.plantaDestino.descripcion === activeFilters.destino :
+                `${cartaPorte.destino.descripcionAbre}, ${cartaPorte.plantaDestino.descripcion}` === activeFilters.destino
+            ) || // Filtro una u otra con ||
+            cartaPorte.estadoCarta.descripcion === activeFilters.estado
+          )
       } else {
-          // Si la CP no tiene destino no la incluyo
-          return false;
+        // Si la CP no tiene destino no la incluyo
+        return false;
       }
 
-  });
+    });
 
-return newTableDate
+    return newTableDate
 
-}
-// Retorna los nuevos filtros activos
-getNewActiveFilters(filter: string, typeFilter: string, oldActiveFilters: {estado: string, destino: string}) {
-  // Primeramente checkeo si está limpiando los filtros, en ese caso retorno un activeFilters vacio
-  if (typeFilter === 'todos') {
-      return {estado: null, destino: null};
   }
-  // hago una copia para evitar mutación
-  const  activeFilters : any = oldActiveFilters;
-  //const activeFilters: {estado: string, destino: string} = oldActiveFilters;
-  // Asigno el nuevo filtro. Ejemplo activeFilters['estado'] = 'Demorado';
-  activeFilters[typeFilter] = filter;
+  // Retorna los nuevos filtros activos
+  getNewActiveFilters(filter: string, typeFilter: string, oldActiveFilters: { estado: string, destino: string }) {
+    // Primeramente checkeo si está limpiando los filtros, en ese caso retorno un activeFilters vacio
+    if (typeFilter === 'todos') {
+      return { estado: null, destino: null };
+    }
+    // hago una copia para evitar mutación
+    const activeFilters: any = oldActiveFilters;
+    //const activeFilters: {estado: string, destino: string} = oldActiveFilters;
+    // Asigno el nuevo filtro. Ejemplo activeFilters['estado'] = 'Demorado';
+    activeFilters[typeFilter] = filter;
 
-  return activeFilters;
-}
-// Retorna un titulo acorde al filtro dado, con la cantidad filtrada
-getTituloFiltrado(filter: string, typeFilter: string) {
-  if (typeFilter === 'estado') {
+    return activeFilters;
+  }
+  // Retorna un titulo acorde al filtro dado, con la cantidad filtrada
+  getTituloFiltrado(filter: string, typeFilter: string) {
+    if (typeFilter === 'estado') {
       // Si sus últimas 3 letras son 'ado', entonces le agrego una 's'
       if (filter.substr(filter.length - 3) === 'ado') {
-          return `Camiones ${filter}s: `; //Ejemplo: Camiones Demorados: 123
+        return `Camiones ${filter}s: `; //Ejemplo: Camiones Demorados: 123
       } else if (filter === 'Rechazo') {
-          return `Camiones Rechazados: `;
+        return `Camiones Rechazados: `;
       } else if (filter === 'Ingreso') {
-          return `Camiones Ingresados: `;
+        return `Camiones Ingresados: `;
       } else {
-          return `${filter}: `;
+        return `${filter}: `;
       }
-  } else if(typeFilter === 'destino') {
+    } else if (typeFilter === 'destino') {
       // Si el nombre es muy largo, lo acorto para que entre
       if (filter.length >= 16) {
-          return `${filter.substr(0, 16)}: `;
+        return `${filter.substr(0, 16)}: `;
       } else {
-          return `${filter}: `;
+        return `${filter}: `;
       }
-  }
-  return `${filter}: `;
-
-}
-
-// Extrae las descricipnes de lso destinos de tableDate, luego los retorna.
-getDestinosList(tableDate: CartaPortePosicion[]) {
-  // Guardo solo las descripciones de los destinos en el array. uniq es para borrar los repetidos
-  return _.compact(
-      _.uniq(
-          _.map(tableDate,
-              (cartaPorte: { destino: { descripcionAbre: any; }; plantaDestino: { descripcion: any; }; }) => {
-                  if (cartaPorte.destino && cartaPorte.plantaDestino) {
-                      if (this.puertosService.getIfPuertos()) {
-
-                          return `${cartaPorte.plantaDestino.descripcion}`;
-                      } else {
-                          return `${cartaPorte.destino.descripcionAbre}, ${cartaPorte.plantaDestino.descripcion}`;
-                      }
-                  } else if (cartaPorte.destino) {
-                      return cartaPorte.destino.descripcionAbre;
-                  }
-              }
-          )
-      )
-  );
-}
-
-
-
-
-getAnalisis = (cartaPorte: CartaPortePosicion) => {
-
-        const parseAnalisis = (a: any) =>
-            `${a.rbr_abrev}: ${a.anl_porc_analisis}% ${a.anl_porc_merma !== 0 ? `${
-                a.rbr_abrev === 'HD' ? 'M' : 'R'
-            }: ${a.anl_porc_merma}%` : ''}`;
-
-
-        const analisis = cartaPorte &&
-            cartaPorte.analisis ? cartaPorte.analisis
-                .map(anal => parseAnalisis(anal))
-                .join(' ')
-                .concat(cartaPorte.observacion ? cartaPorte.observacion : '') :
-            cartaPorte.observacion ? cartaPorte.observacion : ''
-
-        return analisis;
     }
-// Recibe la lista de estados de carta de porte y la reformatea para mostrarlas mas lindas
-formatEstadosCartaPosicion(estadosCartaPosicion: any) {
-  return Object.keys(estadosCartaPosicion)
-      .map(estado => estado.replace('_',' '));
-}
+    return `${filter}: `;
 
-checkIfDesviableOrLlamable(
-  cartaPorte: CartaPortePosicion
-) {
-  if (this.puertosService.getIfPuertos()) {
-      return false;
   }
-  return (
+
+  // Extrae las descricipnes de lso destinos de tableDate, luego los retorna.
+  getDestinosList(tableDate: CartaPortePosicion[]) {
+    // Guardo solo las descripciones de los destinos en el array. uniq es para borrar los repetidos
+    return _.compact(
+      _.uniq(
+        _.map(tableDate,
+          (cartaPorte: { destino: { descripcionAbre: any; }; plantaDestino: { descripcion: any; }; }) => {
+            if (cartaPorte.destino && cartaPorte.plantaDestino) {
+              if (this.puertosService.getIfPuertos()) {
+
+                return `${cartaPorte.plantaDestino.descripcion}`;
+              } else {
+                return `${cartaPorte.destino.descripcionAbre}, ${cartaPorte.plantaDestino.descripcion}`;
+              }
+            } else if (cartaPorte.destino) {
+              return cartaPorte.destino.descripcionAbre;
+            }
+          }
+        )
+      )
+    );
+  }
+
+
+
+
+  getAnalisis = (cartaPorte: CartaPortePosicion) => {
+
+    const parseAnalisis = (a: any) =>
+      `${a.rbr_abrev}: ${a.anl_porc_analisis}% ${a.anl_porc_merma !== 0 ? `${a.rbr_abrev === 'HD' ? 'M' : 'R'
+        }: ${a.anl_porc_merma}%` : ''}`;
+
+
+    const analisis = cartaPorte &&
+      cartaPorte.analisis ? cartaPorte.analisis
+        .map(anal => parseAnalisis(anal))
+        .join(' ')
+        .concat(cartaPorte.observacion ? cartaPorte.observacion : '') :
+      cartaPorte.observacion ? cartaPorte.observacion : ''
+
+    return analisis;
+  }
+  // Recibe la lista de estados de carta de porte y la reformatea para mostrarlas mas lindas
+  formatEstadosCartaPosicion(estadosCartaPosicion: any) {
+    return Object.keys(estadosCartaPosicion)
+      .map(estado => estado.replace('_', ' '));
+  }
+
+  checkIfDesviableOrLlamable(
+    cartaPorte: CartaPortePosicion
+  ) {
+    if (this.puertosService.getIfPuertos()) {
+      return false;
+    }
+    return (
       (cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Demorado ||
-      cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Rechazo)
-  ) ? true : false;
-}
-
-checkIfAutorizable(
-  cartaPorte: CartaPortePosicion
-) {
-  if (this.puertosService.getIfPuertos()) {
-      return false;
-  }
-  return (
-      (cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Demorado)
-  ) ? true : false;
-}
-
-// Solicita una accion, y hace lo correspondiente
-async solicitarAccion(
-  cartaPorte: any,
-  tipoAccion: number
-) {
-debugger
-  // Checkeo si solicita un llamado o una accion //
-  if (tipoAccion === tiposAcciones.SOLICITUD_LLAMADO ) {
-
-     this.uiService.presentAlertConfirm(textos.posicionDia.solicitarLlamado.titulo, textos.posicionDia.solicitarLlamado.descripcion,
-      async() => {
-        try {
-            // Obtengo token del user
-
-            // Nota: El await es requerido porque sinó NO dispara el catch de abajo
-           /*await this.authService.solicitarLlamado(
-                cartaPorte.entregador.idEntregador,
-                '',
-                tipoSesion.NORMAL,
-                currentToken
-            );*/
-
-
-            return new Promise(async (resolve, reject) => {
-              try {
-
-                const isPuertos = this.puertosService.getIfPuertos()
-               const currentToken:any = localStorage.getItem('token')?.toString();
-               let parameters:URLSearchParams = new URLSearchParams();
-               parameters.set("tipoAccion", String(tipoAccion));
-               parameters.set("dispositivoOrigen", String(dispositivosOrigen.APP))
-
-               const url = `${this.getURLServicioSolicitarLlamado(isPuertos)}?`+parameters;
-                const httpOptions = {
-                  headers: new HttpHeaders({
-                      token: currentToken.replace(/['"]+/g, ''),
-                  }),
-
-                };
-                debugger
-                this.http.post(url,  httpOptions).subscribe({
-                  next: (data: any) => {
-                     resolve (
-                      {
-                        data
-                      }
-                    );
-
-                  },
-
-                  error: (error: any) => {
-                    debugger
-                    // ourrio algun error en el loginalert
-                    this.uiService.presentAlertConfirm("Error", "ocurrio un error inesperado. "+error.name)
-                    resolve(error);
-                  },
-                });
-              } catch (error: any) {
-                this.uiService.presentAlertConfirm("Error", "ocurrio un error inesperado. "+error.name)
-
-                const dataError = JSON.parse(error.error);
-                reject(dataError.control.descripcion);
-              }
-            });
-
-        } catch(err) {
-            this.uiService.presentAlertInfo(textos.posicionDia.solicitarLlamado.error.titulo+": "+
-              textos.posicionDia.solicitarLlamado.error.descripcion)
-
-        }
-    },
-    true
-  )
-
-
-
-
-
-  }else {
-      // Solicitó acción. Checkeo si son clientes o si es puertos
-      const isPuertos = this.puertosService.getIfPuertos();
-      //
-      if (isPuertos) {
-          // Si el usuario es de puertos
-          // this.navCtrl.push(AccionPuertosPage, {cartasEncontradas: cartasEncontradas});
-          /*this.app.getActiveNav().push(
-              AccionPuertosPage,
-              {
-                  cartaPorte,
-                  tipoAccion
-              }
-          );*/
-      } else {
-          // Si el usuario es un cliente
-          this.uiService.presentAlertConfirm(
-              textos.posicionDia.solicitarAccion.titulo,
-              textos.posicionDia.solicitarAccion.descripcion,
-              async() => {
-                  try {
-                      // Obtengo token del user
-                      const   currentToken:any = localStorage.getItem('token')?.toString();
-
-                      // Solicito la accion
-                     /* this.solicitarAccion(
-                          cartaPorte,
-                          tiposAcciones[tipoAccion],
-                          currentToken
-                      );*/
-
-                      // Y ahora muto la cartaPorte que me viene por parámetros así se actualiza la vista
-                      cartaPorte.setEstadoCarta(
-                          this.getEstadoByTipoAccion(tipoAccion)
-                      );
-
-                      // Agrego la clase del color
-                      //event.target.classList.add('class3');
-
-                  } catch(err) {
-                      //console.log(err);
-                      this.uiService.presentAlertInfo(
-                          textos.posicionDia.solicitarAccion.error.titulo+" : "+
-                          textos.posicionDia.solicitarAccion.error.descripcion
-                      );
-                  }
-              },
-              true
-          )
-      }
-
-  }
-
-}
-
-// Checkea si el camion es desviable o autorizable (estado Demorado o Rechazado)
-    // También checkea que eluser logueado sea autorizador
-   /* checkIfAccionable(
-      cartaPorte: CartaPortePosicion,
-      usuarioActivo
-  ) {
-      return (
-          (cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Demorado ||
-          cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Rechazo)  &&
-          (usuarioActivo.perfil.id === perfilesUsuarios.USUARIO_AUTORIZACION)
-      ) ? true : false;
-  }*/
-
- /* checkIfDesviableOrLlamable(
-      cartaPorte: CartaPortePosicion
-  ) {
-      if (this.puertosService.getIfPuertos()) {
-          return false;
-      }
-      return (
-          (cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Demorado ||
-          cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Rechazo)
-      ) ? true : false;
+        cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Rechazo)
+    ) ? true : false;
   }
 
   checkIfAutorizable(
-      cartaPorte: CartaPortePosicion
+    cartaPorte: CartaPortePosicion
   ) {
-      if (this.puertosService.getIfPuertos()) {
-          return false;
-      }
-      return (
-          (cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Demorado)
-      ) ? true : false;
-  }*/
-
-
-// Obtengo el estado a partir del tipo de acción
-getEstadoByTipoAccion(tipoAccion: number) {
-  if (tipoAccion == tiposAcciones.SOLICITUD_AUTORIZACION) {
-      return new EstadoCarta({
-          idEstadoCarta: estadosCartaPosicion.Pendiente_Autorizacion,
-          descripcion: 'Pendiente Autorizacion'
-      });
-  } else if (tipoAccion == tiposAcciones.SOLICITUD_DESVIO) {
-      return new EstadoCarta({
-          idEstadoCarta: estadosCartaPosicion.Pendiente_Desvio,
-          descripcion: 'Pendiente Desvio'
-      });
-  } else {
-      return null;
+    if (this.puertosService.getIfPuertos()) {
+      return false;
+    }
+    return (
+      (cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Demorado)
+    ) ? true : false;
   }
-}
+  async solicitarLlamado(cartaPorte: any, tipo: number) {
+
+    if (tipo === 3) {
+      const celular_1 = 5493416435556;
+      const celular_2 = 5493416903752;
+      const celular_3 = 5493416417920;
+
+      const titular = cartaPorte.intervinientes[0].nombre
+      const mensaje = "SOLICITUD DE LLAMADO: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
+
+      this.mensajeriaService.enviarMensajeWhatsUWapi(celular_1, mensaje);
+      this.mensajeriaService.enviarMensajeWhatsUWapi(celular_2, mensaje);
+      //alert("Mensaje enviado con éxito")
+      //this.mensajeriaService.enviarMensajeWhatsUWapi(celular_3, mensaje);
+      //this.mensajeriaService.enviarMensajeWhatsUWapi(celular_4, mensaje);
+    } else if (tipo === 1) {
+      const celular_1 = 5493416435556;
+      const titular = cartaPorte.intervinientes[0].nombre
+      const mensaje = "SOLICITUD DE DESVIO: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
+      this.mensajeriaService.enviarMensajeWhatsUWapi(celular_1, mensaje);
+
+    }
+    this.uiService.presentAlertInfo("Mensaje enviado con éxito")
+
+
+
+  }
+  // Solicita una accion, y hace lo correspondiente
+  async solicitarAccion(
+    cartaPorte: any,
+    tipoAccion: number
+  ) {
+
+
+    if (tipoAccion === tiposAcciones.SOLICITUD_LLAMADO) {
+
+      this.uiService.presentAlertConfirm(textos.posicionDia.solicitarLlamado.titulo, textos.posicionDia.solicitarLlamado.descripcion,
+        async () => {
+          try {
+
+            this.solicitarLlamado(cartaPorte, tipoAccion)
+
+
+
+          } catch (err) {
+            this.uiService.presentAlertInfo(textos.posicionDia.solicitarLlamado.error.titulo + ": " +
+              textos.posicionDia.solicitarLlamado.error.descripcion)
+
+          }
+        },
+        true
+      )
+
+
+    } else if (tipoAccion === tiposAcciones.SOLICITUD_DESVIO) {
+
+
+
+      this.uiService.presentAlertConfirm(textos.posicionDia.solicitarLlamado.titulo, textos.posicionDia.solicitarLlamado.descripcion,
+        async () => {
+          try {
+
+            this.solicitarLlamado(cartaPorte, tipoAccion)
+
+
+
+          } catch (err) {
+            this.uiService.presentAlertInfo(textos.posicionDia.solicitarLlamado.error.titulo + ": " +
+              textos.posicionDia.solicitarLlamado.error.descripcion)
+
+          }
+        },
+        true
+      )
+
+
+    }
+
+  }
+
+
+
+  // Obtengo el estado a partir del tipo de acción
+  getEstadoByTipoAccion(tipoAccion: number) {
+    if (tipoAccion == tiposAcciones.SOLICITUD_AUTORIZACION) {
+      return new EstadoCarta({
+        idEstadoCarta: estadosCartaPosicion.Pendiente_Autorizacion,
+        descripcion: 'Pendiente Autorizacion'
+      });
+    } else if (tipoAccion == tiposAcciones.SOLICITUD_DESVIO) {
+      return new EstadoCarta({
+        idEstadoCarta: estadosCartaPosicion.Pendiente_Desvio,
+        descripcion: 'Pendiente Desvio'
+      });
+    } else {
+      return null;
+    }
+  }
 
   /**
   * Esta funcion devuelve la URL del servicio
   */
   private getURLServicio(puertos: boolean) {
     // Por ahora devuelvo el string como esta, despues hay que usar el token
-    if(puertos === true){
-      return PosicionDiaService.URLSERVICIOPUERTOS+`/cartaPorte/posicion`;
-    }else{
+    if (puertos === true) {
+      return PosicionDiaService.URLSERVICIOPUERTOS + `/cartaPorte/posicion`;
+    } else {
       return PosicionDiaService.URLSERVICIO + `/cartaPorte/posicion`;
     }
   }
   private getURLServicioSolicitarLlamado(puertos: boolean) {
     // Por ahora devuelvo el string como esta, despues hay que usar el token
-    if(puertos === true){
-      return PosicionDiaService.URLSERVICIOPUERTOS+`/notificaciones/solicitud-llamado`;
-    }else{
-      return PosicionDiaService.URLSERVICIOPUERTOS+`/notificaciones/solicitud-llamado`;
+    if (puertos === true) {
+      return PosicionDiaService.URLSERVICIOPUERTOS + `/notificaciones/solicitud-llamado`;
+    } else {
+      return PosicionDiaService.URLSERVICIOPUERTOS + `/notificaciones/solicitud-llamado`;
 
-    //  return false;
+      //  return false;
     }
-}
+  }
 
 
 }

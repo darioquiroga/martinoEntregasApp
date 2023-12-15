@@ -28,6 +28,16 @@ export class BuscarCamionService {
     public static URLSERVICIOPUERTOS: string = Configuraciones.urlBasePuertos;
     async  getCartaDePorteCamion  (paramBusqueda: string) {
 
+      let paramBusquedaTemp: String;
+      if(paramBusqueda.length > 8){
+        paramBusquedaTemp = paramBusqueda.slice(3,12);
+      }else{
+        paramBusquedaTemp = paramBusqueda;
+
+      }
+
+
+
       // Mapeo el array posicionDia de la respuesta en otro array de modelos CartaPorte, y lo retorno
 
      return new Promise(async (resolve, reject) => {
@@ -39,7 +49,7 @@ export class BuscarCamionService {
 
 
 
-          const url = `${this.getURLServicio()}/`+paramBusqueda
+          const url = `${this.getURLServicio()}/`+paramBusquedaTemp
 
           const httpOptions = {
             headers: new HttpHeaders({
@@ -159,8 +169,8 @@ export class BuscarCamionService {
     private getURLServicio() {
 
 
-
-      return BuscarCamionService.URLSERVICIOPUERTOS + `/cartaPorte/posicion`
+      return BuscarCamionService.URLSERVICIO + `/cartaPorte/posicion`
+      //return BuscarCamionService.URLSERVICIOPUERTOS + `/cartaPorte/posicion`
 
 
     }

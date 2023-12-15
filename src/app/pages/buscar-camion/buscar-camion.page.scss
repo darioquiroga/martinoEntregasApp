@@ -35,6 +35,7 @@ ion-content {
     $element-extra--odd: #1d2b36;
   ion-card{
     font-size: 0px;
+    background-color: white;
   }
   ion-header ion-toolbar{
     //background-color: var(--ion-color-primary-toolbar);
@@ -181,7 +182,7 @@ ion-content {
 
 
             .head-table {
-                background: $head-table;
+                background: white;
                 color: $important-info--odd;
                 padding-left: 15px;
                 padding-right: 40px;
