@@ -15,12 +15,14 @@ export class Configuraciones {
     public static authPuertosUrl: string = `${Configuraciones.urlBasePuertos}/usuario/login/`;
     public static timeoutDefault: number = 120000;  //120 seg
     public static servicioRss2JsonURL: string = "https://api.rss2json.com/v1/api.json?rss_url=";
-    public static wapiUrl : string = "https://www.kernelinformatica.com.ar/envia-wu.php";
+    public static wapiUrl : string = "https://www.kernelinformatica.com.ar/webservices/ws-envia-wu.php";
+    //https://www.kernelinformatica.com.ar//app/webservices/public/ws-envia-wu.php?token=Token 33b8c0ae0e9b533d97eddd7f58087ff308276407&to=543416435556&message=hola mundo
     //"/wapi"//"https://wapi.im/api/messages";
     //public static serviciosWebURL : string = `https://www.kernelinformatica.com.ar/app/webservices/public/servicios-web-rest.php`;
      public static version : string = "0.02A";
-     public static tokenWapiGestAgro: string = "Token 33b8c0ae0e9b533d97eddd7f58087ff308276407";
-
+     // token para envio de whats up
+     // el token debe ser enviado desde el back end
+     public static tokenWapi: string = "Token 33b8c0ae0e9b533d97eddd7f58087ff308276407";
 
 
     // Servicio push

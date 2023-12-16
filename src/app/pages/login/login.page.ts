@@ -12,6 +12,7 @@ import { tipoSesion } from '../../shared/constants/tipoSesion';
 import { Configuraciones }  from '../../shared/constants/configuraciones';
 import { MensajeriaService } from 'src/app/services/mensajeria.service';
 import { timer } from 'rxjs';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -69,6 +70,7 @@ export class LoginPage implements OnInit {
     this.direccionEmpresa = textos.login.html.cerealnet.direccion;
     this.telefonoEmpresa = textos.login.html.cerealnet.telefono;
     this.doLoadLogin();
+    this.traerConfiguracionDelTelefono();
   }
   togglePasswordMode() {
     this.passwordTypeInput  =  this.passwordTypeInput  ===  'text'  ?  'password'  :  'text';
@@ -85,6 +87,11 @@ export class LoginPage implements OnInit {
       this.passwordToggleIcon = 'eye';
     }
   }
+  traerConfiguracionDelTelefono (){
+    //TelephonyManager telephonyManager = (TelephonyManager)
+    //getSystemService(Context.TELEPHONY_SERVICE);
+  }
+
 
   setOpen(isOpen: boolean) {
     this.isAlertOpen = isOpen;

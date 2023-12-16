@@ -60,25 +60,23 @@ export class MensajeriaService {
         let parameters:URLSearchParams = new URLSearchParams();
 
         const url = `${this.getURLServicio()}&to=`+celular+`&message=`+mensaje
-        //const datos = '{"to": "+5493416435556", "text": "hola soy gestagro enviando mensaje desde wapi.ima nombre de coope avella" }'
-        const datos = '{"to": "+5493416435556", "text": "hola soy la APP enviando mensaje con wapi.im desde app gestagro y matrino entregas, yeah !!!" }'
-
         const httpOptions = {
          headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Authorization': 'Token 33b8c0ae0e9b533d97eddd7f58087ff308276407'
+          'Authorization': this.configuraciones.tokenWapi
 
         }),
-       //body : JSON.parse(datos),
 
         };
 
-        this.http.post(url, JSON.parse(datos), httpOptions).subscribe({
+        this.http.post(url,  httpOptions).subscribe({
 
           next: (response: any) => {
-            debugger
-            this.respuesta = response.result;
-            alert("Mensaje enviado con éxito")
+
+            this.respuesta = response;
+            if (this.respuesta.status === 200){
+              //alert("Su solicitud fue enviada con éxito")
+            }
             resolve({
               respuesta : this.respuesta
             });
@@ -88,8 +86,8 @@ export class MensajeriaService {
           },
           error: (error: any) => {
 
-            //("No se pudo enviar el mensaje "+error.message)
-            //alert("Mensaje enviado con éxito")
+            //(""+error.message)
+            //alert("No se pudo enviar el mensaje, intente nuevamente más tarde ")
             resolve({
               respuesta : error.error.control
 
@@ -125,7 +123,7 @@ export class MensajeriaService {
   */
   private getURLServicio() {
 
-    return MensajeriaService.URLSERVICIO+"?token=Token%2033b8c0ae0e9b533d97eddd7f58087ff308276407";
+    return MensajeriaService.URLSERVICIO+"?token="+this.configuraciones.tokenWapi;
 
   }
 

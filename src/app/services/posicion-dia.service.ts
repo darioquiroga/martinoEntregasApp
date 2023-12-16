@@ -46,6 +46,7 @@ export class PosicionDiaService {
 
   usuarioActual: any;
   resumenSocio: any;
+  respu : any;
   // Metodo constructor
   constructor(public http: HttpClient,
     private responsiveTableService: ResponsiveTableService,
@@ -379,23 +380,35 @@ export class PosicionDiaService {
   async solicitarLlamado(cartaPorte: any, tipo: number) {
 
     if (tipo === 3) {
+
       const celular_1 = 5493416435556;
       const celular_2 = 5493416903752;
       const celular_3 = 5493416417920;
-
+      let celulares: number[] = [5493416435556,5493416903752,5493416417920];
       const titular = cartaPorte.intervinientes[0].nombre
-      const mensaje = "SOLICITUD DE LLAMADO: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
+      const mensaje = "Solicitud llamado: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
+      for (let celu in celulares) {
+        await this.mensajeriaService.enviarMensajeWhatsUWapi(celulares[celu], mensaje);
 
-      this.mensajeriaService.enviarMensajeWhatsUWapi(celular_1, mensaje);
-      this.mensajeriaService.enviarMensajeWhatsUWapi(celular_2, mensaje);
+      }
+
+
+       // this.mensajeriaService.enviarMensajeWhatsUWapi(celular_2, mensaje);
       //alert("Mensaje enviado con éxito")
       //this.mensajeriaService.enviarMensajeWhatsUWapi(celular_3, mensaje);
       //this.mensajeriaService.enviarMensajeWhatsUWapi(celular_4, mensaje);
     } else if (tipo === 1) {
       const celular_1 = 5493416435556;
+      const celular_2 = 5493416903752;
+      const celular_3 = 5493416417920;
+      let celulares: number[] = [5493416435556,5493416903752,5493416417920];
+
       const titular = cartaPorte.intervinientes[0].nombre
-      const mensaje = "SOLICITUD DE DESVIO: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
-      this.mensajeriaService.enviarMensajeWhatsUWapi(celular_1, mensaje);
+      const mensaje = "Solicitud de desvio: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
+      for (let celu in celulares) {
+        await this.mensajeriaService.enviarMensajeWhatsUWapi(celulares[celu], mensaje);
+
+      }
 
     }
     this.uiService.presentAlertInfo("Mensaje enviado con éxito")
