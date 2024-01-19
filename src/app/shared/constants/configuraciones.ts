@@ -9,7 +9,7 @@ export class Configuraciones {
 
     public static miCuentaUrl: string = "https://ws.cerealnet.com/cerealnetServiciosWebV3/ws/mi-cuenta";
     public static dummyUrl: string ="https://ws.cerealnet.com/cerealnetServiciosWebV3/ws";
-    public static notificacionesUrl: string = "https://ws.cerealnet.com/cerealnetServiciosWebV2/ws/notifiaciones";
+    public static notificacionesUrl: string = "https://ws.cerealnet.com/cerealnetServiciosWebV3/ws/notifiaciones";
 
     public static authUrl: string = `${Configuraciones.urlBase}/usuario/login/`;
     public static authPuertosUrl: string = `${Configuraciones.urlBasePuertos}/usuario/login/`;
@@ -22,7 +22,7 @@ export class Configuraciones {
      public static version : string = "0.02A";
      // token para envio de whats up
      // el token debe ser enviado desde el back end
-     public static tokenWapi: string = "Token 33b8c0ae0e9b533d97eddd7f58087ff308276407";
+     public static tokenWapi: string = "a441bd60784918d8bd65e5d7d21b91148f5ee307";
 
 
     // Servicio push

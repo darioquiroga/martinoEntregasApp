@@ -249,6 +249,18 @@
                               posicionDiaService.checkIfDesviableOrLlamable(cartaPorte) ||
                               puertosService.checkIfAccionable(cartaPorte)
                           "
+                      (click)="posicionDiaService.solicitarAccion(cartaPorte,2)"
+                      class="btn-desviar"
+                      ion-button
+                      outline
+                    >
+                  Autorizar
+                    </button>
+                    <button
+                      *ngIf="
+                              posicionDiaService.checkIfDesviableOrLlamable(cartaPorte) ||
+                              puertosService.checkIfAccionable(cartaPorte)
+                          "
                       (click)="posicionDiaService.solicitarAccion(cartaPorte,1)"
                       class="btn-desviar"
                       ion-button

@@ -126,13 +126,13 @@ export class LoginPage implements OnInit {
         } else {
 
           await this.loadingController.dismiss();
-          this.uiService.presentAlertInfo(respuesta.error.descripcion);
+          this.uiService.presentAlertInfo("Parece que el servcio no esta disponible por el momento, sepa disculpar las molestias e intente nuevamente más tarde.");
 
       }
     }
     ).catch(
       async error => {
-        this.uiService.presentAlertInfo(error+" Ocurrio un error inesperado, inténte nuevamente más tarde.");
+        this.uiService.presentAlertInfo(error+" Parece que el servcio no esta disponible por el momento, sepa disculpar las molestias e intente nuevamente más tarde.");
         await this.loadingController.dismiss();
       }
     );

@@ -24,7 +24,7 @@ import { TipoAccion } from '../modelo/tipoAccion';
 import { IonFab, IonFabButton, IonFabList, IonIcon } from '@ionic/angular';
 import { dispositivosOrigen } from '../shared/constants/dispositivosOrigen';
 import { MensajeriaService } from './mensajeria.service';
-
+import {LoadingController}   from '@ionic/angular';
 /**
 * Esta clase se creo para invocar el recurso del servicio web que devuelve el
 * resumen de la cuenta
@@ -51,6 +51,7 @@ export class PosicionDiaService {
   constructor(public http: HttpClient,
     private responsiveTableService: ResponsiveTableService,
     private puertosService: PuertosService, private uiService: UiService,
+    private loadingController: LoadingController,
     private mensajeriaService: MensajeriaService) { }
   public configuraciones = Configuraciones;
 
@@ -378,40 +379,51 @@ export class PosicionDiaService {
     ) ? true : false;
   }
   async solicitarLlamado(cartaPorte: any, tipo: number) {
-
+    this.uiService.presentLoading("Contactando con su entregador, aguarde...")
+    const celu_1 = 5493416192379;
+    const celu_2 = 5493413709702;
+    const celu_3 = 5493413709701;
+    const celu_da = 5493416435556;
+    const celu_su = 5493416417920;
+    const celu_her = 543416903752;
+    let err =0
+    let celulares: number[] = [celu_1, celu_2, celu_3, celu_da, celu_su, celu_her];
+    let mensaje = "";
     if (tipo === 3) {
-
-      const celular_1 = 5493416435556;
-      const celular_2 = 5493416903752;
-      const celular_3 = 5493416417920;
-      let celulares: number[] = [5493416435556,5493416903752,5493416417920];
       const titular = cartaPorte.intervinientes[0].nombre
-      const mensaje = "Solicitud llamado: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
-      for (let celu in celulares) {
-        await this.mensajeriaService.enviarMensajeWhatsUWapi(celulares[celu], mensaje);
+      mensaje = "Solicitud llamado: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
 
-      }
-
-
-       // this.mensajeriaService.enviarMensajeWhatsUWapi(celular_2, mensaje);
-      //alert("Mensaje enviado con éxito")
-      //this.mensajeriaService.enviarMensajeWhatsUWapi(celular_3, mensaje);
-      //this.mensajeriaService.enviarMensajeWhatsUWapi(celular_4, mensaje);
     } else if (tipo === 1) {
-      const celular_1 = 5493416435556;
-      const celular_2 = 5493416903752;
-      const celular_3 = 5493416417920;
-      let celulares: number[] = [5493416435556,5493416903752,5493416417920];
-
       const titular = cartaPorte.intervinientes[0].nombre
-      const mensaje = "Solicitud de desvio: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
-      for (let celu in celulares) {
-        await this.mensajeriaService.enviarMensajeWhatsUWapi(celulares[celu], mensaje);
+      mensaje = "Solicitud de desvio: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta +" | Estado: "+ cartaPorte.estadoCarta.descripcion  + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
 
+    } else if (tipo === 2) {
+      const titular = cartaPorte.intervinientes[0].nombre
+      mensaje = "Autorizar: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta+" | Estado: "+ cartaPorte.estadoCarta.descripcion  + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
+    }
+    for (let celu in celulares) {
+      await this.mensajeriaService.enviarMensajeWhatsUWapi(celulares[celu], mensaje).then(function(resp:any) {
+        // cumplimiento
+        if(resp.respuesta == "error"){
+          err = err +1;
       }
+      }, function(reason) {
+
+        // rechazo
+      });
 
     }
-    this.uiService.presentAlertInfo("Mensaje enviado con éxito")
+    if (err > 0){
+
+      await this.loadingController.dismiss();
+      this.uiService.presentAlertInfo("Error, No se pudo enviar el mensaje , debido a un error inesperado, comuniquese via whatsUp a alguno de los siguientes números "+celu_1+", "+celu_2+", "+celu_3+ ". Sepa disculpar las molestias ocasionadas.")
+
+    }else{
+      await this.loadingController.dismiss();
+      this.uiService.presentAlertInfo("Mensajes enviado con éxito, pronto se pondrán en contacto con usted.")
+
+    }
+
 
 
 
@@ -447,7 +459,7 @@ export class PosicionDiaService {
 
 
 
-      this.uiService.presentAlertConfirm(textos.posicionDia.solicitarLlamado.titulo, textos.posicionDia.solicitarLlamado.descripcion,
+      this.uiService.presentAlertConfirm(textos.posicionDia.solicitarDesvio.titulo, textos.posicionDia.solicitarDesvio.descripcion,
         async () => {
           try {
 
@@ -456,15 +468,30 @@ export class PosicionDiaService {
 
 
           } catch (err) {
-            this.uiService.presentAlertInfo(textos.posicionDia.solicitarLlamado.error.titulo + ": " +
-              textos.posicionDia.solicitarLlamado.error.descripcion)
+            this.uiService.presentAlertInfo(textos.posicionDia.solicitarDesvio.error.titulo + ": " +
+              textos.posicionDia.solicitarDesvio.error.descripcion)
 
           }
         },
         true
       )
+    } else if (tipoAccion === tiposAcciones.SOLICITUD_AUTORIZACION) {
+      this.uiService.presentAlertConfirm(textos.posicionDia.solicitarAutorizar.titulo, textos.posicionDia.solicitarAutorizar.descripcion,
+        async () => {
+          try {
+
+            this.solicitarLlamado(cartaPorte, tipoAccion)
 
 
+
+          } catch (err) {
+            this.uiService.presentAlertInfo(textos.posicionDia.solicitarAutorizar.error.titulo + ": " +
+              textos.posicionDia.solicitarAutorizar.error.descripcion)
+
+          }
+        },
+        true
+      )
     }
 
   }

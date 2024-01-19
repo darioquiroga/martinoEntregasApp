@@ -139,8 +139,6 @@ export class ResumenPage implements OnInit {
            async resp => {
 
              const respuesta = JSON.stringify(resp);
-
-
              const data = JSON.stringify(resp);
              this.completeTableData = JSON.parse(data).data ;
 

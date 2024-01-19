@@ -40,7 +40,7 @@ export class MensajeriaService {
   public respuesta : any;
   //private loginService: LoginService | any;
   //---------------------------------------------//
-
+public errorWup: any;
   usuarioActual: any;
   errors: Object | undefined;
 
@@ -74,8 +74,12 @@ export class MensajeriaService {
           next: (response: any) => {
 
             this.respuesta = response;
+
             if (this.respuesta.status === 200){
+
               //alert("Su solicitud fue enviada con éxito")
+            }else{
+           // alert(this.respuesta.message)
             }
             resolve({
               respuesta : this.respuesta
@@ -87,9 +91,9 @@ export class MensajeriaService {
           error: (error: any) => {
 
             //(""+error.message)
-            //alert("No se pudo enviar el mensaje, intente nuevamente más tarde ")
+
             resolve({
-              respuesta : error.error.control
+              respuesta : error.error.type
 
             });
 

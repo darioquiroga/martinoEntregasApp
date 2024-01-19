@@ -382,7 +382,7 @@ async refreshTable() {
           this.esPuertosSn = this.puertosService.getIfPuertos();
           const data = JSON.stringify(resp);
           this.completeTableData = JSON.parse(data).data ;
-debugger
+
           // Guardo la cantidad en posicion (Posicion del dia)
 
 

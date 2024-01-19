@@ -94,7 +94,23 @@ export const textos = {
                 titulo: 'Informacion',
                 descripcion: 'Hubo un problema, quizás su celular no se encuentra registrado en el sistema'
             }
+        },
+        solicitarDesvio: {
+          titulo: 'Aviso',
+          descripcion: '¿Desea desviar el camión?',
+          error: {
+              titulo: 'Informacion',
+              descripcion: 'Hubo un problema, quizás su celular no se encuentra registrado en el sistema'
+          }
+      },
+      solicitarAutorizar: {
+        titulo: 'Aviso',
+        descripcion: '¿Desea autorizar el camión?',
+        error: {
+            titulo: 'Informacion',
+            descripcion: 'Hubo un problema, quizás su celular no se encuentra registrado en el sistema'
         }
+    }
     },
     registerCamionero: {
         html: {
