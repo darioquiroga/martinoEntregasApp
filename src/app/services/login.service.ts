@@ -72,8 +72,13 @@ export class LoginService {
               this.saveStorage('usuario', this.usuarioActual);
               this.saveStorage('token', this.usuarioToken);
               this.saveStorage('esPuertosSn', this.esPuertosSn);
-              this.logueado = true;
+              this.saveStorage('tokenWappi', data.tokenWAPPI);
+              this.saveStorage('AutorizadorNombre', data.nombre);
+              this.saveStorage('AutorizadorCelular', data.celular);
+              this.saveStorage('AutorizadorDni', data.dni);
 
+              this.logueado = true;
+              debugger
 
               resolve(this.logueado);
             } else {
@@ -234,11 +239,26 @@ export class LoginService {
       localStorage.setItem('token', JSON.stringify(obj));
     } else if (queGrabo == 'usuario') {
       localStorage.setItem('usuarioActual', JSON.stringify(this.usuarioActual));
+    } else if (queGrabo == 'tokenWappi') {
+      localStorage.setItem('tokenWappi', obj);
+      debugger
+    } else if (queGrabo == 'AutorizadorNombre') {
+      localStorage.setItem('AutorizadorNombre', obj)
+    } else if (queGrabo == 'AutorizadorCelular') {
+      localStorage.setItem('AutorizadorCelular',obj)
+    } else if (queGrabo == 'AutorizadorDni') {
+      localStorage.setItem('AutorizadorDni', obj)
     }
+
+
   }
   deleteStorage() {
     localStorage.removeItem('token');
     localStorage.removeItem('usuarioActual');
+    localStorage.removeItem('tokenWappi');
+    localStorage.removeItem('AutorizadorNombre');
+    localStorage.removeItem('AutorizadorCelular');
+    localStorage.removeItem('AutorizadorDni');
     localStorage.clear();
   }
 

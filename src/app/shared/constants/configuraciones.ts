@@ -3,7 +3,8 @@ export class Configuraciones {
 
     // PRODUCCIÓN
 
-    public static urlBase: string = "https://ws.cerealnet.com/cerealnetServiciosWebV3/ws";
+    //public static urlBase: string = "https://ws.cerealnet.com/cerealnetServiciosWebV3/ws";
+    public static urlBase: string = "http://190.210.222.177:48080/cerealnetServiciosWebV4/ws";
     //public static urlBasePuertos: string = "https://ws.cerealnet.com/cerealnetPuertosRest-1.0-SNAPSHOT/ws";
     public static urlBasePuertos: string = "https://ws.cerealnet.com/cerealnetPuertosRest-1.0-SNAPSHOT/ws";
 
@@ -22,7 +23,9 @@ export class Configuraciones {
      public static version : string = "0.02A";
      // token para envio de whats up
      // el token debe ser enviado desde el back end
-     public static tokenWapi: string = "a441bd60784918d8bd65e5d7d21b91148f5ee307";
+     //a441bd60784918d8bd65e5d7d21b91148f5ee307
+
+     public static tokenWapi: string = "xxxxx"
 
 
     // Servicio push

@@ -81,6 +81,8 @@ export class IncidenciasPage implements OnInit {
   public ver: boolean = false;
   public numeroMensajes: any;
   public usuarioActivoJson = localStorage.getItem('usuarioActual')?.toString();
+  public tokenWAPPI : any = localStorage.getItem('tokenWappi')?.toString();
+
   public cantidadRegistros :any;
   // Estado de la busqueda, si esta activa o no
    busquedaActiva: boolean | false = false;

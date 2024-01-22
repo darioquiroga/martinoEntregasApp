@@ -49,6 +49,8 @@ public errorWup: any;
   public configuraciones = Configuraciones;
   // Este metodo invoca el servicio y parsea la respuesta
 
+  public tokenWAPPI : any = localStorage.getItem('tokenWappi')?.toString();
+
 
   public async enviarMensajeWhatsUWapi(celular: any ,mensaje: any) {
 
@@ -58,13 +60,11 @@ public errorWup: any;
         try {
 
         let parameters:URLSearchParams = new URLSearchParams();
-
         const url = `${this.getURLServicio()}&to=`+celular+`&message=`+mensaje
         const httpOptions = {
          headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Authorization': this.configuraciones.tokenWapi
-
+          'Authorization': this.tokenWAPPI
         }),
 
         };
@@ -127,7 +127,7 @@ public errorWup: any;
   */
   private getURLServicio() {
 
-    return MensajeriaService.URLSERVICIO+"?token="+this.configuraciones.tokenWapi;
+    return MensajeriaService.URLSERVICIO+"?token="+this.tokenWAPPI;
 
   }
 

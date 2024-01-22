@@ -39,7 +39,8 @@ export class PosicionDiaService {
   //---------------------------------------------//
   public static URLSERVICIO: string = Configuraciones.urlBase;
   public static URLSERVICIOPUERTOS: string = Configuraciones.urlBasePuertos;
-
+  public nombreAutorizador : any = localStorage.getItem('AutorizadorNombre')?.toString();
+  public celularAutorizador : any = localStorage.getItem('AutorizadorCelular')?.toString();
   public flag: boolean = false;
   //private loginService: LoginService | any;
   //---------------------------------------------//
@@ -391,15 +392,15 @@ export class PosicionDiaService {
     let mensaje = "";
     if (tipo === 3) {
       const titular = cartaPorte.intervinientes[0].nombre
-      mensaje = "Solicitud llamado: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
+      mensaje = "Solicitud llamado: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre+ " | Encargado: "+this.nombreAutorizador+": "+this.celularAutorizador
 
     } else if (tipo === 1) {
       const titular = cartaPorte.intervinientes[0].nombre
-      mensaje = "Solicitud de desvio: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta +" | Estado: "+ cartaPorte.estadoCarta.descripcion  + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
+      mensaje = "Solicitud de desvio: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta +" | Estado: "+ cartaPorte.estadoCarta.descripcion  + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre+" | Encargado: "+this.nombreAutorizador+" "+this.celularAutorizador
 
     } else if (tipo === 2) {
       const titular = cartaPorte.intervinientes[0].nombre
-      mensaje = "Autorizar: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta+" | Estado: "+ cartaPorte.estadoCarta.descripcion  + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre
+      mensaje = "Autorizar: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta+" | Estado: "+ cartaPorte.estadoCarta.descripcion  + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre+" | Encargado: "+this.nombreAutorizador+" "+this.celularAutorizador
     }
     for (let celu in celulares) {
       await this.mensajeriaService.enviarMensajeWhatsUWapi(celulares[celu], mensaje).then(function(resp:any) {
@@ -416,7 +417,7 @@ export class PosicionDiaService {
     if (err > 0){
 
       await this.loadingController.dismiss();
-      this.uiService.presentAlertInfo("Error, No se pudo enviar el mensaje , debido a un error inesperado, comuniquese via whatsUp a alguno de los siguientes números "+celu_1+", "+celu_2+", "+celu_3+ ". Sepa disculpar las molestias ocasionadas.")
+      this.uiService.presentAlertInfo("Error, No se pudo enviar el mensaje , debido a un error inesperado, comuniquese via WhatsUp con alguno de los siguientes números "+celu_1+", "+celu_2+", "+celu_3+ ". Sepa disculpar las molestias ocasionadas.")
 
     }else{
       await this.loadingController.dismiss();
