@@ -16,6 +16,7 @@ import { UiService } from 'src/app/services/ui.service';
 import { ResponsiveTableService } from 'src/app/services/responsive-table.service';
 import { PuertosService } from 'src/app/services/puertos.service';
 import { textos } from 'src/app/shared/textos/textos';
+import { Mensajes } from 'src/app/modelo/mensajes';
 @Component({
   selector: 'app-resumen',
   templateUrl: './resumen.page.html',
@@ -52,7 +53,9 @@ export class ResumenPage implements OnInit {
    destinosList: string[] = [];
    // Guardo el usuario activo en una variable
    usuarioActivo: Usuario | any;
-
+  // Mensajes de whats up para verificar si y ase envio o no
+  mensajes: Mensajes[] = JSON.parse(localStorage.getItem('mensajes') || '[]');
+  public mensajeEnviadoSn : string | undefined;
    // Necesario para asegurarse que el user no se desplaza hacia abajo (infiniteScrollTop)
    lastScrollTop: any;
   constructor(
@@ -191,6 +194,30 @@ export class ResumenPage implements OnInit {
      }
    }
 
+   public graboMensajes(id: any, msg : any){
+
+    const nuevoMensaje: Mensajes = { id: id, contenido:msg };
+    this.mensajes.push(nuevoMensaje);
+    localStorage.setItem('mensajes', JSON.stringify(this.mensajes));
+
+  }
+
+
+  deleteStorageMensaje() {
+    localStorage.removeItem('mensajes');
+  }
+
+  public verificaMensajeEnviado (mensaje:any){
+    const mensajesAlmacenados: Mensajes[] = JSON.parse(localStorage.getItem('mensajes') || '[]');
+
+    for (var i = 0, len = mensajesAlmacenados.length; i < len; i++){
+      if (mensaje == mensajesAlmacenados[i].contenido){
+          this.mensajeEnviadoSn = "S";
+      }else{
+        this.mensajeEnviadoSn = "N";
+        }
+    }
+  }
 
 
 }

@@ -53,10 +53,7 @@ public errorWup: any;
 
 
   public async enviarMensajeWhatsUWapi(celular: any ,mensaje: any) {
-
-
-
-    return new Promise(async (resolve, reject) => {
+   return new Promise(async (resolve, reject) => {
         try {
 
         let parameters:URLSearchParams = new URLSearchParams();
@@ -64,7 +61,7 @@ public errorWup: any;
         const httpOptions = {
          headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Authorization': this.tokenWAPPI
+          'Authorization': this.tokenWAPPI //"33b8c0ae0e9b533d97eddd7f58087ff308276407"
         }),
 
         };
@@ -72,15 +69,14 @@ public errorWup: any;
         this.http.post(url,  httpOptions).subscribe({
 
           next: (response: any) => {
-
             this.respuesta = response;
 
-            if (this.respuesta.status === 200){
+            //if (this.respuesta.status === 200){
 
               //alert("Su solicitud fue enviada con éxito")
-            }else{
+            //}else{
            // alert(this.respuesta.message)
-            }
+            //}
             resolve({
               respuesta : this.respuesta
             });
@@ -90,10 +86,9 @@ public errorWup: any;
           },
           error: (error: any) => {
 
-            //(""+error.message)
 
-            resolve({
-              respuesta : error.error.type
+           resolve({
+              respuesta : error.type
 
             });
 

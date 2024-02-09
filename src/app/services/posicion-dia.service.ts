@@ -25,6 +25,7 @@ import { IonFab, IonFabButton, IonFabList, IonIcon } from '@ionic/angular';
 import { dispositivosOrigen } from '../shared/constants/dispositivosOrigen';
 import { MensajeriaService } from './mensajeria.service';
 import {LoadingController}   from '@ionic/angular';
+import { Mensajes } from 'src/app/modelo/mensajes';
 /**
 * Esta clase se creo para invocar el recurso del servicio web que devuelve el
 * resumen de la cuenta
@@ -40,8 +41,10 @@ export class PosicionDiaService {
   public static URLSERVICIO: string = Configuraciones.urlBase;
   public static URLSERVICIOPUERTOS: string = Configuraciones.urlBasePuertos;
   public nombreAutorizador : any = localStorage.getItem('AutorizadorNombre')?.toString();
-  public celularAutorizador : any = localStorage.getItem('AutorizadorCelular')?.toString();
+  public celularAutorizador : any = "(Celular: "+localStorage.getItem('AutorizadorCelular')?.toString()+")";
   public flag: boolean = false;
+  mensajes: Mensajes[] = JSON.parse(localStorage.getItem('mensajes') || '[]');
+  public mensajeEnviadoSn : string | undefined;
   //private loginService: LoginService | any;
   //---------------------------------------------//
 
@@ -379,56 +382,142 @@ export class PosicionDiaService {
       (cartaPorte.estadoCarta.idEstadoCarta === estadosCartaPosicion.Demorado)
     ) ? true : false;
   }
+  generaCodigoAleatorio() {
+    let result = '';
+    //const characters = 'ABCDEFGHIJKLMNOPQuvwxyz0123456789';
+    const characters = '0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < charactersLength; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+}
+
+
   async solicitarLlamado(cartaPorte: any, tipo: number) {
-    this.uiService.presentLoading("Contactando con su entregador, aguarde...")
+
+
+
     const celu_1 = 5493416192379;
     const celu_2 = 5493413709702;
     const celu_3 = 5493413709701;
     const celu_da = 5493416435556;
     const celu_su = 5493416417920;
-    const celu_her = 543416903752;
-    let err =0
+    const celu_her =5493416903752;
     let celulares: number[] = [celu_1, celu_2, celu_3, celu_da, celu_su, celu_her];
+   // let celulares: number[] = [celu_da, celu_su, celu_her];
+
+    //
+    let codigoReferencia = this.generaCodigoAleatorio();
+
+    //
+    const fechaHora = new Date();
+
+    let i =0;
     let mensaje = "";
+    let mensajeCorto="";
+    let err  = 0;
     if (tipo === 3) {
       const titular = cartaPorte.intervinientes[0].nombre
-      mensaje = "Solicitud llamado: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre+ " | Encargado: "+this.nombreAutorizador+": "+this.celularAutorizador
-
+      mensaje = "REF "+codigoReferencia+" - SOLICITUD LLAMADO: Titular: " + titular +", Nro Carta: " + cartaPorte.nroCarta + ", Puerto: " + cartaPorte.destino.descripcionAbre +", Encargado: "+this.nombreAutorizador+" "+this.celularAutorizador+", Entregador: "+cartaPorte.entregador.nombre+" - " +fechaHora.toLocaleDateString()+" "+fechaHora.toLocaleTimeString()
+      mensajeCorto ="Solicitud llamado: Titular: " + titular +", Nro Carta: " + cartaPorte.nroCarta + ", Puerto: " + cartaPorte.destino.descripcionAbre
+      +", Entregador: "+cartaPorte.entregador.nombre+" - " +fechaHora.toLocaleDateString()+" "+fechaHora.toLocaleTimeString();
     } else if (tipo === 1) {
       const titular = cartaPorte.intervinientes[0].nombre
-      mensaje = "Solicitud de desvio: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta +" | Estado: "+ cartaPorte.estadoCarta.descripcion  + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre+" | Encargado: "+this.nombreAutorizador+" "+this.celularAutorizador
+      mensaje = "REF "+codigoReferencia+" - SOLICITUD DE DESVIO: Titular: " + titular +", Nro Carta: " + cartaPorte.nroCarta + ", Puerto: " + cartaPorte.destino.descripcionAbre +", Encargado: "+this.nombreAutorizador+" "+this.celularAutorizador+", Entregador: "+cartaPorte.entregador.nombre+" - " +fechaHora.toLocaleDateString()+" "+fechaHora.toLocaleTimeString()
+      titular +", Nro Carta: " + cartaPorte.nroCarta +", Estado: "+ cartaPorte.estadoCarta.descripcion  + ", Puerto: " + cartaPorte.destino.descripcionAbre
+      +", Entregador: "+cartaPorte.entregador.nombre+", Encargado: "+this.nombreAutorizador+": "+this.celularAutorizador;
+      mensajeCorto ="Solicitud de desvío: Titular: " + titular +", Nro Carta: " + cartaPorte.nroCarta + ", Puerto: " + cartaPorte.destino.descripcionAbre +", Entregador: "+cartaPorte.entregador.nombre+ ", Encargado: "+this.nombreAutorizador+": "+this.celularAutorizador;
 
     } else if (tipo === 2) {
       const titular = cartaPorte.intervinientes[0].nombre
-      mensaje = "Autorizar: Titular: " + titular +" | Nro Carta: " + cartaPorte.nroCarta+" | Estado: "+ cartaPorte.estadoCarta.descripcion  + " | Puerto: " + cartaPorte.destino.descripcionAbre +" | Entregador: "+cartaPorte.entregador.nombre+" | Encargado: "+this.nombreAutorizador+" "+this.celularAutorizador
+      mensaje = "REF "+codigoReferencia+" - AUTORIZAR: Titular: " + titular +", Nro Carta: " + cartaPorte.nroCarta + ", Puerto: " + cartaPorte.destino.descripcionAbre +", Encargado: "+this.nombreAutorizador+" "+this.celularAutorizador+", Entregador: "+cartaPorte.entregador.nombre+" - " +fechaHora.toLocaleDateString()+" "+fechaHora.toLocaleTimeString()
+      mensajeCorto ="Autorizar: Titular: " + titular +", Nro Carta: " + cartaPorte.nroCarta + ", Puerto: " + cartaPorte.destino.descripcionAbre +", Entregador: "+cartaPorte.entregador.nombre+ ", Encargado: "+this.nombreAutorizador+": "+this.celularAutorizador;
+
     }
-    for (let celu in celulares) {
-      await this.mensajeriaService.enviarMensajeWhatsUWapi(celulares[celu], mensaje).then(function(resp:any) {
-        // cumplimiento
+
+
+    this.verificaMensajeEnviado(mensajeCorto);
+    if (this.mensajeEnviadoSn == "S"){
+      // No se envía e mensaje ya que se envio hace unos instantes
+     this.uiService.presentAlertInfo("Ya fue enviado un mensaje idéntico, no se puede enviar el mensaje")
+
+    }else{
+      // Se envia el mensaje
+      this.uiService.presentLoading("Contactando con su entregador, aguarde...")
+
+
+   for (let celu in celulares) {
+
+      await this.mensajeriaService.enviarMensajeWhatsUWapi(celulares[i], mensaje).then(function(resp:any) {
+
         if(resp.respuesta == "error"){
+
           err = err +1;
       }
       }, function(reason) {
 
-        // rechazo
+
       });
+      i++;
 
     }
+
+
     if (err > 0){
 
-      await this.loadingController.dismiss();
-      this.uiService.presentAlertInfo("Error, No se pudo enviar el mensaje , debido a un error inesperado, comuniquese via WhatsUp con alguno de los siguientes números "+celu_1+", "+celu_2+", "+celu_3+ ". Sepa disculpar las molestias ocasionadas.")
+     await this.loadingController.dismiss();
+     this.uiService.presentAlertInfo("Error, No se pudo enviar el mensaje , debido a un error inesperado, comuniquese via WhatsUp con alguno de los siguientes números "+celu_1+", "+celu_2+", "+celu_3+ ". Sepa disculpar las molestias ocasionadas.")
 
     }else{
+      this.graboMensajes(codigoReferencia, mensajeCorto);
       await this.loadingController.dismiss();
       this.uiService.presentAlertInfo("Mensajes enviado con éxito, pronto se pondrán en contacto con usted.")
 
     }
 
+    await this.loadingController.dismiss();
+    }
+
+
+
+
 
 
 
   }
+
+
+  public graboMensajes(id: any, msg : any){
+
+    const nuevoMensaje: Mensajes = { id: id, contenido:msg };
+    this.mensajes.push(nuevoMensaje);
+    localStorage.setItem('mensajes', JSON.stringify(this.mensajes));
+
+  }
+
+
+  deleteStorageMensaje() {
+    localStorage.removeItem('mensajes');
+  }
+
+  public verificaMensajeEnviado (mensaje:any){
+    const mensajesAlmacenados: Mensajes[] = JSON.parse(localStorage.getItem('mensajes') || '[]');
+    for (var i = 0, len = mensajesAlmacenados.length; i < len; i++){
+      if (mensaje == mensajesAlmacenados[i].contenido){
+          this.mensajeEnviadoSn = "S";
+      }else{
+        this.mensajeEnviadoSn = "N";
+        }
+    }
+  }
+
+
+
+
+
+
   // Solicita una accion, y hace lo correspondiente
   async solicitarAccion(
     cartaPorte: any,

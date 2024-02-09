@@ -76,14 +76,11 @@ export class LoginService {
               this.saveStorage('AutorizadorNombre', data.nombre);
               this.saveStorage('AutorizadorCelular', data.celular);
               this.saveStorage('AutorizadorDni', data.dni);
-
               this.logueado = true;
-              debugger
-
               resolve(this.logueado);
             } else {
               resolve(false);
-              //reject(this.usuarioActual.control?.descripcion ?? 'Error al autenticar.');
+              reject(this.usuarioActual.control?.descripcion ?? 'Error al autenticar.');
             }
            // resolve(this.usuarioActual);
           },
@@ -136,17 +133,17 @@ export class LoginService {
   async trySavedLogin() {
     //return new Promise(async (resolve, reject) => {
     //  try {
+
     let credenciales: any = localStorage.getItem('usuarioActual');
+    this.usuarioActual = localStorage.getItem('usuarioActual');
     let credencialesToken: any = localStorage.getItem('token');
     this.usuarioGrabado = JSON.parse(credenciales);
     this.usuarioToken = JSON.parse(credencialesToken);
-
-
+    const isPuertos = false;
+    this.esPuertosSn = isPuertos;
     const today = new Date();
+    debugger
     const fechaHoy = today.toDateString();
-    //let fechaToken = new Date(this.usuarioGrabado.token.fechaHasta);
-    //let fechaActual = new Date(fechaHoy);
-
     if (this.usuarioToken  != null && this.usuarioGrabado != '' ) {
       return new Promise(async (resolve, reject) => {
 
@@ -259,6 +256,7 @@ export class LoginService {
     localStorage.removeItem('AutorizadorNombre');
     localStorage.removeItem('AutorizadorCelular');
     localStorage.removeItem('AutorizadorDni');
+    localStorage.removeItem('mensajes');
     localStorage.clear();
   }
 

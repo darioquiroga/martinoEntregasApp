@@ -3,8 +3,8 @@ export class Configuraciones {
 
     // PRODUCCIÓN
 
-    //public static urlBase: string = "https://ws.cerealnet.com/cerealnetServiciosWebV3/ws";
-    public static urlBase: string = "http://190.210.222.177:48080/cerealnetServiciosWebV4/ws";
+    public static urlBase: string = "https://ws.cerealnet.com/cerealnetServiciosWebV4/ws";
+    //public static urlBase: string = "https://190.210.222.177:48080/cerealnetServiciosWebV4/ws";
     //public static urlBasePuertos: string = "https://ws.cerealnet.com/cerealnetPuertosRest-1.0-SNAPSHOT/ws";
     public static urlBasePuertos: string = "https://ws.cerealnet.com/cerealnetPuertosRest-1.0-SNAPSHOT/ws";
 

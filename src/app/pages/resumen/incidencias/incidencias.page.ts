@@ -17,7 +17,7 @@ import { PosicionDiaService } from 'src/app/services/posicion-dia.service';
 import { UiService } from 'src/app/services/ui.service';
 import { ResponsiveTableService } from 'src/app/services/responsive-table.service';
 import { PuertosService } from 'src/app/services/puertos.service';
-
+import { Mensajes } from 'src/app/modelo/mensajes';
 
 
 
@@ -82,7 +82,8 @@ export class IncidenciasPage implements OnInit {
   public numeroMensajes: any;
   public usuarioActivoJson = localStorage.getItem('usuarioActual')?.toString();
   public tokenWAPPI : any = localStorage.getItem('tokenWappi')?.toString();
-
+  mensajes: Mensajes[] = JSON.parse(localStorage.getItem('mensajes') || '[]');
+  public mensajeEnviadoSn : string | undefined;
   public cantidadRegistros :any;
   // Estado de la busqueda, si esta activa o no
    busquedaActiva: boolean | false = false;
@@ -385,6 +386,7 @@ async refreshTable() {
           const data = JSON.stringify(resp);
           this.completeTableData = JSON.parse(data).data ;
 
+
           // Guardo la cantidad en posicion (Posicion del dia)
 
 
@@ -430,7 +432,30 @@ async refreshTable() {
 }
 
 
+public graboMensajes(id: any, msg : any){
 
+  const nuevoMensaje: Mensajes = { id: id, contenido:msg };
+  this.mensajes.push(nuevoMensaje);
+  localStorage.setItem('mensajes', JSON.stringify(this.mensajes));
+
+}
+
+
+deleteStorageMensaje() {
+  localStorage.removeItem('mensajes');
+}
+
+public verificaMensajeEnviado (mensaje:any){
+  const mensajesAlmacenados: Mensajes[] = JSON.parse(localStorage.getItem('mensajes') || '[]');
+
+  for (var i = 0, len = mensajesAlmacenados.length; i < len; i++){
+    if (mensaje == mensajesAlmacenados[i].contenido){
+        this.mensajeEnviadoSn = "S";
+    }else{
+      this.mensajeEnviadoSn = "N";
+      }
+  }
+}
 
 }
 

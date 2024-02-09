@@ -126,7 +126,7 @@ export class LoginPage implements OnInit {
         } else {
 
           await this.loadingController.dismiss();
-          this.uiService.presentAlertInfo("Parece que el servcio no esta disponible por el momento, sepa disculpar las molestias e intente nuevamente más tarde.");
+          this.uiService.presentAlertInfo("El usuario o clave ingresados no son correctos, verifique sus datos e intente nuevamente.");
 
       }
     }
@@ -151,6 +151,7 @@ enviarMensajeWhatsUp(){
 
 
     await this.uiService.presentLoading("Ingresando...");
+
       this.loginService.trySavedLogin().then(
         async returnValue => {
           //Si hay login guardado.
