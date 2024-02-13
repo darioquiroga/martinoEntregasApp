@@ -112,9 +112,9 @@ ion-fab {
     }
     .fab-list-destino {
         left: 130%;
-        transform: translatex(-50%);
+        transform: translatex(-30%);
         align-items: center;
-
+        margin-bottom: -60px;
         width: 160px;
         overflow-y: auto;
         flex-direction: column;

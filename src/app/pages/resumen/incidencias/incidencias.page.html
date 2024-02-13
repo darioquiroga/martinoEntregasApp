@@ -34,10 +34,6 @@
      ></ion-searchbar>
    </div>
 
-  <!-- <div class="active-filters-container" *ngIf="this.completeTableData.length > 0"  style="padding-left: 4%">
-     <ion-badge class="ion-badge-format" style="font-size: 10px;  color:white" *ngIf="filtroEstado" color="warning">{{filtroEstado}}</ion-badge><br>
-    <ion-badge class="ion-badge-format" style="font-size: 10px;  color:white" *ngIf="filtroDestino" color="warning">{{filtroDestino}}</ion-badge>
- </div>-->
 
 
 
@@ -68,7 +64,7 @@
        <div>
          <div
            class="element-table"
-           *ngFor="let cartaPorte of completeTableDataMostrarIncidencias  ; index as i "
+           *ngFor="let cartaPorte of parcialTableData  ; index as i "
          >
 
          <!--<ion-accordion-group expand="inset">
@@ -299,6 +295,7 @@
 
 
 
+
     <!-- <div  class="spinner-container" *ngIf="!istodoCargado">
        <ion-spinner ></ion-spinner>
    </div>-->
@@ -321,5 +318,61 @@
          </ng-template>
        </div>
      </div>
+
+     <ion-fab
+     slot="fixed"
+     horizontal="center"
+     vertical="bottom"
+     #fabPrincipal>
+
+     <ion-fab-button (click)="posicionDiaService.closeFabs([fabDestino])">
+       <!--<ion-icon name="add"></ion-icon>-->
+       Destino
+     </ion-fab-button>
+
+
+<!--  <ion-fab-list side="end">
+       <ion-fab class="fab-estado" #fabEstado >
+         <ion-fab-button
+           (click)="posicionDiaService.closeFabs([fabDestino])"
+           ion-fab>Estado
+         </ion-fab-button>
+        <ion-fab-list class="fab-list-estado" side="top">
+           <button
+             *ngFor="let estado of estadosList"
+             (click)="onClickFilter(estado, 'estado', [fabEstado, fabDestino, fabPrincipal])"
+             ion-fab
+           >
+             {{estado}}
+           </button>
+         </ion-fab-list>
+       </ion-fab>
+     </ion-fab-list>-->
+     <ion-fab-list side="top">
+       <ion-fab class="fab-destino"  #fabDestino>
+          <!-- <ion-fab-button (click)="posicionDiaService.closeFabs([fabEstado])" ion-fab> Destino </ion-fab-button>-->
+        <!--  <button (click)="posicionDiaService.closeFabs([fabEstado])" ion-fab>Destino</button>-->
+         <ion-fab-list class="fab-list-destino" side="top">
+           <button
+             *ngFor="let destino of destinosList"
+             (click)="onClickFilter(destino, 'destino', [fabDestino, fabPrincipal])"
+             ion-fab >
+             {{destino}}
+           </button>
+         </ion-fab-list>
+       </ion-fab>
+     </ion-fab-list>
+
+    <ion-fab-list side="start">
+       <ion-fab class="fab-destino" #fabTodos>
+         <ion-fab-button
+           ion-fab
+           (click)="onClickFilter('', 'todos', [fabTodos, fabDestino, fabPrincipal])"
+         >
+           Todos
+         </ion-fab-button>
+       </ion-fab>
+     </ion-fab-list>
+   </ion-fab>
 
  </ion-content>

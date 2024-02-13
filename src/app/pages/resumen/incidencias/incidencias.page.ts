@@ -204,7 +204,7 @@ async initTable() {
 
 
         // Cambio el titulo por uno mas acorde
-        this.tituloCantidad = `Incidencias: ${this.completeTableDataMostrarIncidencias.length}`;
+        this.tituloCantidad = `Incidencias: ${this.parcialTableData.length}`;
 
     }
 
@@ -221,9 +221,9 @@ async initTable() {
       // hago una copia para evitar mutación
       let activeFilters: {estado: string, destino: string} = oldActiveFilters;
       this.filtroDestino  =activeFilters.estado;
-      this.filtroEstado = activeFilters.destino;
+
       // Asigno el nuevo filtro. Ejemplo activeFilters['estado'] = 'Demorado';
-      activeFilters["estado"] = activeFilters.estado;
+
       activeFilters["destino"] = activeFilters.destino;
       return activeFilters;
   }
@@ -354,7 +354,7 @@ doInfiniteScrollTop($event: { scrollTop: any; }) {
   // Necesario para asegurarse que el user no se desplaza hacia abajo
   this.lastScrollTop = $event.scrollTop;
 }
-// Hago la búsqueda SIEMPRE en la tabla completa (tabla con TODAS las cps del user)
+
 
 // Refresca la tabla
 async refreshTable() {

@@ -19,7 +19,7 @@ import { CartaPorteHistoria } from 'src/app/modelo/cartaPorteHistoria';
 import { DescargaService } from 'src/app/services/descarga.service';
 import { DatePipe } from '@angular/common';
 import { LoadingController } from '@ionic/angular';
-
+import { PosicionDiaService } from 'src/app/services/posicion-dia.service';
 
 @Component({
   selector: 'app-descarga',
@@ -70,9 +70,14 @@ export class DescargaPage implements OnInit {
  usuarioActivo: Usuario | any;
  // Necesario para asegurarse que el user no se desplaza hacia abajo (infiniteScrollTop)
  lastScrollTop : any | undefined;
+ filtroVisible: any | "N";
  // Fecha para filtrar la descarga
+// Lista con todos los destinos de las cartas
+destinosList: string[] = [];
  filtroFecha: Date | undefined;
 totalCartas: any | 0;
+activeFilters: { /*estado: string; */destino: string; } | any;
+filtroDestino: String | undefined;
  // respuesta del servicio de estado ok, ver luego si esto se quita
  respuestaEstadoDescarga : string |  undefined;
  istodoCargado : any
@@ -88,6 +93,7 @@ totalCartas: any | 0;
     //private datePicker: DatePicker,
    // public puertosService: PuertosService,
     public descargaService: DescargaService,
+    public posicionDiaService: PosicionDiaService,
     private uiService: UiService,
   ) { }
 /*  if (!this.cartaDePorte : any) {
@@ -115,6 +121,7 @@ totalCartas: any | 0;
   }
    // Inicializa la tabla
    async initTable() {
+
   // Pongo el spinner
     this.loading = true;
     await this.uiService.presentLoading("Cargando...");
@@ -145,6 +152,62 @@ changeDate() {
  this.refreshTable();
 
 }
+
+// Primero guardo filtros activos, después filtro y por último cierro los FAB's
+
+onClickFilter(filter: string, typeFilter: string, fabCollection: any) {
+
+  // Cierro los FAB's
+  this.posicionDiaService.closeFabs(fabCollection);
+  // Guardo los nuevos filtros
+  this.activeFilters = this.posicionDiaService.getNewActiveFilters(filter, typeFilter,this.activeFilters);  ;
+  // Filtro
+  this.parcialTableData = this.posicionDiaService.filter(this.activeFilters, this.completeTableData);
+
+
+
+ this.filtroDestino  = this.activeFilters.destino;
+  // Cambio el titulo por uno mas acorde
+  if (this.activeFilters.destino && this.activeFilters.estado) {
+
+      this.tituloCantidad = `Total: ${this.parcialTableData.length}`;
+  } else {
+      if (typeFilter === 'todos') {
+          // Guardo todos en cantidad
+          this.filtroDestino  ="";
+
+          this.tituloCantidad = `Cantidad en Posicion: ${this.parcialTableData.length}`;
+      } else {
+          this.tituloCantidad = `${this.posicionDiaService.getTituloFiltrado(filter, typeFilter)}${this.parcialTableData.length}`;
+      }
+  }
+
+}
+
+
+// Retorna los nuevos filtros activos
+getNewActiveFilters(filter: string, typeFilter: string, oldActiveFilters: {estado: string, destino: string}) {
+// Primeramente checkeo si está limpiando los filtros, en ese caso retorno un activeFilters vacio
+if (typeFilter === 'todos') {
+  this.filtroDestino  ="";
+
+    return {estado: null, destino: null};
+}
+
+// hago una copia para evitar mutación
+let activeFilters: {estado: string, destino: string} = oldActiveFilters;
+this.filtroDestino  =activeFilters.estado;
+
+// Asigno el nuevo filtro. Ejemplo activeFilters['estado'] = 'Demorado';
+activeFilters["estado"] = activeFilters.estado;
+activeFilters["destino"] = activeFilters.destino;
+return activeFilters;
+}
+
+
+
+
+
 /**
      * Refresca la tabla
      */
@@ -172,15 +235,15 @@ async refreshTable() {
 
       this.descargaService.getDescarga(formattedDate, formattedDate).then(
         async (resp: any)=>{
-          debugger
+
           if (resp.data.length == 0){
             await this.loadingController.dismiss();
             this.tituloCantidad = `Descarga de ayer 0`;
             this.uiService.presentAlertInfo("No se encontraron datos de descarga");
-
+            this.filtroVisible = "N"
           }else{
             let response = JSON.parse(JSON.stringify(resp.data));
-
+            this.filtroVisible = "S";
             this.completeTableData = response
 
             // Guardo la cantidad en posicion (Posicion del dia)
@@ -194,7 +257,11 @@ async refreshTable() {
             this.parcialTableData = this.completeTableData;//this.responsiveTableService.getInitParcialTable(this.completeTableData);
             this.totalCartas = this.parcialTableData.length;
             // Inicializo los estados toggle de las cartas en false
-            this.estadosToggleCarta = this.responsiveTableService.initToggles(this.completeTableData.length);
+            this.estadosToggleCarta = this.responsiveTableService.initToggles(this.completeTableData.length);9
+
+            // Obtengo los destinos para los filtros
+            this.destinosList = this.posicionDiaService.getDestinosList(this.completeTableData);
+
             // Texto buscado vacio
             this.inputSearchBar = '';
             // Saco el spinner
@@ -227,6 +294,8 @@ async refreshTable() {
 
     this.nadaEnBusqueda =  textos.posicionDia.html.nadaEnPosicion;
     this.nadaEnPosicion = textos.posicionDia.html.nadaEnBusqueda
+
+
     this.initTable();
   }
 
