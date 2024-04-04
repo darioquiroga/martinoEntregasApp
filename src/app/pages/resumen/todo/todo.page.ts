@@ -80,6 +80,7 @@ export class Todopage implements OnInit {
   //public notificaciones: any;
   public ver: boolean = false;
   public numeroMensajes: any;
+  public intervalId: any;
   public usuarioActivoJson = localStorage.getItem('usuarioActual')?.toString();
   // Estado de la busqueda, si esta activa o no
    busquedaActiva: boolean | false = false;
@@ -169,7 +170,7 @@ export class Todopage implements OnInit {
       this.numeroMensajes = this.data;
     }); */
 
-
+    this.controlCarga()
     this.initTable();
 
 
@@ -194,6 +195,22 @@ async initTable() {
 
 
 }
+
+controlCarga(){
+
+  let count = 0;
+  this.intervalId = setInterval(()=>{
+    count++;
+   // console.log("---->"+count)
+    if (count == 40){
+      this.loadingController.dismiss();
+      clearInterval(this.intervalId)
+      this.uiService.presentAlertInfo(textos.errorNoRespondeEnPoint.timeOutError.descripcion)
+      this.navController.navigateRoot("/logout");
+    }
+  }, 1000);
+}
+
  // Primero guardo filtros activos, después filtro y por último cierro los FAB's
 
     onClickFilter(filter: string, typeFilter: string, fabCollection: any) {
@@ -244,12 +261,11 @@ async initTable() {
       activeFilters["destino"] = activeFilters.destino;
       return activeFilters;
   }
-async doRefresh(refresher:any) {
-  // Recargo toda la tabla
-  await this.refreshTable();
-  // Aviso que finalizó
-  refresher.complete();
-}
+  async doRefresh(event:any) {
+    console.log("doRefresh");
+    await this.refreshTable();
+    event.target.complete();
+  }
 public getLogoEmpresa() {
     if (this.resumen.empresa.id != '') {
       this.logo = Configuraciones.rutaLogos + this.resumen.empresa.id + '.png';
@@ -424,6 +440,7 @@ async refreshTable() {
         }else{
           this.tituloCantidad = `Cantidad en Posicion: `+this.completeTableDataMostrar.length;
         }
+        clearInterval(this.intervalId)
           // Obtengo los destinos para los filtros
           this.destinosList = this.posicionDiaService.getDestinosList(this.completeTableData);
           // Inicializo los estados toggle de las cartas en false
@@ -445,6 +462,7 @@ async refreshTable() {
       // Muestro error
       /*this.textos.erroresGenericos.timeOutError.titulo +
         this.textos.erroresGenericos.timeOutError.descripcion*/
+        clearInterval(this.intervalId)
       this.uiService.presentAlertInfo(textos.erroresGenericos.timeOutError.titulo+": "+textos.erroresGenericos.timeOutError.descripcion);
 
   }

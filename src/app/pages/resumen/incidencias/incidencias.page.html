@@ -20,9 +20,11 @@
      <ion-badge color="warning">{{this.completeTableData.length}}</ion-badge>
 
    </ion-item>
-   <ion-refresher (ionRefresh)="doRefresh($event)">
-     <ion-refresher-content></ion-refresher-content>
-   </ion-refresher>-->
+  -->
+  <ion-refresher slot="fixed"  (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
 
    <div class="searchbar-container">
      <ion-searchbar

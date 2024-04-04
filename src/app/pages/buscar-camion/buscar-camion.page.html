@@ -159,7 +159,7 @@
     </ion-card-content>
     </ion-card>
     <ion-button
-    style="padding-left: 20px; padding-right: 20px; color: grey"
+    style="padding-left: 20px; padding-bottom:50px; padding-right: 20px; color: grey"
     id="submit-btn"
     type="submit"
     (click)="onClickBuscar()"
@@ -167,16 +167,34 @@
     class="btn-login"
     >BUSCAR</ion-button
   >
-  <ion-button
-  style="padding-left: 20px; padding-right: 20px; color: grey"
-  id="submit-btn"
-  type="submit"
-  (click)="onClickEnviarWhatsUp()"
-  expand="block"
-  class="btn-login"
-  >whats up</ion-button
->
+
+
+
+
+
+
+
 
     <!-- /////////////////////// -->
   </div>
+
+
+  <ion-card color="tertiary">
+    <ion-card-header>
+      <ion-card-subtitle>{{tituloEntregador}}</ion-card-subtitle>
+      <ion-card-title >Contacte con {{entregadorNombre}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div>{{mensajeEntregador}}</div>
+      <br><br>
+      <ion-button
+      style="padding-left: 20px; padding-right: 20px;  color: grey"
+      id="submit-btn"
+      type="submit"
+      (click)="onClickContactarEntregador()"
+      expand="block"
+      class="btn-login"
+      >CONTACTAR</ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

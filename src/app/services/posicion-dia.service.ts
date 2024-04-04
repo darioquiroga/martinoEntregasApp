@@ -399,12 +399,12 @@ export class PosicionDiaService {
 
 
 
-    const celu_1 = 5493416192379;
-    const celu_2 = 5493413709702;
-    const celu_3 = 5493413709701;
-    const celu_da = 5493416435556;
-    const celu_su = 5493416417920;
-    const celu_her =5493416903752;
+    const celu_1 = this.configuraciones.celu_1;
+    const celu_2 = this.configuraciones.celu_2;
+    const celu_3 = this.configuraciones.celu_3;
+    const celu_da = this.configuraciones.celu_da;
+    const celu_su = this.configuraciones.celu_su;
+    const celu_her =this.configuraciones.celu_her;
     let celulares: number[] = [celu_1, celu_2, celu_3, celu_da, celu_su, celu_her];
    // let celulares: number[] = [celu_da, celu_su, celu_her];
 
@@ -413,11 +413,13 @@ export class PosicionDiaService {
 
     //
     const fechaHora = new Date();
+    let r = 0
 
     let i =0;
     let mensaje = "";
     let mensajeCorto="";
     let err  = 0;
+    let enviados = 0
     if (tipo === 3) {
       const titular = cartaPorte.intervinientes[0].nombre
       mensaje = "REF "+codigoReferencia+" - SOLICITUD LLAMADO: Titular: " + titular +", Nro Carta: " + cartaPorte.nroCarta + ", Puerto: " + cartaPorte.destino.descripcionAbre +", Encargado: "+this.nombreAutorizador+" "+this.celularAutorizador+", Entregador: "+cartaPorte.entregador.nombre+" - " +fechaHora.toLocaleDateString()+" "+fechaHora.toLocaleTimeString()
@@ -448,42 +450,47 @@ export class PosicionDiaService {
       this.uiService.presentLoading("Contactando con su entregador, aguarde...")
 
 
-   for (let celu in celulares) {
+      for (let celu in celulares) {
 
-      await this.mensajeriaService.enviarMensajeWhatsUWapi(celulares[i], mensaje).then(function(resp:any) {
+        await this.mensajeriaService.enviarMensajeWhatsUWapi(celulares[i], mensaje).then(function(resp:any) {
 
-        if(resp.respuesta == "error"){
+          const respuesta = JSON.stringify(resp);
+          const data = JSON.parse(respuesta);
+          if(data.respuesta == false){
 
-          err = err +1;
+            err = err +1;
+          }else{
+            enviados = enviados+1
+        }
+        }, function(reason) {
+
+
+        });
+        i++;
+
       }
-      }, function(reason) {
 
 
-      });
-      i++;
+      let idInterval = setInterval(() => {
+        if (enviados >= celulares.length){
+          clearInterval(idInterval);
+          this.graboMensajes(codigoReferencia, mensajeCorto);
+          this.loadingController.dismiss(null)
+          this.uiService.presentAlertInfo("Mensaje enviado con éxito, pronto se pondrán en contacto con usted.")
+
+        }
+        if (err > 0){
+          clearInterval(idInterval);
+          this.uiService.presentAlertInfo("Error, No se pudo enviar el mensaje , debido a un error inesperado, comuniquese via WhatsUp con alguno de los siguientes números "+celu_1+", "+celu_2+", "+celu_3+ ". Sepa disculpar las molestias ocasionadas.")
+
+          this.loadingController.dismiss(null)
+
+
+        }
+      r++
+      }, 1000);
 
     }
-
-
-    if (err > 0){
-
-     await this.loadingController.dismiss();
-     this.uiService.presentAlertInfo("Error, No se pudo enviar el mensaje , debido a un error inesperado, comuniquese via WhatsUp con alguno de los siguientes números "+celu_1+", "+celu_2+", "+celu_3+ ". Sepa disculpar las molestias ocasionadas.")
-
-    }else{
-      this.graboMensajes(codigoReferencia, mensajeCorto);
-      await this.loadingController.dismiss();
-      this.uiService.presentAlertInfo("Mensajes enviado con éxito, pronto se pondrán en contacto con usted.")
-
-    }
-
-    await this.loadingController.dismiss();
-    }
-
-
-
-
-
 
 
   }

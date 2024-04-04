@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Contacte con el Entregador</ion-title>
+    <ion-buttons slot="end">
+      <ion-back-button defaultHref="/buscar-camion"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding class="body"  style="text-align: center;">
+  <br /><br />
+  <div *ngIf="!loading" class="buscar-content">
+
+    <i class="fa fa-mobile" aria-hidden="true"></i>
+  <ion-item style="text-align: center;">
+    <div style="width: 100%; text-align: center;">
+          <h6>Ingrese su número de celular</h6>
+          <!--<ion-badge style="font-size: 11px;" color="info">(Sin ceros ni quince)</ion-badge>
+-->
+</div>
+    </ion-item>
+
+    <ion-item >
+
+      <ion-input class="custom"
+        maxlength="10" min = "10" required="true"  [(ngModel)]="nroCelularDestino" type="tel" placeholder="000-0000000">
+      </ion-input>
+    </ion-item>
+    <ion-item class="custom">
+       <div style="width: 100%; text-align: center;">
+            <h6>Escriba el mensaje que desea enviar</h6>
+        </div>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea class="custom"
+
+        placeholder="Indique el motivo de su problema o consulta"
+        [autoGrow]="true" [(ngModel)]="msg"
+        value="" >
+      </ion-textarea>
+    </ion-item>
+
+
+    <!-- Muestro la tabla cuando encuentre elementos -->
+    <!-- <div *ngIf="cartasEncontradas && cartasEncontradas.length > 0" class="table-container"> -->
+
+    <ion-button
+    style="padding-left: 20px; padding-right: 20px; color: grey"
+    id="submit-btn"
+    type="submit"
+    (click)="onClickContactarEntregador()"
+    expand="block"
+    class="btn-login"
+    > <ion-icon name="logo-whatsapp"></ion-icon>  ENVIAR</ion-button
+  >
+
+
+    <!-- /////////////////////// -->
+  </div>
+
+</ion-content>

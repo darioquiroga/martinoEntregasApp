@@ -33,9 +33,12 @@ ion-content {
     $important-info--odd: #F7F7F7;
     $element-extra: #FFFFFF;
     $element-extra--odd: #1d2b36;
+
+
+
   ion-card{
     font-size: 0px;
-    //background-color: white;
+    background-color: white;
   }
   ion-header ion-toolbar{
     //background-color: var(--ion-color-primary-toolbar);
@@ -496,4 +499,32 @@ ion-content {
 .cantidad-camiones {
   padding: 10px 17px 1px;
   opacity: 0.9;
+}
+
+
+
+
+ion-textarea.custom{
+  --background: white;
+  --color: #4c4c4c;
+  --placeholder-color: rgb(70, 70, 70);
+  --placeholder-opacity: 0.8;
+  --padding-bottom: 10px;
+  --padding-end: 10px;
+  --padding-start: 10px;
+  --padding-top: 10px;
+  margin-bottom: 20px
+}
+
+ion-input.custom {
+  text-align: center;
+  --background: white;
+  --color: #4c4c4c;
+  --placeholder-color: rgb(70, 70, 70);
+  --placeholder-opacity: 0.8;
+  --padding-bottom: 10px;
+  --padding-end: 10px;
+  --padding-start: 10px;
+  --padding-top: 10px;
+  margin-bottom: 20px
 }

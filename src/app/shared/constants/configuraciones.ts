@@ -2,15 +2,15 @@ export class Configuraciones {
     // LOCAL
 
     // PRODUCCIÓN
-
+    public static nombreEntregador: string = "Martino Entregas"
     public static urlBase: string = "https://ws.cerealnet.com/cerealnetServiciosWebV4/ws";
     //public static urlBase: string = "https://190.210.222.177:48080/cerealnetServiciosWebV4/ws";
     //public static urlBasePuertos: string = "https://ws.cerealnet.com/cerealnetPuertosRest-1.0-SNAPSHOT/ws";
     public static urlBasePuertos: string = "https://ws.cerealnet.com/cerealnetPuertosRest-1.0-SNAPSHOT/ws";
 
-    public static miCuentaUrl: string = "https://ws.cerealnet.com/cerealnetServiciosWebV3/ws/mi-cuenta";
-    public static dummyUrl: string ="https://ws.cerealnet.com/cerealnetServiciosWebV3/ws";
-    public static notificacionesUrl: string = "https://ws.cerealnet.com/cerealnetServiciosWebV3/ws/notifiaciones";
+    public static miCuentaUrl: string = "https://ws.cerealnet.com/cerealnetServiciosWebV4/ws/mi-cuenta";
+    public static dummyUrl: string ="https://ws.cerealnet.com/cerealnetServiciosWebV4/ws";
+    public static notificacionesUrl: string = "https://ws.cerealnet.com/cerealnetServiciosWeb4/ws/notifiaciones";
 
     public static authUrl: string = `${Configuraciones.urlBase}/usuario/login/`;
     public static authPuertosUrl: string = `${Configuraciones.urlBasePuertos}/usuario/login/`;
@@ -25,13 +25,13 @@ export class Configuraciones {
      // el token debe ser enviado desde el back end
      //a441bd60784918d8bd65e5d7d21b91148f5ee307
 
-     public static tokenWapi: string = "xxxxx"
+     public static tokenWapi: string = ""
 
 
     // Servicio push
     public static oneSignalCredenciales = {
-        appId: 'c7904741-cfbf-4e4a-b373-197d53fa659b',
-        googleProjectnumber: '819718918776'
+        appId: '00000000-0000-0000-0000-00000000000',
+        googleProjectnumber: '000000000000'
     }
     public static rutaLogos : string = "https://www.kernelinformatica.com.ar/applications/apps/gestagro/logos/";
     public static serviciosWebURL : string = `https://www.kernelinformatica.com.ar/app/webservices/public/ws.php`;
@@ -39,5 +39,14 @@ export class Configuraciones {
 
     // Cantidad de items que se muestran en la lista de posicion dia
     public static lazyLoadSize = 20;
+
+
+    /*celulares de contacto*/
+    public static celu_1 = 5493416192379;
+    public static celu_2 = 5493413709702;
+    public static celu_3 = 5493413709701;
+    public static celu_da = 5493416435556;
+    public static celu_su = 5493416417920;
+    public static celu_her =5493416903752;
 
 }

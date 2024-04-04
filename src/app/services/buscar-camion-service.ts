@@ -8,6 +8,7 @@ import { Configuraciones } from '../shared/constants/configuraciones';
 import { Camionero } from '../modelo/camionero';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginService } from './login.service';
+import { MensajeriaService } from './mensajeria.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +19,7 @@ export class BuscarCamionService {
       public http: HttpClient,
       private loginService: LoginService,
       private uiService: UiService,
+      private mensajeriaService: MensajeriaService
     ) {}
 
     /**
@@ -99,6 +101,10 @@ export class BuscarCamionService {
 
 
     }
+
+
+
+
     getIntervinienteOfArray(arrayIntervi: any[], nombreIntervi: any) {
       const titular = arrayIntervi.filter(interArray => interArray.tipoInterviniente.nombre === nombreIntervi);
       // Como filter retorna un array, retorno el 1er elemento de ese array

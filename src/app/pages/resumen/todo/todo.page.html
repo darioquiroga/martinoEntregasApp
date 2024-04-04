@@ -238,16 +238,9 @@
 
 
 
-
-   <!-- <div  class="spinner-container" *ngIf="!istodoCargado">
-      <ion-spinner ></ion-spinner>
-  </div>-->
-
-
-
- <!-- <ion-infinite-scroll (ionInfinite)="doInfiniteBottom($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>-->
+  <ion-refresher slot="fixed"  (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
 
       <div class="empty-table">

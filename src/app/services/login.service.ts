@@ -142,7 +142,7 @@ export class LoginService {
     const isPuertos = false;
     this.esPuertosSn = isPuertos;
     const today = new Date();
-    debugger
+
     const fechaHoy = today.toDateString();
     if (this.usuarioToken  != null && this.usuarioGrabado != '' ) {
       return new Promise(async (resolve, reject) => {
@@ -238,7 +238,7 @@ export class LoginService {
       localStorage.setItem('usuarioActual', JSON.stringify(this.usuarioActual));
     } else if (queGrabo == 'tokenWappi') {
       localStorage.setItem('tokenWappi', obj);
-      debugger
+
     } else if (queGrabo == 'AutorizadorNombre') {
       localStorage.setItem('AutorizadorNombre', obj)
     } else if (queGrabo == 'AutorizadorCelular') {

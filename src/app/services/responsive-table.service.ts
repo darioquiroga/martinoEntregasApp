@@ -107,7 +107,6 @@ doLazyLoad(parcialTableData: CartaPortePosicion[], completeTableData: CartaPorte
     return completeTableData.slice(sliceDesde, sliceHasta);
 }
 
-
 // Define todos los estados de los toggles en false
 closeToggles(estadosToggleCarta: boolean[]) {
     return estadosToggleCarta.fill(false);
@@ -120,14 +119,12 @@ initToggles(lengthCompleteTableData: any) {
 
 // En esta funcion se busca solo por nroCarta o Patente
 searchByNroCartaOrPatente(ev: { target: { value: any; }; }, completeTableData: CartaPortePosicion[]) {
-
     let text = _.toLower(ev.target.value);
-
+    let buscar = text.toString().slice(3)
 
     // Defino el estado 'busquedaActiva'
     let busquedaActiva;
     let parcialTableEncontrada;
-
     // Si el text buscado es '' entonces la búsqueda deja de estar activa
     if (text === '') {
         // Desactivo la busqueda
@@ -143,8 +140,9 @@ searchByNroCartaOrPatente(ev: { target: { value: any; }; }, completeTableData: C
 
             // Me fijo si text está en la patente o en el nroCarta
             if (
+
                 (cp.patente && cp.patente.toLowerCase().includes(text.toLowerCase())) ||
-                (cp.nroCarta.toString().includes(text))
+                (cp.nroCarta.toString().includes(buscar))
             ) {
                 booleanDeRetorno = true;
             }

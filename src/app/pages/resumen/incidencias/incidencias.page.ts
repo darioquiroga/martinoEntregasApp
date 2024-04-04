@@ -2,7 +2,7 @@ import { AppComponent } from './../../../app.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Component, OnInit,  NgZone,  ViewChild, inject } from '@angular/core';
 import { MensajeriaService } from 'src/app/services/mensajeria.service';
-import {  IonContent, IonFab  } from '@ionic/angular';
+import {  IonContent, IonFab, IonRefresher, RefresherCustomEvent, RefresherEventDetail  } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 // Constantes y otros
 import { estadosCartaPosicion } from '../../../shared/constants/estadosCartaPorte';
@@ -42,6 +42,8 @@ import {
 import { Configuraciones }  from '../../../shared/constants/configuraciones';
 import * as _ from 'lodash';
 import { async } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
 
 
 //import { posicionDiaAnimations } from './posicionDiaAnimations';
@@ -85,6 +87,7 @@ export class IncidenciasPage implements OnInit {
   mensajes: Mensajes[] = JSON.parse(localStorage.getItem('mensajes') || '[]');
   public mensajeEnviadoSn : string | undefined;
   public cantidadRegistros :any;
+  public intervalId: any;
   // Estado de la busqueda, si esta activa o no
    busquedaActiva: boolean | false = false;
    // Texto buscado (esta bindeado con el input)
@@ -163,7 +166,7 @@ export class IncidenciasPage implements OnInit {
     this.filtroDestino = "";
 
 
-
+    this.controlCarga()
     this.initTable();
 
 
@@ -180,10 +183,11 @@ async initTable() {
   // Seteo un titulo por default
   this.tituloCantidad = `Incidencias`;
   // Busco la posicion y refresco
+
   await this.refreshTable();
   // Saco el spinner
-  this.loading = false
-  //this.uiService.dissmiss();
+   this.loading = false
+
 
 
 
@@ -227,12 +231,22 @@ async initTable() {
       activeFilters["destino"] = activeFilters.destino;
       return activeFilters;
   }
-async doRefresh(refresher:any) {
+/*async doRefresh(event) {
+
   // Recargo toda la tabla
   await this.refreshTable();
   // Aviso que finalizó
   refresher.complete();
+  // Saco el spinner
+  this.loading = false
+}*/
+
+async doRefresh(event:any) {
+  console.log("doRefresh");
+  await this.refreshTable();
+  event.target.complete();
 }
+
 public getLogoEmpresa() {
     if (this.resumen.empresa.id != '') {
       this.logo = Configuraciones.rutaLogos + this.resumen.empresa.id + '.png';
@@ -256,7 +270,21 @@ public getLogoEmpresa() {
 
 
   }
+  controlCarga(){
 
+    let count = 0;
+    this.intervalId = setInterval(()=>{
+      count++;
+    //  console.log("---->"+count)
+      if (count == 20){
+        this.loadingController.dismiss();
+        clearInterval(this.intervalId)
+
+        this.uiService.presentAlertInfo(textos.errorNoRespondeEnPoint.timeOutError.descripcion)
+        this.navController.navigateRoot("/logout");
+      }
+    }, 1000);
+  }
 
 // Abre o cierra la info extra de una carta de porte
 toggleState(indice: string | number) {
@@ -358,7 +386,9 @@ doInfiniteScrollTop($event: { scrollTop: any; }) {
 
 // Refresca la tabla
 async refreshTable() {
- // alert("refresh table")
+   // Buscqueda activa false
+
+
   try {
       // Buscqueda activa false
       this.busquedaActiva = false;
@@ -379,9 +409,8 @@ async refreshTable() {
 
       this.posicionDiaService.getPosicionDia().then(
         async resp => {
-
+          this.loading = false
           const respuesta = JSON.stringify(resp);
-
           this.esPuertosSn = this.puertosService.getIfPuertos();
           const data = JSON.stringify(resp);
           this.completeTableData = JSON.parse(data).data ;
@@ -405,6 +434,7 @@ async refreshTable() {
         }else{
           this.tituloCantidad = `Incidencias: `+this.completeTableDataMostrarIncidencias.length;
         }
+        clearInterval(this.intervalId)
           // Obtengo los destinos para los filtros
           this.destinosList = this.posicionDiaService.getDestinosList(this.completeTableData);
           // Inicializo los estados toggle de las cartas en false
@@ -423,6 +453,7 @@ async refreshTable() {
   }
   catch(err) {
       console.log(err);
+      clearInterval(this.intervalId)
       // Muestro error
       /*this.textos.erroresGenericos.timeOutError.titulo +
         this.textos.erroresGenericos.timeOutError.descripcion*/

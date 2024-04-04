@@ -11,7 +11,7 @@ import { textos } from 'src/app/shared/textos/textos';
 import { tipoSesion } from '../../shared/constants/tipoSesion';
 import { Configuraciones }  from '../../shared/constants/configuraciones';
 import { MensajeriaService } from 'src/app/services/mensajeria.service';
-import { timer } from 'rxjs';
+import { interval, timer } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -69,6 +69,7 @@ export class LoginPage implements OnInit {
     this.emailEmpresa = textos.login.html.cerealnet.mail;
     this.direccionEmpresa = textos.login.html.cerealnet.direccion;
     this.telefonoEmpresa = textos.login.html.cerealnet.telefono;
+
     this.doLoadLogin();
     this.traerConfiguracionDelTelefono();
   }

@@ -38,6 +38,7 @@ export class ResumenPage implements OnInit {
    public notificaciones: any;
    public ver: boolean = false;
    public numeroMensajes: any;
+   public intervalId: any;
    posicionCompletaDelDia : any;
    cantidadTodos: any = 0;
    cantidadIncidencias  : any = 0;
@@ -87,19 +88,11 @@ export class ResumenPage implements OnInit {
     if (!localStorage.getItem('reload')) {
       localStorage['reload'] = true;
       window.location.reload();
-  } else {
-    localStorage.removeItem('reload');
-  }
-   /* let i = 0;
-    setTimeout(() =>{
-      console.log("refrescarPaginaResumen()");
-      window.location.reload();
-      i++
+    } else {
+      localStorage.removeItem('reload');
+    }
+    this.controlCarga();
 
-     }, 2000);
-
-   console.log("---> Temporizador de dos segundos y refresca para arreglar el bug de que no muestra el menu ni bien ingresa");
-*/
 
    if (typeof this.usuarioActivoJson === 'string') {
     this.usuarioActivo =  JSON.parse(this.usuarioActivoJson);
@@ -120,8 +113,19 @@ export class ResumenPage implements OnInit {
   }
 
 
-
-
+controlCarga(){
+  let count = 0;
+  this.intervalId = setInterval(()=>{
+    count++;
+    //console.log("---->"+count)
+    if (count == 20){
+      this.loadingController.dismiss();
+      clearInterval(this.intervalId)
+      this.uiService.presentAlertInfo(textos.errorNoRespondeEnPoint.timeOutError.descripcion)
+      this.navController.navigateRoot("/logout");
+    }
+  }, 1000);
+}
 
 
 
@@ -176,6 +180,7 @@ export class ResumenPage implements OnInit {
             }else{
               this.uiService.presentAlertInfo("No hay cartas disponibles.")
             }
+            clearInterval(this.intervalId)
            }) ;
 
 

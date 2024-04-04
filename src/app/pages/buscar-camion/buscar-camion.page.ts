@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
 import { CartaPosicionCamionero } from 'src/app/modelo/cartaPosicionCamionero';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { By } from '@angular/platform-browser';
 import { BuscarCamionService } from 'src/app/services/buscar-camion-service';
 import { Router } from '@angular/router';
 import { ResponsiveTableService } from 'src/app/services/responsive-table.service';
 import { PuertosService } from 'src/app/services/puertos.service';
 import { CartaPortePosicion } from 'src/app/modelo/cartaPortePosicion';
+import { Configuraciones } from 'src/app/shared/constants/configuraciones';
+import { textos } from 'src/app/shared/textos/textos';
 @Component({
   selector: 'app-buscar-camion',
   templateUrl: './buscar-camion.page.html',
@@ -24,10 +26,14 @@ export class BuscarCamionPage implements OnInit {
   completeTableDataMostrar :  CartaPortePosicion[] = [];
   cardTitulo : String = "";
   cardSubTitulo: String = "";
+  entregadorNombre:  String = "";
+  mensajeEntregador: String = textos.mensajeContacteConEntregador.descripcion;
+  tituloEntregador: String = textos.mensajeContacteConEntregador.titulo;
   constructor(
     public buscarCamionService: BuscarCamionService,
     private router: Router,
     private uiService: UiService,
+    private navController: NavController,
     private loadingController: LoadingController,
     private puertosService : PuertosService,
     public responsiveTableService: ResponsiveTableService
@@ -48,10 +54,17 @@ async onClickEnviarWhatsUp(){
 
 
 }
+
+onClickContactarEntregador(){
+ // alert("onClickContactarEntregadors")
+  this.navController.navigateRoot('/contactar-con-entregador', { animated: true });
+}
  async onClickBuscar(){
   if (this.nroCartaOPatenteBuscada != ""){
     this.uiService.presentLoading("Buscando...")
-
+    /*14423383*/
+    let buscar = this.nroCartaOPatenteBuscada.slice(3)
+    this.nroCartaOPatenteBuscada = buscar
     this.buscarCamionService.getCartaDePorteCamion(this.nroCartaOPatenteBuscada).then(
       async (resp: any)=>{
 
@@ -104,6 +117,7 @@ async onClickEnviarWhatsUp(){
 
   ngOnInit() {
 
+    this.entregadorNombre = Configuraciones.nombreEntregador;
   }
 
 }

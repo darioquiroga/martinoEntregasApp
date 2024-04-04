@@ -123,5 +123,18 @@ export const textos = {
             titulo: 'Informacion',
             descripcion: 'Problema de conexión, intente en unos segundos',
         }
+    },
+    errorNoRespondeEnPoint: {
+      timeOutError: {
+        titulo: 'Error de conección',
+        descripcion:   "Ocurrio un error inesperado, inténte nuevamente más tarde o reingrese nuevamente, sepa disculplar las molestias ocasionadas."
+
+      }
+    },
+
+    mensajeContacteConEntregador: {
+      titulo: 'ATENCION !',
+      descripcion: 'Si tiene algún problema o consulta, no dude en contactarnos para ofrecerle una solución integral a sus necesidades.',
+
     }
 }

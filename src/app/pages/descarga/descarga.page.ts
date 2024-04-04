@@ -74,6 +74,7 @@ export class DescargaPage implements OnInit {
  // Fecha para filtrar la descarga
 // Lista con todos los destinos de las cartas
 destinosList: string[] = [];
+
  filtroFecha: Date | undefined;
 totalCartas: any | 0;
 activeFilters: { /*estado: string; */destino: string; } | any;
@@ -81,6 +82,7 @@ filtroDestino: String | undefined;
  // respuesta del servicio de estado ok, ver luego si esto se quita
  respuestaEstadoDescarga : string |  undefined;
  istodoCargado : any
+ public intervalId : any
  // Spinner imagen descarga
   descargandoImagen: any;
   datePicker: any;
@@ -88,7 +90,7 @@ filtroDestino: String | undefined;
   constructor(
     public responsiveTableService: ResponsiveTableService,
     private loadingController: LoadingController,
-    private navCtrl: NavController,
+    private navController: NavController,
     private zone: NgZone,
     //private datePicker: DatePicker,
    // public puertosService: PuertosService,
@@ -127,23 +129,41 @@ filtroDestino: String | undefined;
     await this.uiService.presentLoading("Cargando...");
 
     // Seteo un titulo por default
-    this.tituloCantidad = `Descarga de ayer `
+    this.tituloCantidad = `Descarga de ayer`
     // Seteo la fecha por default en ayer
     this.filtroFecha = new Date((new Date).getTime() - 24*60*60*1000);
     // Busco la posicion y refresco
+
      await this.refreshTable();
 
+}
+
+controlCarga(){
+
+  let count = 0;
+  this.intervalId = setInterval(()=>{
+    count++;
+    console.log("---->"+count)
+    if (count == 20){
+
+      clearInterval(this.intervalId)
+      this.loadingController.dismiss();
+
+      this.uiService.presentAlertInfo(textos.errorNoRespondeEnPoint.timeOutError.descripcion)
+      this.navController.navigateRoot("/logout");
+    }
+  }, 1000);
 }
 
  /**
      * Refresca la tabla
      */
- async doRefresh(refresher: any, exclude?:any) {
-  // Recargo toda la tabla
+ async doRefresh(event:any) {
+  console.log("doRefresh");
   await this.refreshTable();
-  // Aviso que finalizó
-  refresher.complete();
+  event.target.complete();
 }
+
 /**
      * Cambia la fecha de busqueda (SOLO FUNCIONA EN CELULAR, NO EN WEB)
      */
@@ -235,10 +255,12 @@ async refreshTable() {
 
       this.descargaService.getDescarga(formattedDate, formattedDate).then(
         async (resp: any)=>{
-
+          this.loading = false;
+          this.loadingController.dismiss();
+          clearInterval(this.intervalId)
           if (resp.data.length == 0){
-            await this.loadingController.dismiss();
-            this.tituloCantidad = `Descarga de ayer 0`;
+
+            this.tituloCantidad = `Descarga de ayer`;
             this.uiService.presentAlertInfo("No se encontraron datos de descarga");
             this.filtroVisible = "N"
           }else{
@@ -261,19 +283,19 @@ async refreshTable() {
 
             // Obtengo los destinos para los filtros
             this.destinosList = this.posicionDiaService.getDestinosList(this.completeTableData);
-
+            clearInterval(this.intervalId)
             // Texto buscado vacio
             this.inputSearchBar = '';
             // Saco el spinner
             this.loading = false;
-            await this.loadingController.dismiss();
+            this.loadingController.dismiss();
 
 
         }
 
         },
         (error: any) => {
-
+          clearInterval(this.intervalId)
          this.uiService.presentAlertInfo("Error: "+error);
 
 
@@ -294,9 +316,8 @@ async refreshTable() {
 
     this.nadaEnBusqueda =  textos.posicionDia.html.nadaEnPosicion;
     this.nadaEnPosicion = textos.posicionDia.html.nadaEnBusqueda
-
-
-    this.initTable();
-  }
+    this.controlCarga()
+      this.initTable();
+    }
 
 }
