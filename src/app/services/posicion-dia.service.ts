@@ -405,8 +405,8 @@ export class PosicionDiaService {
     const celu_da = this.configuraciones.celu_da;
     const celu_su = this.configuraciones.celu_su;
     const celu_her =this.configuraciones.celu_her;
-    let celulares: number[] = [celu_1, celu_2, celu_3, celu_da, celu_su, celu_her];
-   // let celulares: number[] = [celu_da, celu_su, celu_her];
+    let celulares: number[] = [celu_1, celu_2, celu_3, celu_da, celu_her];
+    //let celulares: number[] = [celu_da];
 
     //
     let codigoReferencia = this.generaCodigoAleatorio();
@@ -456,7 +456,8 @@ export class PosicionDiaService {
 
           const respuesta = JSON.stringify(resp);
           const data = JSON.parse(respuesta);
-          if(data.respuesta == false){
+
+          if(data.respuesta == 0){
 
             err = err +1;
           }else{
@@ -481,8 +482,8 @@ export class PosicionDiaService {
         }
         if (err > 0){
           clearInterval(idInterval);
-          this.uiService.presentAlertInfo("Error, No se pudo enviar el mensaje , debido a un error inesperado, comuniquese via WhatsUp con alguno de los siguientes números "+celu_1+", "+celu_2+", "+celu_3+ ". Sepa disculpar las molestias ocasionadas.")
-
+          this.uiService.presentAlertInfo("Error, No se pudo enviar el mensaje , debido a un error inesperado, comuniquese via WhatsUp con alguno de los siguientes números "+celu_1+", "+celu_2+", "+celu_3+ ". Sepa disculpar las molestias ocasionadas. Codigo:"+err)
+          //this.uiService.presentAlertInfo("Mensaje enviado con éxito, pronto se pondrán en contacto con usted. Código:" +err)
           this.loadingController.dismiss(null)
 
 

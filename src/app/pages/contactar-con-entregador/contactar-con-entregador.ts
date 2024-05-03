@@ -23,9 +23,11 @@ export class ContactarConEntregadorPage implements OnInit {
   nroCelularDestino:  string = '';
   msg: string = '';
   // Martino
+  /*
+  Ver con Matias
+  Esto token debe venir desde el back end como asi tambien los nros de destino de los mensajes de whats ahora estan puestos fijos
+  */
   tokenWapi = "a441bd60784918d8bd65e5d7d21b91148f5ee307";
-  // Avellaneda
-  //tokenWapi = "33b8c0ae0e9b533d97eddd7f58087ff308276407";
   // Estados de cartas expandidas o contraidas
   estadosToggleCarta: boolean[] = [];
   cartaEncontrada: any[] = [] ;
@@ -83,18 +85,19 @@ async onClickEnviarWhatsUp(){
       let codigoReferencia = this.generaCodigoAleatorio();
       const fechaHora = new Date();
       this.uiService.presentLoading("Enviando mensaje, aguarde un momento.")
-      let mensaje = "SOLICITUD LLAMADO - Solicitante: "+this.nroCelularDestino+":  Dice: "+this.msg+" - "+fechaHora.toLocaleDateString()+" "+fechaHora.toLocaleTimeString()
+      let mensaje = "SOLICITUD LLAMADO - Solicitante: "+this.nroCelularDestino+":  Dice: "+this.msg+" - "+fechaHora.toLocaleDateString()+" "+fechaHora.toLocaleTimeString()+" - REF: "+codigoReferencia
 
     for (let celu in celulares) {
+
       await this.mensajeriaService.enviarMensajeWhatsUWapi(celulares[i], mensaje).then(function(resp:any) {
         const respuesta = JSON.stringify(resp);
         const data = JSON.parse(respuesta);
-        if(data.respuesta == false){
 
+        if(data.respuesta == 0){
           err = err +1;
         }else{
           enviados = enviados+1
-      }
+        }
       }, function(reason) {
 
 
@@ -103,23 +106,28 @@ async onClickEnviarWhatsUp(){
     }
 
     let idInterval = setInterval(() => {
+
       if (enviados >= celulares.length){
         clearInterval(idInterval);
+
         this.loadingController.dismiss(null)
         this.loadingController.dismiss(null)
         this.procesoCompleto = true
-        this.uiService.presentAlertInfo("Su mensaje fue entregado exitosamente, aguarde a ser contactado por el entregador.")
+        this.uiService.presentAlertInfo("Su mensaje fue entregado exitosamente, aguarde a ser contactado por el entregador")
         this.msg = ""
         this.nroCelularDestino = "";
+        err =0
         this.navController.navigateRoot('/buscar-camion', { animated: false });
       }
       if (err > 0){
         clearInterval(idInterval);
         this.loadingController.dismiss(null)
         this.procesoCompleto= false;
-        this.uiService.presentAlertInfo("Error, ocurrio un error inesperado al enviar el mensaje, intente nuevamente más tarde.")
+        //this.uiService.presentAlertInfo("Su mensaje fue entregado exitosamente, aguarde a ser contactado por el entregador. (codigo: "+err+" )")
+        this.uiService.presentAlertInfo("Error, ocurrio un error inesperado al enviar el mensaje, intente nuevamente más tarde."+err)
         this.msg = ""
         this.nroCelularDestino = "";
+        err =0
         this.navController.navigateRoot('/buscar-camion', { animated: false });
 
       }

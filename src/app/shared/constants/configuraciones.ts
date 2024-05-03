@@ -20,7 +20,7 @@ export class Configuraciones {
     //https://www.kernelinformatica.com.ar//app/webservices/public/ws-envia-wu.php?token=Token 33b8c0ae0e9b533d97eddd7f58087ff308276407&to=543416435556&message=hola mundo
     //"/wapi"//"https://wapi.im/api/messages";
     //public static serviciosWebURL : string = `https://www.kernelinformatica.com.ar/app/webservices/public/servicios-web-rest.php`;
-     public static version : string = "0.02A";
+     public static version : string = "0.2";
      // token para envio de whats up
      // el token debe ser enviado desde el back end
      //a441bd60784918d8bd65e5d7d21b91148f5ee307

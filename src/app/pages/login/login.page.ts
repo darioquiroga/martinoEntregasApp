@@ -12,6 +12,7 @@ import { tipoSesion } from '../../shared/constants/tipoSesion';
 import { Configuraciones }  from '../../shared/constants/configuraciones';
 import { MensajeriaService } from 'src/app/services/mensajeria.service';
 import { interval, timer } from 'rxjs';
+import { App } from '@capacitor/app';
 
 @Component({
   selector: 'app-login',
@@ -147,7 +148,11 @@ enviarMensajeWhatsUp(){
 
 }
 
+cerrarAplicacion() {
 
+    App.exitApp();
+
+}
   async doLoadLogin() {
 
 

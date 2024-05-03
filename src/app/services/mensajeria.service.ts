@@ -7,7 +7,7 @@ import { DEFAULT_CURRENCY_CODE, Injectable } from '@angular/core';
 import { HTTP } from '@awesome-cordova-plugins/http/ngx';
 import { Cuenta } from 'src/app/modelo/cuenta';
 import '@capacitor-community/http'
-import { Plugin, Plugins } from '@capacitor/core';
+
 
 //------------IMPORTO LAS CLASES QUE NECESITO ------------//
 //Le agrego el authService. Para que use el token.
@@ -41,6 +41,8 @@ export class MensajeriaService {
   public control: any;
   public logueado: boolean = false;
   public respuesta : any;
+  public mensajeRespuesta: string = "";
+
   //private loginService: LoginService | any;
   //---------------------------------------------//
 public errorWup: any;
@@ -56,11 +58,14 @@ public errorWup: any;
 
 
   public async enviarMensajeWhatsUWapi(celular: any ,mensaje: any) {
+
     return new Promise(async (resolve, reject) => {
          try {
 
-         let parameters:URLSearchParams = new URLSearchParams();
+
          const url = `${this.getURLServicio()}&to=`+celular+`&message=`+mensaje
+
+
          const httpOptions = {
           headers: new HttpHeaders({
            'Content-Type': 'application/json',
@@ -70,25 +75,33 @@ public errorWup: any;
          };
          this.http.post(url,  httpOptions).subscribe({
            next: (response: any) => {
-            if (response.status > 0){
-              resolve({
-                respuesta : this.respuesta
-              });
-              this.respuesta = response;
-            }
 
+            if (response.status ==  200 || response.status == "200"){
+              resolve({
+                respuesta : 1
+              });
+
+            }else{
+              resolve({
+                respuesta : 0
+              });
+
+            }
+              //this.mensajeRespuesta = response.data
 
            },
            error: (error: any) => {
 
             resolve({
-               respuesta : false
+               respuesta : -1
              });
            }
          })
          } catch (error: any) {
-         /*  const dataError = JSON.parse(error.error)
-           reject(dataError.control.descripcion);*/
+
+         resolve({
+               respuesta : -1
+             });
          }
        });
 
